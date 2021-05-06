@@ -4,9 +4,17 @@ newbee-mall-plus 项目是 newbee-mall 项目的升级版本，增加了优惠�
 
 目前已经开始开发这个项目，相信很快就能够开源出来让大家体验和练手，Star 和关注可以先点起来了呦！很需要各位小伙伴的支持！
 
-## 2021-03-16 最新开发进度
+## 2021-05-05 最新开发进度
 
-完善UI、调整代码，预计 3 月底进入测试阶段。
+由于之前一直有其它事情，给 [newbee-mall-plus](https://github.com/newbee-ltd/newbee-mall-plus) 项目的开发时间就比较少，本来应该在 4 月底前开源的代码，还没写完。不过，开发工作并没有停滞，有时间我就会去写一点代码。目前主要的功能都实现的差不多了，部分页面如下：
+
+![seckill-m](https://13-doc.oss-cn-beijing.aliyuncs.com/images/2021/05/seckill-m.png)
+
+![coupon-m](https://13-doc.oss-cn-beijing.aliyuncs.com/images/2021/05/coupon-m.png)
+
+## 2021-03-16 开发中
+
+完善UI、调整代码。
 
 ## 2021-01-17 准备
 

@@ -4,11 +4,11 @@
 ![Version 2.0.0](https://img.shields.io/badge/version-2.0.0-yellow.svg)
 [![License](https://img.shields.io/badge/license-GPL3.0-blue.svg)](https://github.com/newbee-ltd/newbee-mall/blob/master/LICENSE)
 
-newbee-mall-plus 项目是newbee-mall的升级版本，新增了优惠券模块、商品秒杀模块、支付宝支付，优化了搜索功能，后续如果有技术栈和功能的升级也会放在这个仓库里，当前项目中的代码主要由 [@十三](https://github.com/newbee-mall) 和 [@wayn111](https://github.com/wayn111) 共同开发。newbee-mall 项目是一套电商系统，包括 newbee-mall 商城系统及 newbee-mall-admin 商城后台管理系统，基于 Spring Boot 2.X 及相关技术栈开发。 
+newbee-mall-plus 项目是 newbee-mall 的升级版本，新增了优惠券模块、商品秒杀模块、支付宝支付，优化了搜索功能，后续如果有技术栈和功能的升级也会放在这个仓库里，当前项目中的代码主要由 [@十三](https://github.com/newbee-mall) 和 [@wayn111](https://github.com/wayn111) 共同开发。newbee-mall 项目是一套电商系统，包括 newbee-mall 商城系统及 newbee-mall-admin 商城后台管理系统，基于 Spring Boot 2.X 及相关技术栈开发。 
 
 新蜂商城PLUS版本线上预览地址：[http://mall-plus.newbee.ltd](http://mall-plus.newbee.ltd?from=github)，账号可自行注册。
 
-**坚持不易，如果觉得项目还不错的话可以给项目一个 Star 吧，也是对我一直更新代码的一种鼓励啦，谢谢各位的支持。**
+**坚持不易，如果觉得项目还不错的话可以给项目一个 Star 吧，也是对我自 2019 年开始一直更新这个项目的一种鼓励啦，谢谢各位的支持。**
 
 - newbee-mall 对新手开发者十分友好，无需复杂的操作步骤，**仅需 2 秒就可以启动这个完整的商城项目；**
 - newbee-mall **也是一个企业级别的 Spring Boot 大型项目，对于各个阶段的 Java 开发者都是极佳的选择；**
@@ -105,21 +105,21 @@ newbee-mall-plus 项目是newbee-mall的升级版本，新增了优惠券模块�
 
 - 秒杀商品列表页面
 
-![seckill-page](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5acd8bbf3aea49428cc065ceb04b9a40~tplv-k3u1fbpfcp-zoom-1.image)
+  ![seckill-page](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5acd8bbf3aea49428cc065ceb04b9a40~tplv-k3u1fbpfcp-zoom-1.image)
 
 - 优惠券列表页面
 
-![coupon-list](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5c72a068a4a642cc9897eec5c0854920~tplv-k3u1fbpfcp-zoom-1.image)
+  ![coupon-list](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5c72a068a4a642cc9897eec5c0854920~tplv-k3u1fbpfcp-zoom-1.image)
 
 - 我的优惠券页面
 
-![my-coupons](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dd80eaa4b31749ef83647e34e711ee24~tplv-k3u1fbpfcp-zoom-1.image)
+  ![my-coupons](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dd80eaa4b31749ef83647e34e711ee24~tplv-k3u1fbpfcp-zoom-1.image)
 
 - 支付宝接入(截的支付宝网站的预览图)
 
-![sandbox-pay01](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dd372b84d17949ecb3e19f56864b1c84~tplv-k3u1fbpfcp-zoom-1.image)
+  ![sandbox-pay01](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dd372b84d17949ecb3e19f56864b1c84~tplv-k3u1fbpfcp-zoom-1.image)
 
-![sandbox-pay02](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/67e7bf25a9894206bc0ac16f41db8385~tplv-k3u1fbpfcp-zoom-1.image)
+  ![sandbox-pay02](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/67e7bf25a9894206bc0ac16f41db8385~tplv-k3u1fbpfcp-zoom-1.image)
 
 - 商城首页 1
 

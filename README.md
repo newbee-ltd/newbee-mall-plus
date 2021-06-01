@@ -20,7 +20,12 @@ newbee-mall-plus 项目是newbee-mall的升级版本，新增了优惠券模块�
 
 ![](https://raw.githubusercontent.com/newbee-ltd/newbee-mall-vue-app/master/static-files/newbee-mall.png)
 
-**新蜂商城前后端分离版本已开源，包括四个仓库：**
+**新蜂商城有两个仓库：**
+
+- [新蜂商城 newbee-mall](https://github.com/newbee-ltd/newbee-mall)
+- [新蜂商城升级版 newbee-mall-plus](https://github.com/newbee-ltd/newbee-mall-plus)
+
+**新蜂商城前后端分离版本也已经开源，包括四个仓库：**
 
 - [新蜂商城后端接口 newbee-mall-api](https://github.com/newbee-ltd/newbee-mall-api)
 - [新蜂商城 Vue2 版本 newbee-mall-vue-app](https://github.com/newbee-ltd/newbee-mall-vue-app)

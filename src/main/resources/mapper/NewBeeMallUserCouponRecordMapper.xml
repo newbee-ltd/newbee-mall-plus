@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ltd.newbee.mall.dao.NewBeeMallUserCouponRecordMapper">
+    <resultMap id="BaseResultMap" type="ltd.newbee.mall.entity.NewBeeMallUserCouponRecord">
+        <id column="coupon_user_id" jdbcType="BIGINT" property="couponUserId"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="coupon_id" jdbcType="BIGINT" property="couponId"/>
+        <result column="use_status" jdbcType="TINYINT" property="useStatus"/>
+        <result column="used_time" jdbcType="TIMESTAMP" property="usedTime"/>
+        <result column="order_id" jdbcType="BIGINT" property="orderId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        coupon_user_id, user_id, coupon_id, use_status, used_time, order_id,
+    create_time, update_time, is_deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_newbee_mall_user_coupon_record
+        where coupon_user_id = #{couponUserId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        update tb_newbee_mall_user_coupon_record
+        set is_deleted = 1
+        where coupon_user_id = #{couponUserId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="ltd.newbee.mall.entity.NewBeeMallUserCouponRecord">
+        insert into tb_newbee_mall_user_coupon_record (coupon_user_id, user_id, coupon_id,
+                                                       use_status, used_time, order_id,
+                                                       create_time, update_time, is_deleted)
+        values (#{couponUserId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{couponId,jdbcType=BIGINT},
+                #{useStatus,jdbcType=TINYINT}, #{usedTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP},
+                #{endTime,jdbcType=TIMESTAMP}, #{orderId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.NewBeeMallUserCouponRecord">
+        insert into tb_newbee_mall_user_coupon_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="couponUserId != null">
+                coupon_user_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="couponId != null">
+                coupon_id,
+            </if>
+            <if test="useStatus != null">
+                use_status,
+            </if>
+            <if test="usedTime != null">
+                used_time,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="couponUserId != null">
+                #{couponUserId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="couponId != null">
+                #{couponId,jdbcType=BIGINT},
+            </if>
+            <if test="useStatus != null">
+                #{useStatus,jdbcType=TINYINT},
+            </if>
+            <if test="usedTime != null">
+                #{usedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="ltd.newbee.mall.entity.NewBeeMallUserCouponRecord">
+        update tb_newbee_mall_user_coupon_record
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="couponId != null">
+                coupon_id = #{couponId,jdbcType=BIGINT},
+            </if>
+            <if test="useStatus != null">
+                use_status = #{useStatus,jdbcType=TINYINT},
+            </if>
+            <if test="usedTime != null">
+                used_time = #{usedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=TINYINT},
+            </if>
+        </set>
+        where coupon_user_id = #{couponUserId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.NewBeeMallUserCouponRecord">
+        update tb_newbee_mall_user_coupon_record
+        set user_id     = #{userId,jdbcType=BIGINT},
+            coupon_id   = #{couponId,jdbcType=BIGINT},
+            use_status  = #{useStatus,jdbcType=TINYINT},
+            used_time   = #{usedTime,jdbcType=TIMESTAMP},
+            order_id    = #{orderId,jdbcType=BIGINT},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            is_deleted  = #{isDeleted,jdbcType=TINYINT}
+        where coupon_user_id = #{couponUserId,jdbcType=BIGINT}
+    </update>
+    <select id="getUserCouponCount" resultType="java.lang.Integer">
+        select count(coupon_user_id)
+        from tb_newbee_mall_user_coupon_record
+        where is_deleted = 0
+          and user_id = #{userId}
+          and coupon_id = #{couponId}
+    </select>
+    <select id="getCouponCount" resultType="java.lang.Integer">
+        select count(coupon_user_id)
+        from tb_newbee_mall_user_coupon_record
+        where is_deleted = 0
+          and coupon_id = #{couponId}
+    </select>
+    <select id="selectMyCoupons" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_newbee_mall_user_coupon_record
+        where is_deleted = 0 and user_id = #{userId}
+        order by use_status asc, create_time desc
+    </select>
+    <select id="selectMyAvailableCoupons" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_newbee_mall_user_coupon_record
+        where is_deleted = 0 and user_id = #{userId}
+        and use_status = 0 order by create_time limit 8
+    </select>
+    <select id="getUserCouponByOrderId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_newbee_mall_user_coupon_record
+        where is_deleted = 0 and order_id = #{orderId}
+    </select>
+</mapper>

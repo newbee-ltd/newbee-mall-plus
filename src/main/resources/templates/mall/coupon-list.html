@@ -1,0 +1,90 @@
+<!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mall/header::head-fragment('NewBee商城-优惠券列表','coupon-list')">
+</head>
+<body>
+<header th:replace="mall/header::header-fragment"></header>
+<!-- nav -->
+<nav th:replace="mall/header::nav-fragment"></nav>
+
+<div class="coupon-title">
+    <div class="text">
+        专属优惠券
+    </div>
+</div>
+
+<div class="coupons center">
+    <div class="main center">
+        <div class="quan-list">
+            <th:block th:each="coupon : ${coupons}">
+                <div class="quan-item quan-d-item" th:onclick="'saveCoupon('+${coupon.couponId}+')'">
+                    <div class="q-type">
+                        <div class="q-price">
+                            <em>￥</em>
+                            <strong class="num" th:text="${coupon.discount}">200</strong>
+                            <div class="txt">
+                                <div class="typ-txt" th:text="${coupon.couponName}">
+                                    newbee券
+                                </div>
+                            </div>
+                        </div>
+                        <div class="limit">
+                        <span class="t-span" th:text="'满' + ${coupon.min} + '元可用'">
+                            满1000元可用
+                        </span>
+                        </div>
+                        <div class="q-range">
+                            <div class="range-item">
+                                <th:block th:if="${coupon.goodsType == 0}">全平台可用</th:block>
+                                <th:block th:if="${coupon.goodsType == 1}">指定分类可用</th:block>
+                                <th:block th:if="${coupon.goodsType == 2}">指定商品可用</th:block>
+                            </div>
+                            <div class="range-item" coupon-time="753151009"
+                                 th:text="${coupon.couponStartTime} + ' ' + ${coupon.couponStartTime}">
+                                2021.01.15-2021.01.18
+                            </div>
+                        </div>
+                    </div>
+                    <div class="q-opbtns">
+                        <a href="##"><b class="semi-circle"></b>立即领取</a>
+                    </div>
+                </div>
+            </th:block>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<div th:replace="mall/footer::footer-fragment"></div>
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
+<script th:inline="javascript"> var _ctx = [[@{/}]]; </script>
+<script type="text/javascript">
+    function saveCoupon(couponId) {
+        $.ajax({
+            type: 'POST',
+            url: _ctx + 'coupon/' + couponId,
+            success: function (result) {
+                if (result.resultCode == 200) {
+                    swal("领取成功", {
+                        icon: "success"
+                    });
+                    // window.location = _ctx + "coupon";
+                } else {
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                }
+            },
+            error: function () {
+                swal("领取失败", {
+                    icon: "error",
+                });
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mall/header::head-fragment('NewBee商城-商品详情','detail')">
+</head>
+<body>
+<header th:replace="mall/header::header-fragment"></header>
+<link rel="stylesheet" th:href="@{/mall/css/bootstrap.min.css}">
+<style>
+    .tb-extra dl {
+        margin-bottom: 0;
+    }
+</style>
+
+<div id="detail">
+    <!-- nav -->
+    <nav th:replace="mall/header::nav-fragment"></nav>
+
+    <div class="dc">
+        <div class="content w">
+            <div class="title fl">商品详情</div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <div class="intro mt20 w clearfix">
+        <div class="left fl" style="position: relative;">
+            <div class="swiper-container fl">
+                <img id="goodsImg">
+            </div>
+        </div>
+        <div class="right fr">
+            <h2 class="text-danger" style="padding: 0 0 0 20px;">
+                <!-- 显示time图标 -->
+                <span class="glyphicon glyphicon-time"></span>
+                <!-- 展示倒计时 -->
+                <span class="glyphicon" id="seckillBox"></span>
+            </h2>
+            <div class="h3 ml20 mt20" id="goodsName">NewBeeMall</div>
+            <div class="sub_title mr40 ml20 mt10" id="goodsIntro">NewBeeMall</div>
+            <div class="item_price mr40 ml20 mt10" style="color: red; width: 315px;">
+                秒杀价：<span id="seckillPrice" style="font-size: 28px">100 元</span>
+                <del id="originalPrice">
+                </del>
+            </div>
+
+            <div class="order">
+                <input type="hidden" id="userId" th:value="${userId}">
+                <button class="btn btn-success btn-lg" disabled id="killBtn">开始秒杀</button>
+            </div>
+            <div class="tb-extra ml20" id="J_tbExtra" style="margin-top: 0">
+                <dl>
+                    <dt>承诺</dt>
+                    <dd><a class="J_Cont" title="满足7天无理由退换货申请的前提下，包邮商品需要买家承担退货邮费，非包邮商品需要买家承担发货和退货邮费。" href="#"
+                           target="_blank"><img th:src="@{/mall/image/7d.jpg}">7天无理由</a></dd>
+                </dl>
+                <dl>
+                    <dt>支付</dt>
+                    <dd><a href="##" target="_blank"><img th:src="@{/mall/image/hua.png}">蚂蚁花呗</a><a href="##"
+                                                                                                     target="_blank"><img
+                            th:src="@{/mall/image/card.png}">信用卡支付</a><a href="##" target="_blank"><img
+                            th:src="@{/mall/image/ji.png}">集分宝</a></dd>
+                </dl>
+                <dl>
+                    <dt>支持</dt>
+                    <dd>折旧变现，买新更省钱。<a style="float:none;text-decoration: underline;" href="##">详情</a></dd>
+                </dl>
+
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <!-- 这里使用的是 th:utext 标签，用 th:text 不会解析 html，用 th:utext 会解析 html -->
+    <div class="goods mt20 w clearfix" id="goodsDetailContent">
+    </div>
+</div>
+
+<div th:replace="mall/footer::footer-fragment"></div>
+
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/mall/js/jquery.countdown.min.js}"></script>
+<script th:inline="javascript"> var _ctx = [[@{/}]]; </script>
+<script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
+<script th:src="@{/mall/js/seckill.js}" type="text/javascript"></script>
+<script type="text/javascript">
+    var userId = $('#userId').val();
+    $(function () {
+        $.ajax({
+            url: _ctx + 'seckill/' + [[${seckillId}]],
+            datatype: 'json',
+            success: function (res) {
+                if (res.resultCode != 200) {
+                    swal(res.message, {
+                        icon: "error",
+                    });
+                    return;
+                }
+                var seckillGoods = res.data;
+                $('#goodsImg').attr('src', seckillGoods.goodsCoverImg);
+                $('#goodsName').text(seckillGoods.goodsName);
+                $('#goodsIntro').text(seckillGoods.goodsIntro);
+                $('#goodsDetailContent').html(seckillGoods.goodsDetailContent);
+                $('#seckillPrice').text(seckillGoods.seckillPrice + '.00 元');
+                $('#originalPrice').text(seckillGoods.sellingPrice + '.00 元');
+
+                // 使用EL表达式传入参数
+                seckill.detail.init({
+                    seckillId: seckillGoods.seckillId,
+                    startTime: seckillGoods.startDate,//毫秒
+                    endTime: seckillGoods.endDate
+                });
+            }
+        })
+    });
+</script>
+</body>
+</html>

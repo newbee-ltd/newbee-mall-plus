@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="admin/header :: header-fragment"/>
+    <link rel="stylesheet" th:href="@{/admin/plugins/daterangepicker/daterangepicker.css}">
+</head>
+</header>
+<style>
+    .ui-jqgrid tr.jqgrow td {
+        white-space: normal !important;
+        height: auto;
+        vertical-align: text-top;
+        padding-top: 2px;
+    }
+</style>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper" id="app">
+    <!-- 引入页面头header-fragment -->
+    <div th:replace="admin/header::header-nav"></div>
+    <!-- 引入工具栏sidebar-fragment -->
+    <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+    <!-- Content Wrapper. Contains 图标content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">优惠卷管理</h3>
+                    </div>
+
+                    <!-- .card-body -->
+                    <div class="card-body">
+                        <div class="grid-btn">
+                            <button class="btn btn-info" onclick="couponAdd()"><i
+                                    class="fa fa-plus"></i>&nbsp;新增
+                            </button>
+                            <button class="btn btn-info" onclick="couponEdit()"><i
+                                    class="fa fa-pencil-square-o"></i>&nbsp;修改
+                            </button>
+                            <button class="btn btn-danger" onclick="couponDelete()"><i
+                                    class="fa fa-trash-o"></i>&nbsp;删除
+                            </button>
+                        </div>
+                        <div class="grid-btn">
+                            <input style="width: 140px;" type="text" class="form-control"
+                                   placeholder="优惠劵名称" id="name"> &nbsp;
+                            <select style="width: 160px;" class="form-control" id="couponType"
+                                    placeholder="优惠劵类型">
+                                <option value="" selected>全部优惠劵类型</option>
+                                <option value="0">通用卷</option>
+                                <option value="1">注册赠卷</option>
+                                <option value="2">兑换卷</option>
+                            </select> &nbsp;
+                            <select style="width: 160px;" class="form-control" id="couponStatus"
+                                    placeholder="上架状态">
+                                <option value="" selected>全部上架状态</option>
+                                <option value="0">上架</option>
+                                <option value="1">过期</option>
+                                <option value="2">下架</option>
+                            </select> &nbsp;
+                            <input style="width: 240px;" type="text" class="form-control" id="createTime"
+                                   placeholder="创建时间"> &nbsp;
+                            <button class="btn btn-info" onclick="searchCoupon()"><i class="fa fa-search"></i>&nbsp;搜索
+                            </button>
+                        </div>
+                        <table id="jqGrid" class="table table-bordered">
+                        </table>
+                        <div id="jqGridPager"></div>
+                    </div>
+                    <!-- /.card-body -->
+
+                </div>
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+        <div class="content">
+            <!-- 模态框（Modal） -->
+            <div class="modal fade" id="couponModal" tabindex="-1" role="dialog"
+                 aria-labelledby="couponModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h6 class="modal-title"></h6>
+                        </div>
+                        <div class="modal-body">
+                            <form id="couponForm">
+                                <div class="form-group">
+                                    <div class="alert alert-danger" id="edit-error-msg" style="display: none;">
+                                        错误信息展示栏。
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="couponName" class="col-md-3 control-label">优惠卷名称:</label>
+                                    <input type="text" class="col-md-9 form-control" id="couponName" name="couponName"
+                                           placeholder="*请输入优惠卷名称" required="true">
+                                    <input type="hidden" id="couponId" name="couponId">
+                                </div>
+                                <div class="form-group row">
+                                    <label for="couponTotal" class="col-md-3 control-label">优惠卷数量:</label>
+                                    <input type="number" class="col-md-9 form-control" id="couponTotal" name="couponTotal"
+                                           placeholder="*请输入优惠卷数量，如果是0则是无限量" required="true">
+                                </div>
+                                <div class="form-group row">
+                                    <label for="discount" class="col-md-3 control-label">优惠金额:</label>
+                                    <input type="number" class="col-md-9 form-control" id="discount" name="discount"
+                                           placeholder="*请输入优惠金额">
+                                </div>
+                                <div class="form-group row">
+                                    <label for="min" class="col-md-3 control-label">最少消费金额:</label>
+                                    <input type="number" class="col-md-9 col-md-9 form-control" id="min" name="min"
+                                           placeholder="*请输入最少消费金额">
+                                </div>
+                                <div class="form-group row">
+                                    <label for="couponStartTime" class="col-md-3 control-label">优惠卷开始:</label>
+                                    <input type="text" class="col-md-9 col-md-9 form-control" id="couponStartTime" name="couponStartTime"
+                                           placeholder="*请输入优惠卷开始时间">
+                                </div>
+                                <div class="form-group row">
+                                    <label for="couponEndTime" class="col-md-3 control-label">优惠卷结束:</label>
+                                    <input type="text" class="col-md-9 col-md-9 form-control" id="couponEndTime" name="couponEndTime"
+                                           placeholder="*请输入优惠卷结束时间">
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 control-label">领取限制数量:</label>
+                                    <div class="col-md-9 btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-info">
+                                            <input type="radio" name="couponLimit" value="0">无限制
+                                        </label>
+                                        <label class="btn btn-info">
+                                            <input type="radio" name="couponLimit" value="1">限领一张
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 control-label">赠送类型:</label>
+                                    <div class="col-md-9 btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-info">
+                                            <input type="radio" name="couponType" value="0">通用卷
+                                        </label>
+                                        <label class="btn btn-info">
+                                            <input type="radio" name="couponType" value="1">注册赠卷
+                                        </label>
+                                        <label class="btn btn-info">
+                                            <input type="radio" name="couponType" value="2">优惠码兑卷
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 control-label">状态:</label>
+                                    <div class="col-md-9 btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-info">
+                                            <input type="radio" name="couponStatus" value="0">可用
+                                        </label>
+                                        <label class="btn btn-info">
+                                            <input type="radio" name="couponStatus" value="2">下架
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 control-label">限制类型:</label>
+                                    <div class="col-md-9 btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-info active"
+                                               onclick="changeGoodsType(0)">
+                                            <input type="radio" name="goodsType" value="0">全商品
+                                        </label>
+                                        <label class="btn btn-info"
+                                               onclick="changeGoodsType(1)">
+                                            <input type="radio" name="goodsType" value="1">类目限制
+                                        </label>
+                                        <label class="btn btn-info"
+                                               onclick="changeGoodsType(2)">
+                                            <input type="radio" name="goodsType" value="2">商品限制
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row" id="goodsTypeShow">
+                                    <label class="col-md-3 control-label" id="goodsValueLabel"></label>
+                                    <input type="text" class="col-md-9 form-control" id="goodsValue" name="goodsValue"
+                                           :placeholder="'*请输入' + goodsValueLabel + ',多个用逗号分隔'">
+                                </div>
+                                <div class="form-group row">
+                                    <label for="couponDesc" class="col-md-3 control-label">优惠卷简介:</label>
+                                    <textarea rows="2" class="col-md-9 form-control" id="couponDesc" name="couponDesc"
+                                              placeholder="请输入优惠卷简介"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" id="saveButton">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal -->
+        </div>
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- 引入页脚footer-fragment -->
+    <div th:replace="admin/footer::footer-fragment"></div>
+</div>
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
+<!-- jqgrid -->
+<script th:src="@{/admin/plugins/jqgrid-5.5.2/jquery.jqGrid.min.js}"></script>
+<script th:src="@{/admin/plugins/jqgrid-5.5.2/grid.locale-cn.js}"></script>
+
+<!-- sweetalert -->
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/admin/dist/js/public.js}"></script>
+<script th:inline="javascript"> var _ctx = [[@{/}]]; </script>
+<script th:src="@{/admin/plugins/daterangepicker/moment.min.js}"></script>
+<script th:src="@{/admin/plugins/daterangepicker/daterangepicker.js}"></script>
+<script th:src="@{/admin/dist/js/newbee_mall_coupon.js}"></script>
+</body>
+</html>

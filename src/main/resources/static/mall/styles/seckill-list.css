@@ -1,0 +1,207 @@
+.seckill .main {
+    width: 1326px;
+}
+
+.seckill-title {
+    width: 100%;
+    height: 186px;
+    background-color: #fff8f8;
+    margin-bottom: 24px;
+}
+
+.seckill-title img {
+    height: 184px;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.goods_item .main {
+    width: 1226px;
+}
+.goods_item .main .item_card_frame {
+    float: left;
+    width: 280px;
+    height: 360px;
+    background: #fafafa;
+    cursor: pointer;
+    margin-bottom: 16px;
+    margin-top: 4px;
+    margin-left: 2px;
+}
+.goods_item .main .item_card_frame:hover {
+    border-color: #1baeae;
+}
+.goods_item .main .item_card_frame .item_card {
+    padding: 37px;
+}
+.goods_item .main .item_card_frame .item_card img {
+    display: block;
+    width: 160px;
+    height: 160px;
+    opacity: 0.85;
+}
+.goods_item .main .item_card_frame .item_card img:hover {
+    width: 160px;
+    height: 160px;
+    opacity: 1;
+}
+.goods_item .main .item_card_frame .item_brand {
+    width: 280px;
+    height: 14px;
+    line-height: 14px;
+    text-align: center;
+    margin-top: -10px;
+    font-size: 14px;
+}
+
+.goods_item .main .item_card_frame .item_sub_intro {
+    width: 268px;
+    height: 14px;
+    line-height: 14px;
+    margin: 18px 0;
+    font-size: 14px;
+    color: #b0b0b0;
+    text-align: center;
+    padding: 0 8px 0 8px;
+    margin-top: 36px;
+}
+.goods_item .main .item_card_frame .seckill_price {
+    font-size: 18px;
+    margin-left: 8px;
+    color: #1baeae;
+    line-height: 38px;
+}
+
+.goods_item .main .item_card_frame .seckill_price del {
+    font-size: 12px;
+    color: #999;
+    text-decoration:line-through;
+}
+
+.goods_item .pages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 35px 0 20px;
+    width: 100%;
+    height: 50px;
+}
+.goods_item .pages .page_wrap {
+    width: 1226px;
+}
+.goods_item .pages .page_wrap .page_span1 {
+    float: right;
+}
+.goods_item .pages .page_wrap .page_span1 .active {
+    border: 0;
+    color: #1baeae;
+    background: #fff;
+}
+.goods_item .pages .page_wrap .page_span1 a {
+    font-size: 14px;
+    display: block;
+    float: left;
+    text-decoration: none;
+    height: 36px;
+    background: #f0f0f0;
+    line-height: 36px;
+    padding: 0 14px;
+    margin-right: 5px;
+    border: 1px solid #ddd;
+}
+.goods_item .pages .page_wrap .page_span1 a:nth-child(1) {
+    color: #ccc;
+    background: #fff;
+}
+.goods_item .pages .page_wrap .page_span2 {
+    float: right;
+    margin-right: 55px;
+}
+.goods_item .pages .page_wrap .page_span2 em {
+    float: left;
+    line-height: 38px;
+    font-size: 14px;
+}
+.goods_item .pages .page_wrap .page_span2 em b {
+    font-weight: bold;
+}
+.goods_item .pages .page_wrap .page_span2 input {
+    float: left;
+    width: 30px;
+    height: 30px;
+    margin: 0 3px;
+    line-height: 30px;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 3px;
+}
+.goods_item .pages .page_wrap .page_span2 a {
+    float: left;
+    height: 27px;
+    margin-left: 10px;
+    font-size: 14px;
+    line-height: 27px;
+    display: inline-block;
+    border-radius: 2px;
+    background: #f7f7f7;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    padding: 4px 13px 5px;
+    color: #666;
+    background-repeat: repeat-x;
+}
+
+
+.btn-danger {
+    color: #ffffff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+    float: right;
+    height: 40px;
+    width: 88px;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active,
+.btn-danger.active,
+.open .dropdown-toggle.btn-danger {
+    color: #ffffff;
+    background-color: #d2322d;
+    border-color: #ac2925;
+}
+
+.btn-danger:active,
+.btn-danger.active,
+.open .dropdown-toggle.btn-danger {
+    background-image: none;
+}
+
+.btn-danger.disabled,
+.btn-danger[disabled],
+fieldset[disabled] .btn-danger,
+.btn-danger.disabled:hover,
+.btn-danger[disabled]:hover,
+fieldset[disabled] .btn-danger:hover,
+.btn-danger.disabled:focus,
+.btn-danger[disabled]:focus,
+fieldset[disabled] .btn-danger:focus,
+.btn-danger.disabled:active,
+.btn-danger[disabled]:active,
+fieldset[disabled] .btn-danger:active,
+.btn-danger.disabled.active,
+.btn-danger[disabled].active,
+fieldset[disabled] .btn-danger.active {
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+
+.btn-danger .badge {
+    color: #d9534f;
+    background-color: #fff;
+}

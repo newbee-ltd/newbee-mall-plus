@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ltd.newbee.mall.dao.NewBeeMallSeckillMapper">
+    <resultMap id="BaseResultMap" type="ltd.newbee.mall.entity.NewBeeMallSeckill">
+        <id column="seckill_id" jdbcType="INTEGER" property="seckillId"/>
+        <result column="goods_id" jdbcType="INTEGER" property="goodsId"/>
+        <result column="seckill_price" jdbcType="INTEGER" property="seckillPrice"/>
+        <result column="seckill_num" jdbcType="INTEGER" property="seckillNum"/>
+        <result column="seckill_status" jdbcType="BIT" property="seckillStatus"/>
+        <result column="seckill_begin" jdbcType="TIMESTAMP" property="seckillBegin"/>
+        <result column="seckill_end" jdbcType="TIMESTAMP" property="seckillEnd"/>
+        <result column="seckill_rank" jdbcType="INTEGER" property="seckillRank"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        seckill_id, goods_id, seckill_price, seckill_num, seckill_status, seckill_begin,
+        seckill_end, seckill_rank, create_time, update_time, is_deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_newbee_mall_seckill
+        where seckill_id = #{seckillId,jdbcType=INTEGER}
+    </select>
+
+    <select id="findSeckillList" parameterType="Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_newbee_mall_seckill s
+        where is_deleted = 0
+        <if test="goodsId != null and goodsId != ''">
+            and s.goods_id = #{goodsId}
+        </if>
+        <if test="seckillStatus != null and seckillStatus != ''">
+            and s.seckill_status = #{seckillStatus}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and DATE_FORMAT(s.create_time,'%Y-%m-%d') <![CDATA[ >= ]]> DATE_FORMAT(#{startTime},'%Y-%m-%d')
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and DATE_FORMAT(s.create_time,'%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#{endTime},'%Y-%m-%d')
+        </if>
+    </select>
+    <select id="getTotalSeckills" parameterType="Map" resultType="int">
+        select count(*)
+        from tb_newbee_mall_seckill s
+        where is_deleted = 0
+        <if test="goodsId != null and goodsId != ''">
+            and s.goods_id = #{goodsId}
+        </if>
+        <if test="seckillStatus != null and seckillStatus != ''">
+            and s.seckill_status = #{seckillStatus}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and DATE_FORMAT(s.create_time,'%Y-%m-%d') <![CDATA[ >= ]]> DATE_FORMAT(#{startTime},'%Y-%m-%d')
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and DATE_FORMAT(s.create_time,'%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#{endTime},'%Y-%m-%d')
+        </if>
+    </select>
+    <select id="findHomeSeckillList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_newbee_mall_seckill s
+        where is_deleted = 0
+        and seckill_status = 1
+        and seckill_num > 0
+        order by seckill_rank desc limit 10
+    </select>
+    <select id="getHomeTotalSeckills" resultType="java.lang.Integer">
+        select count(*)
+        from tb_newbee_mall_seckill s
+        where is_deleted = 0
+          and seckill_status = 1
+          and seckill_num > 0
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from tb_newbee_mall_seckill
+        where seckill_id = #{seckillId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="ltd.newbee.mall.entity.NewBeeMallSeckill">
+        insert into tb_newbee_mall_seckill (seckill_id, goods_id, seckill_price,
+                                            seckill_num, seckill_status, seckill_begin,
+                                            seckill_end, seckill_rank, create_time,
+                                            update_time, is_deleted)
+        values (#{seckillId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, #{seckillPrice,jdbcType=INTEGER},
+                #{seckillNum,jdbcType=INTEGER}, #{seckillStatus,jdbcType=BIT}, #{seckillBegin,jdbcType=TIMESTAMP},
+                #{seckillEnd,jdbcType=TIMESTAMP}, #{seckillRank,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.NewBeeMallSeckill">
+        insert into tb_newbee_mall_seckill
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="seckillId != null">
+                seckill_id,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="seckillPrice != null">
+                seckill_price,
+            </if>
+            <if test="seckillNum != null">
+                seckill_num,
+            </if>
+            <if test="seckillStatus != null">
+                seckill_status,
+            </if>
+            <if test="seckillBegin != null">
+                seckill_begin,
+            </if>
+            <if test="seckillEnd != null">
+                seckill_end,
+            </if>
+            <if test="seckillRank != null">
+                seckill_rank,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="seckillId != null">
+                #{seckillId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="seckillPrice != null">
+                #{seckillPrice,jdbcType=INTEGER},
+            </if>
+            <if test="seckillNum != null">
+                #{seckillNum,jdbcType=INTEGER},
+            </if>
+            <if test="seckillStatus != null">
+                #{seckillStatus,jdbcType=BIT},
+            </if>
+            <if test="seckillBegin != null">
+                #{seckillBegin,jdbcType=TIMESTAMP},
+            </if>
+            <if test="seckillEnd != null">
+                #{seckillEnd,jdbcType=TIMESTAMP},
+            </if>
+            <if test="seckillRank != null">
+                #{seckillRank,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <insert id="addStock">
+        update tb_newbee_mall_seckill
+        set seckill_num = seckill_num + 1
+        where seckill_id = #{seckillId}
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="ltd.newbee.mall.entity.NewBeeMallSeckill">
+        update tb_newbee_mall_seckill
+        <set>
+            <if test="goodsId != null">
+                goods_id = #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="seckillPrice != null">
+                seckill_price = #{seckillPrice,jdbcType=INTEGER},
+            </if>
+            <if test="seckillNum != null">
+                seckill_num = #{seckillNum,jdbcType=INTEGER},
+            </if>
+            <if test="seckillStatus != null">
+                seckill_status = #{seckillStatus,jdbcType=BIT},
+            </if>
+            <if test="seckillBegin != null">
+                seckill_begin = #{seckillBegin,jdbcType=TIMESTAMP},
+            </if>
+            <if test="seckillEnd != null">
+                seckill_end = #{seckillEnd,jdbcType=TIMESTAMP},
+            </if>
+            <if test="seckillRank != null">
+                seckill_rank = #{seckillRank,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=BIT},
+            </if>
+        </set>
+        where seckill_id = #{seckillId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.NewBeeMallSeckill">
+        update tb_newbee_mall_seckill
+        set goods_id       = #{goodsId,jdbcType=BIGINT},
+            seckill_price  = #{seckillPrice,jdbcType=BIGINT},
+            seckill_num    = #{seckillNum,jdbcType=INTEGER},
+            seckill_status = #{seckillStatus,jdbcType=BIT},
+            seckill_begin  = #{seckillBegin,jdbcType=TIMESTAMP},
+            seckill_end    = #{seckillEnd,jdbcType=TIMESTAMP},
+            seckill_rank   = #{seckillRank,jdbcType=INTEGER},
+            create_time    = #{createTime,jdbcType=TIMESTAMP},
+            update_time    = #{updateTime,jdbcType=TIMESTAMP},
+            is_deleted     = #{isDeleted,jdbcType=BIT}
+        where seckill_id = #{seckillId,jdbcType=INTEGER}
+    </update>
+
+    <select id="killByProcedure" statementType="CALLABLE">
+        call execute_seckill(
+                #{seckillId, jdbcType = BIGINT, mode = IN },
+                #{userId, jdbcType = BIGINT, mode = IN },
+                #{killTime, jdbcType = TIMESTAMP, mode = IN },
+                #{result, jdbcType = INTEGER, mode = OUT }
+            )
+    </select>
+</mapper>

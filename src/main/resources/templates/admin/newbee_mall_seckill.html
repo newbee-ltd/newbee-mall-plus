@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="admin/header :: header-fragment"/>
+    <link rel="stylesheet" th:href="@{/admin/plugins/daterangepicker/daterangepicker.css}">
+</head>
+</header>
+<style>
+    .ui-jqgrid tr.jqgrow td {
+        white-space: normal !important;
+        height: auto;
+        vertical-align: text-top;
+        padding-top: 2px;
+    }
+</style>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper" id="app">
+    <!-- 引入页面头header-fragment -->
+    <div th:replace="admin/header::header-nav"></div>
+    <!-- 引入工具栏sidebar-fragment -->
+    <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+    <!-- Content Wrapper. Contains 图标content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">秒杀管理</h3>
+                    </div>
+
+                    <!-- .card-body -->
+                    <div class="card-body">
+                        <div class="grid-btn">
+                            <button class="btn btn-info" onclick="seckillAdd()"><i
+                                    class="fa fa-plus"></i>&nbsp;新增
+                            </button>
+                            <button class="btn btn-info" onclick="seckillEdit()"><i
+                                    class="fa fa-pencil-square-o"></i>&nbsp;修改
+                            </button>
+                            <button class="btn btn-danger" onclick="seckillDelete()"><i
+                                    class="fa fa-trash-o"></i>&nbsp;删除
+                            </button>
+                        </div>
+
+                        <div class="grid-btn">
+                            <input style="width: 80px;" type="text" placeholder="商品ID" id="queryGoodsId"
+                                   class="form-control">&nbsp;&nbsp;
+                            <input style="width: 240px;" type="text" placeholder="创建时间" id="createTime"
+                                   class="form-control">&nbsp;&nbsp;
+                            <button class="btn btn-info" onclick="searchSecKillGoods()"><i class="fa fa-search"></i>&nbsp;搜索
+                            </button>
+                        </div>
+                        <table id="jqGrid" class="table table-bordered">
+                        </table>
+                        <div id="jqGridPager"></div>
+                    </div>
+                    <!-- /.card-body -->
+
+                </div>
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+        <div class="content">
+            <!-- 模态框（Modal） -->
+            <div class="modal fade" id="seckillModal" tabindex="-1" role="dialog"
+                 aria-labelledby="seckillModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h6 class="modal-title"></h6>
+                        </div>
+                        <div class="modal-body">
+                            <form id="seckillForm">
+                                <div class="form-group">
+                                    <div class="alert alert-danger" id="edit-error-msg" style="display: none;">
+                                        错误信息展示栏。
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="goodsId" class="col-md-3 control-label">商品ID:</label>
+                                    <input type="text" class="col-md-9 form-control" id="goodsId" name="goodsId"
+                                           placeholder="*请输入商品ID" required="true">
+                                    <input type="hidden" id="seckillId" name="seckillId">
+                                </div>
+                                <div class="form-group row">
+                                    <label for="seckillPrice" class="col-md-3 control-label">秒杀价格:</label>
+                                    <input type="number" class="col-md-9 form-control" id="seckillPrice"
+                                           name="seckillPrice"
+                                           placeholder="*请输入秒杀价格" required="true">
+                                </div>
+                                <div class="form-group row">
+                                    <label for="seckillNum" class="col-md-3 control-label">秒杀数量:</label>
+                                    <input type="number" class="col-md-9 form-control" id="seckillNum" name="seckillNum"
+                                           placeholder="*请输入秒杀数量">
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 control-label">状态:</label>
+                                    <div class="col-md-9 btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-info active">
+                                            <input type="radio" value="0" name="seckillStatus" checked>下架
+                                        </label>
+                                        <label class="btn btn-info">
+                                            <input type="radio" value="1" name="seckillStatus">上架
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="seckillBegin" class="col-md-3 control-label">秒杀开始时间:</label>
+                                    <input type="text" class="col-md-9 col-md-9 form-control" id="seckillBegin"
+                                           name="seckillBegin"
+                                           placeholder="*请输入秒杀开始时间">
+                                </div>
+                                <div class="form-group row">
+                                    <label for="seckillEnd" class="col-md-3 control-label">秒杀结束时间:</label>
+                                    <input type="text" class="col-md-9 col-md-9 form-control" id="seckillEnd"
+                                           name="seckillEnd"
+                                           placeholder="*请输入秒杀结束时间">
+                                </div>
+                                <div class="form-group row">
+                                    <label for="seckillRank" class="col-md-3 control-label">排序值:</label>
+                                    <input type="number" class="col-md-9 col-md-9 form-control" id="seckillRank"
+                                           name="seckillRank"
+                                           placeholder="请输入排序值">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" id="saveButton">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal -->
+        </div>
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- 引入页脚footer-fragment -->
+    <div th:replace="admin/footer::footer-fragment"></div>
+</div>
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
+<!-- jqgrid -->
+<script th:src="@{/admin/plugins/jqgrid-5.5.2/jquery.jqGrid.min.js}"></script>
+<script th:src="@{/admin/plugins/jqgrid-5.5.2/grid.locale-cn.js}"></script>
+
+<!-- sweetalert -->
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/admin/dist/js/public.js}"></script>
+<script th:inline="javascript"> var _ctx = [[@{/}]]; </script>
+<script th:src="@{/admin/plugins/daterangepicker/moment.min.js}"></script>
+<script th:src="@{/admin/plugins/daterangepicker/daterangepicker.js}"></script>
+<script th:src="@{/admin/dist/js/newbee_mall_seckill.js}"></script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mall/header::head-fragment('NewBee商城-订单结算','order-settle')">
+</head>
+<link th:href="@{/mall/css/bootstrap-modal.css}" rel="stylesheet">
+<body>
+<header th:replace="mall/header::header-fragment"></header>
+<!-- nav -->
+<nav th:replace="mall/header::nav-fragment"></nav>
+<!-- personal -->
+<div id="personal">
+    <div class="self-info center">
+
+        <!-- sidebar -->
+        <div th:replace="mall/personal-sidebar::sidebar-fragment"></div>
+
+        <div class="intro fr">
+            <div class="uc-box uc-main-box">
+                <div class="uc-content-box order-view-box">
+                    <div class="box-hd">
+                        <h1 class="title">填写并核对订单信息</h1>
+                        <div class="more clearfix">
+                            <div class="actions">
+                                <a id="saveOrder" class="btn btn-small btn-primary" title="提交订单">提交订单</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-bd">
+                        <div class="uc-order-item uc-order-item-pay">
+                            <div class="order-detail">
+
+                                <div class="order-summary">
+                                    <div class="order-progress">
+                                        <ol class="progress-list clearfix progress-list-5">
+                                            <li class="step step-done">
+                                                <div class="progress"><span class="text">购物车</span></div>
+                                                <div class="info"></div>
+                                            </li>
+                                            <li class="step step-active">
+                                                <div class="progress"><span class="text">下单</span></div>
+                                                <div class="info"></div>
+                                            </li>
+                                            <li class="step">
+                                                <div class="progress"><span class="text">付款</span></div>
+                                                <div class="info"></div>
+                                            </li>
+                                            <li class="step">
+                                                <div class="progress"><span class="text">出库</span></div>
+                                                <div class="info"></div>
+                                            </li>
+                                            <li class="step">
+                                                <div class="progress"><span class="text">交易成功</span></div>
+                                                <div class="info"></div>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <table class="order-items-table">
+                                    <tbody>
+
+                                    <th:block th:each="item : ${myShoppingCartItems}">
+                                        <tr>
+                                            <td class="col col-thumb">
+                                                <div class="figure figure-thumb">
+                                                    <a target="_blank" th:href="@{'/goods/detail/'+${item.goodsId}}">
+                                                        <img th:src="@{${item.goodsCoverImg}}"
+                                                             width="80" height="80" alt="">
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td class="col col-name">
+                                                <p class="name">
+                                                    <a target="_blank" th:href="@{'/goods/detail/'+${item.goodsId}}"
+                                                       th:text="${item.goodsName}">newbee</a>
+                                                </p>
+                                            </td>
+                                            <td class="col col-price"><p class="price"
+                                                                         th:text="${item.sellingPrice+'元 x '+item.goodsCount}">
+                                                1299元 × 1</p></td>
+                                            <td class="col col-actions">
+                                            </td>
+                                        </tr>
+                                    </th:block>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <th:block th:unless="${#lists.isEmpty(coupons)}">
+                            <div class="order-detail-info">
+                                <h3>可用优惠卷</h3>
+                                <div id="my-coupon">
+                                    <ul>
+                                        <th:block th:each="coupon : ${coupons}">
+                                            <li>
+                                                <a href="javascript:;"
+                                                   th:onclick="">
+                                                    <div class="left-desc">
+                                                        <input type="hidden" th:value="${coupon.couponUserId}">
+                                                        <div class="q-price ">
+                                                            <em>¥</em>
+                                                            <strong th:text="${coupon.discount}">50</strong>
+                                                            <span class="q-limit" data-tips=""
+                                                                  th:text="'满'+${coupon.min}+'元可用'">满1000元可用</span>
+                                                        </div>
+                                                        <div class="q-name" th:text="${coupon.name}">
+                                                            限时满减券
+                                                        </div>
+                                                        <div class="q-desc">
+                                                            <div th:text="${coupon.couponDesc}"
+                                                                 th:title="${coupon.couponDesc}">全场通用
+                                                            </div>
+                                                            <div th:text="'有效期：'+${#dates.format(coupon.endTime, 'yyyy-MM-dd')}">
+                                                                有效期：2020-12-12
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </th:block>
+                                    </ul>
+                                </div>
+                                <div class="actions">
+                                </div>
+                            </div>
+                            </th:block>
+                            <div id="editAddr" class="order-detail-info">
+                                <h3>收货信息</h3>
+                                <table class="info-table">
+                                    <tbody>
+                                    <tr>
+                                        <th>收货地址：</th>
+                                        <td class="user_address_label"
+                                            th:text="${session.newBeeMallUser.address==''?'无':session.newBeeMallUser.address}">
+                                            newbee
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="actions">
+                                    <a class="btn btn-small btn-line-gray J_editAddr"
+                                       href="javascript:openUpdateModal();">修改</a>
+                                </div>
+                            </div>
+                            <div id="editTime" class="order-detail-info">
+                                <h3>支付方式</h3>
+                                <table class="info-table">
+                                    <tbody>
+                                    <tr>
+                                        <th>支付方式：</th>
+                                        <td>在线支付</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="actions">
+                                </div>
+                            </div>
+                            <div class="order-detail-total">
+                                <table class="total-table">
+                                    <tbody>
+                                    <tr>
+                                        <th>优惠卷抵扣：</th>
+                                        <td><span class="num" id="discount">10.00</span>元</td>
+                                    </tr>
+                                    <tr>
+                                        <th>商品总价：</th>
+                                        <td><span class="num" th:text="${priceTotal+'.00'}">1299.00</span>元</td>
+                                    </tr>
+                                    <tr>
+                                        <th>运费：</th>
+                                        <td><span class="num">0</span>元</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="total">应付金额：</th>
+                                        <td class="total"><span class="num" id="priceTotal"
+                                                                th:text="${priceTotal+'.00'}">1299.00</span>元
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="personalInfoModal" tabindex="-1" role="dialog"
+             aria-labelledby="personalInfoModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h6 class="modal-title" id="personalInfoModalLabel">地址修改</h6>
+                    </div>
+                    <div class="modal-body">
+                        <form id="personalInfoForm">
+                            <div class="form-group">
+                                <input type="hidden" id="userId" th:value="${session.newBeeMallUser.userId}">
+                                <label for="address" class="control-label">收货地址:</label>
+                                <input type="text" class="form-control" id="address" name="address"
+                                       placeholder="请输入收货地址" th:value="${session.newBeeMallUser.address}"
+                                       required="true">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" id="isSeckillSettle" th:value="${isSeckillSettle}">
+                        <input type="hidden" id="seckillSuccessId" th:value="${seckillSuccessId}">
+                        <input type="hidden" id="seckillSecretKey" th:value="${seckillSecretKey}">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" id="saveButton">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+
+<div th:replace="mall/footer::footer-fragment"></div>
+
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/mall/js/bootstrap3.js}"></script>
+<script th:inline="javascript"> var _ctx = [[@{/}]]; </script>
+<script type="text/javascript">
+    $('#saveOrder').click(function () {
+        var userAddress = $(".user_address_label").html();
+        if (userAddress == '' || userAddress == '无') {
+            swal("请填写收货信息", {
+                icon: "error",
+            });
+            return;
+        }
+        if (userAddress.trim().length < 10) {
+            swal("请输入正确的收货信息", {
+                icon: "error",
+            });
+            return;
+        }
+        if ($('#isSeckillSettle').val()) {
+            window.location.href = _ctx + 'saveOrder/' + $('#seckillSuccessId').val() + '/' + $('#seckillSecretKey').val();
+        } else {
+            window.location.href = _ctx + 'saveOrder?couponUserId=' + ($('#my-coupon ul li.active input').val() || '');
+        }
+    });
+
+    function openUpdateModal() {
+        $('#personalInfoModal').modal('show');
+    }
+
+    //绑定modal上的保存按钮
+    $('#saveButton').click(function () {
+        var address = $("#address").val();
+        var userId = $("#userId").val();
+        var data = {
+            "userId": userId,
+            "address": address
+        };
+        $.ajax({
+            type: 'POST',//方法类型
+            url: '/personal/updateInfo',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+                if (result.resultCode == 200) {
+                    $('#personalInfoModal').modal('hide');
+                    window.location.reload();
+                } else {
+                    $('#personalInfoModal').modal('hide');
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                }
+            },
+            error: function () {
+                swal('操作失败', {
+                    icon: "error",
+                });
+            }
+        });
+    });
+
+    $('.order-detail-total table tr:first').hide();
+
+    $('#my-coupon ul li').on('click', function (e) {
+        var priceTotal = [[${priceTotal}]];
+        if ($(e.target).closest('li').hasClass('active')) {
+            $(e.target).closest('li').removeClass('active');
+            $('.order-detail-total table tr:first').hide();
+            $('#priceTotal').text(priceTotal)
+            return;
+        }
+        $(e.target).closest('li').siblings().removeClass('active');
+        $(e.target).closest('li').addClass('active')
+        var discount = $('#my-coupon ul li.active div.left-desc .q-price strong').text();
+        $('#discount').text(discount);
+        $('.order-detail-total table tr:first').show();
+        $('#priceTotal').text(parseInt(priceTotal) - parseInt(discount))
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ltd.newbee.mall.dao.NewBeeMallCouponMapper">
+    <resultMap id="BaseResultMap" type="ltd.newbee.mall.entity.NewBeeMallCoupon">
+        <id column="coupon_id" jdbcType="BIGINT" property="couponId"/>
+        <result column="coupon_name" jdbcType="VARCHAR" property="couponName"/>
+        <result column="coupon_desc" jdbcType="VARCHAR" property="couponDesc"/>
+        <result column="coupon_total" jdbcType="INTEGER" property="couponTotal"/>
+        <result column="discount" jdbcType="INTEGER" property="discount"/>
+        <result column="min" jdbcType="INTEGER" property="min"/>
+        <result column="coupon_limit" jdbcType="TINYINT" property="couponLimit"/>
+        <result column="coupon_type" jdbcType="TINYINT" property="couponType"/>
+        <result column="coupon_status" jdbcType="TINYINT" property="couponStatus"/>
+        <result column="goods_type" jdbcType="TINYINT" property="goodsType"/>
+        <result column="goods_value" jdbcType="VARCHAR" property="goodsValue"/>
+        <result column="coupon_code" jdbcType="VARCHAR" property="couponCode"/>
+        <result column="coupon_start_time" jdbcType="TIMESTAMP" property="couponStartTime"/>
+        <result column="coupon_end_time" jdbcType="TIMESTAMP" property="couponEndTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        coupon_id, coupon_name, coupon_desc, coupon_total, discount, min, coupon_limit, coupon_type,
+        coupon_status, goods_type, goods_value, coupon_code, coupon_start_time, coupon_end_time, create_time,
+        update_time, is_deleted
+    </sql>
+
+    <select id="findCouponlList" parameterType="Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_newbee_mall_coupon
+        where is_deleted = 0
+        <if test="couponName != null and couponName != ''">
+            and coupon_name LIKE CONCAT('%',#{couponName},'%')
+        </if>
+        <if test="couponType != null and couponType != ''">
+            and coupon_type = #{couponType}
+        </if>
+        <if test="couponStatus != null and couponStatus != ''">
+            and coupon_status = #{couponStatus}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and DATE_FORMAT(create_time,'%Y-%m-%d') <![CDATA[ >= ]]> DATE_FORMAT(#{startTime},'%Y-%m-%d')
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and DATE_FORMAT(create_time,'%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#{endTime},'%Y-%m-%d')
+        </if>
+        order by create_time desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+    <select id="getTotalCoupons" parameterType="Map" resultType="int">
+        select count(*)
+        from tb_newbee_mall_coupon
+        where is_deleted = 0
+        <if test="couponName != null and couponName != ''">
+            and coupon_name LIKE CONCAT('%',#{couponName},'%')
+        </if>
+        <if test="couponType != null and couponType != ''">
+            and coupon_type = #{couponType}
+        </if>
+        <if test="couponStatus != null and couponStatus != ''">
+            and coupon_status = #{couponStatus}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and DATE_FORMAT(create_time,'%Y-%m-%d') <![CDATA[ >= ]]> DATE_FORMAT(#{startTime},'%Y-%m-%d')
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and DATE_FORMAT(create_time,'%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#{endTime},'%Y-%m-%d')
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_newbee_mall_coupon
+        where coupon_id = #{couponId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from tb_newbee_mall_coupon
+        where coupon_id = #{couponId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="ltd.newbee.mall.entity.NewBeeMallCoupon">
+        insert into tb_newbee_mall_coupon (coupon_id, coupon_name, coupon_desc,
+                                           coupon_total, discount, min,
+                                           coupon_limit, coupon_type, coupon_status,
+                                           goods_type, goods_value, coupon_code,
+                                           coupon_start_time, coupon_end_time, create_time,
+                                           update_time, is_deleted)
+        values (#{couponId,jdbcType=BIGINT}, #{couponName,jdbcType=VARCHAR}, #{couponDesc,jdbcType=VARCHAR},
+                #{couponTotal,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER}, #{min,jdbcType=INTEGER},
+                #{couponLimit,jdbcType=TINYINT}, #{couponType,jdbcType=TINYINT}, #{couponStatus,jdbcType=TINYINT},
+                #{goodsType,jdbcType=TINYINT}, #{goodsValue,jdbcType=VARCHAR}, #{couponCode,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.NewBeeMallCoupon">
+        insert into tb_newbee_mall_coupon
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="couponId != null">
+                coupon_id,
+            </if>
+            <if test="couponName != null">
+                coupon_name,
+            </if>
+            <if test="couponDesc != null">
+                coupon_desc,
+            </if>
+            <if test="couponTotal != null">
+                coupon_total,
+            </if>
+            <if test="discount != null">
+                discount,
+            </if>
+            <if test="min != null">
+                min,
+            </if>
+            <if test="couponLimit != null">
+                coupon_limit,
+            </if>
+            <if test="couponType != null">
+                coupon_type,
+            </if>
+            <if test="couponStatus != null">
+                coupon_status,
+            </if>
+            <if test="goodsType != null">
+                goods_type,
+            </if>
+            <if test="goodsValue != null">
+                goods_value,
+            </if>
+            <if test="couponCode != null">
+                coupon_code,
+            </if>
+            <if test="couponStartTime != null">
+                coupon_start_time,
+            </if>
+            <if test="couponEndTime != null">
+                coupon_end_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="couponId != null">
+                #{couponId,jdbcType=BIGINT},
+            </if>
+            <if test="couponName != null">
+                #{couponName,jdbcType=VARCHAR},
+            </if>
+            <if test="couponDesc != null">
+                #{couponDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="couponTotal != null">
+                #{couponTotal,jdbcType=INTEGER},
+            </if>
+            <if test="discount != null">
+                #{discount,jdbcType=INTEGER},
+            </if>
+            <if test="min != null">
+                #{min,jdbcType=INTEGER},
+            </if>
+            <if test="couponLimit != null">
+                #{couponLimit,jdbcType=TINYINT},
+            </if>
+            <if test="couponType != null">
+                #{couponType,jdbcType=TINYINT},
+            </if>
+            <if test="couponStatus != null">
+                #{couponStatus,jdbcType=TINYINT},
+            </if>
+            <if test="goodsType != null">
+                #{goodsType,jdbcType=TINYINT},
+            </if>
+            <if test="goodsValue != null">
+                #{goodsValue,jdbcType=VARCHAR},
+            </if>
+            <if test="couponCode != null">
+                #{coupon_code,jdbcType=VARCHAR},
+            </if>
+            <if test="couponStartTime != null">
+                #{couponStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="couponEndTime != null">
+                #{couponEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="ltd.newbee.mall.entity.NewBeeMallCoupon">
+        update tb_newbee_mall_coupon
+        <set>
+            <if test="couponName != null">
+                coupon_name = #{couponName,jdbcType=VARCHAR},
+            </if>
+            <if test="couponDesc != null">
+                coupon_desc = #{couponDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="couponTotal != null">
+                coupon_total = #{couponTotal,jdbcType=INTEGER},
+            </if>
+            <if test="discount != null">
+                discount = #{discount,jdbcType=INTEGER},
+            </if>
+            <if test="min != null">
+                min = #{min,jdbcType=INTEGER},
+            </if>
+            <if test="couponLimit != null">
+                coupon_limit = #{couponLimit,jdbcType=TINYINT},
+            </if>
+            <if test="couponType != null">
+                coupon_type = #{couponType,jdbcType=TINYINT},
+            </if>
+            <if test="couponStatus != null">
+                coupon_status = #{couponStatus,jdbcType=TINYINT},
+            </if>
+            <if test="goodsType != null">
+                goods_type = #{goodsType,jdbcType=TINYINT},
+            </if>
+            <if test="goodsValue != null">
+                goods_value = #{goodsValue,jdbcType=VARCHAR},
+            </if>
+            <if test="couponCode != null">
+                coupon_code = #{couponCode,jdbcType=VARCHAR},
+            </if>
+            <if test="couponStartTime != null">
+                coupon_start_time = #{couponStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="couponEndTime != null">
+                coupon_end_time = #{couponEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=TINYINT},
+            </if>
+        </set>
+        where coupon_id = #{couponId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.NewBeeMallCoupon">
+        update tb_newbee_mall_coupon
+        set coupon_name       = #{couponName,jdbcType=VARCHAR},
+            coupon_desc       = #{couponDesc,jdbcType=VARCHAR},
+            coupon_total      = #{couponTotal,jdbcType=INTEGER},
+            discount          = #{discount,jdbcType=INTEGER},
+            min               = #{min,jdbcType=INTEGER},
+            coupon_limit      = #{couponLimit,jdbcType=TINYINT},
+            coupon_type       = #{couponType,jdbcType=TINYINT},
+            coupon_status     = #{couponStatus,jdbcType=TINYINT},
+            goods_type        = #{goodsType,jdbcType=TINYINT},
+            goods_value       = #{goodsValue,jdbcType=VARCHAR},
+            coupon_code       = #{couponCode,jdbcType=VARCHAR},
+            coupon_start_time = #{couponStartTime,jdbcType=TIMESTAMP},
+            coupon_end_time   = #{couponEndTime,jdbcType=TIMESTAMP},
+            create_time       = #{createTime,jdbcType=TIMESTAMP},
+            update_time       = #{updateTime,jdbcType=TIMESTAMP},
+            is_deleted        = #{isDeleted,jdbcType=TINYINT}
+        where coupon_id = #{couponId,jdbcType=BIGINT}
+    </update>
+
+    <update id="deleteBatch">
+        update tb_newbee_mall_coupon
+        set is_deleted=1,update_time=now() where coupon_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="reduceCouponTotal">
+        update tb_newbee_mall_coupon
+        set coupon_total = coupon_total - 1
+        where coupon_id = #{couponId}
+          and coupon_total > 0
+    </update>
+
+    <select id="selectAvailableCoupon" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_newbee_mall_coupon t
+        <where>
+            t.is_deleted = 0
+            AND t.coupon_type = 0
+            AND t.coupon_status = 0
+        </where>
+    </select>
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_newbee_mall_coupon
+        where coupon_id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    <select id="selectAvailableGiveCoupon" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_newbee_mall_coupon
+        where is_deleted = 0 and coupon_type = 1
+        and coupon_start_time <![CDATA[ < ]]> now()
+        and coupon_end_time <![CDATA[ > ]]> now()
+    </select>
+</mapper>

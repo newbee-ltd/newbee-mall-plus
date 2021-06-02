@@ -1,0 +1,144 @@
+.coupons .main {
+    width: 1326px;
+}
+
+.coupon-title {
+    width: 100%;
+    height: 81px;
+    background-color: #f5f5f5;
+    margin-bottom: 24px;
+}
+.coupon-title .text {
+    width: 1326px;
+    height: 81px;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    padding-left: 32px;
+    color: #717066;
+}
+
+.quan-list {
+    width: 1260px;
+    margin: 0 auto;
+}
+
+.quan-list .quan-item {
+    width: 316px;
+    float: left;
+    margin: 2px 28px 28px 2px;
+}
+
+.quan-item {
+    position: relative;
+    height: 192px;
+    width: 243px;
+    padding-right: 65px;
+    border: 1px solid #f1f1f1;
+    background: #fff;
+}
+
+.quan-item .q-type {
+    padding-left: 25px;
+}
+
+.quan-item .q-type {
+    padding: 25px 0 20px 38px;
+}
+
+.quan-item .q-price {
+    display: inline-block;
+    display: block;
+    color: #1baeae;
+}
+
+.quan-item .q-price em {
+    float: left;
+    margin: 13px 0 0;
+    font-family: verdana;
+    font-size: 24px;
+}
+
+.quan-item .q-price strong {
+    float: left;
+    line-height: 50px;
+    margin: 0 10px 0 5px;
+    font-size: 40px;
+    font-family: arial;
+    _display: inline;
+}
+
+.quan-item .q-price .txt {
+    float: left;
+    position: relative;
+    line-height: 22px;
+    padding-top: 22px;
+}
+
+.quan-item .limit {
+    width: 250px;
+    height: 22px;
+    line-height: 22px;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.quan-item .limit .t-span{
+    color: #666;
+}
+
+.quan-item .q-range {
+    line-height: 22px;
+    color: #999;
+}
+
+.quan-item .q-range {
+    line-height: 22px;
+    color: #999;
+}
+
+.quan-item .q-opbtns {
+    padding-left: 36px;
+    padding-right: 24px;
+}
+
+.quan-item .q-opbtns {
+    padding-left: 36px;
+    padding-right: 24px;
+}
+
+.quan-d-item .q-opbtns {
+    background: #1baeae;
+}
+
+.quan-item .q-opbtns {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 144px;
+    padding: 48px 22px 0;
+    line-height: 24px;
+    background: #1baeae;
+    color: #fff;
+    font-size: 14px;
+}
+
+.quan-item .q-opbtns a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+}
+
+.quan-item .q-opbtns .semi-circle {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 192px;
+    background: url(https://misc.360buyimg.com/user/quan/3.0.0/css/i/semi-circle.png) repeat-y;
+}

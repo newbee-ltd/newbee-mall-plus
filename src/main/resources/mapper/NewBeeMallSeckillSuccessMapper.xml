@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ltd.newbee.mall.dao.NewBeeMallSeckillSuccessMapper">
+    <resultMap id="BaseResultMap" type="ltd.newbee.mall.entity.NewBeeMallSeckillSuccess">
+        <id column="sec_id" jdbcType="INTEGER" property="secId"/>
+        <result column="seckill_id" jdbcType="INTEGER" property="seckillId"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="state" jdbcType="TINYINT" property="state"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        sec_id, seckill_id, user_id, state, create_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_newbee_mall_seckill_success
+        where sec_id = #{secId,jdbcType=BIGINT}
+    </select>
+    <select id="getSeckillSuccessByUserIdAndSeckillId"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_newbee_mall_seckill_success
+        where seckill_id = #{seckillId}
+        and user_id = #{userId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from tb_newbee_mall_seckill_success
+        where sec_id = #{secId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="ltd.newbee.mall.entity.NewBeeMallSeckillSuccess">
+        insert into tb_newbee_mall_seckill_success (sec_id, seckill_id, user_id,
+                                                    state, create_time)
+        values (#{secId,jdbcType=BIGINT}, #{seckillId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT},
+                #{state,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.NewBeeMallSeckillSuccess">
+        insert into tb_newbee_mall_seckill_success
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="secId != null">
+                sec_id,
+            </if>
+            <if test="seckillId != null">
+                seckill_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="secId != null">
+                #{secId,jdbcType=BIGINT},
+            </if>
+            <if test="seckillId != null">
+                #{seckillId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="ltd.newbee.mall.entity.NewBeeMallSeckillSuccess">
+        update tb_newbee_mall_seckill_success
+        <set>
+            <if test="seckillId != null">
+                seckill_id = #{seckillId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where sec_id = #{secId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.NewBeeMallSeckillSuccess">
+        update tb_newbee_mall_seckill_success
+        set seckill_id  = #{seckillId,jdbcType=BIGINT},
+            user_id     = #{userId,jdbcType=BIGINT},
+            state       = #{state,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        where sec_id = #{secId,jdbcType=BIGINT}
+    </update>
+</mapper>

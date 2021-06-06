@@ -14,13 +14,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import redis.clients.jedis.JedisPoolConfig;
 
 import java.time.Duration;
 
@@ -28,40 +24,13 @@ import java.time.Duration;
 @Configuration
 public class CacheConfig extends CachingConfigurerSupport {
 
-    @Value("${spring.redis.host}")
-    private String host = "127.0.0.1";
-
-    @Value("${spring.redis.port}")
-    private int port = 6379;
-
-    @Value("${spring.redis.password}")
-    private String password = "";
-
-    // 0 - never expire
     @Value("${spring.redis.expire}")
     private int expire = 0;
 
-    //数据库位置
-    @Value("${spring.redis.databaseIndex}")
-    private int databaseIndex = 0;
-
     @Bean
-    public JedisConnectionFactory jedisConnectionFactory(JedisPoolConfig jedisPoolConfig) {
-        JedisClientConfiguration jedisClientConfiguration = JedisClientConfiguration
-                .builder()
-                .usePooling()
-                .poolConfig(jedisPoolConfig)
-                .build();
-        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration(host, port);
-        config.setDatabase(databaseIndex);
-        config.setPassword(password);
-        return new JedisConnectionFactory(config,jedisClientConfiguration);
-    }
-
-    @Bean
-    public RedisTemplate<Object, Object> redisTemplate(JedisConnectionFactory jedisConnectionFactory) {
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(jedisConnectionFactory);
+        redisTemplate.setConnectionFactory(connectionFactory);
         redisTemplate.setKeySerializer(keySerializer());
         redisTemplate.setValueSerializer(valueSerializer());
         redisTemplate.afterPropertiesSet();

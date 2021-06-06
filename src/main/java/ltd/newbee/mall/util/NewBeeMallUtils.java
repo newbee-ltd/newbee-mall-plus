@@ -1,6 +1,6 @@
 package ltd.newbee.mall.util;
 
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.net.URI;
 

@@ -12,7 +12,7 @@ import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.entity.AdminUser;
 import ltd.newbee.mall.service.AdminUserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

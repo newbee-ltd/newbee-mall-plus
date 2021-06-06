@@ -3,7 +3,7 @@ spring:
   datasource:
     name: newbee-mall-datasource
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/newbee_mall_plus_db?useUnicode=true&serverTimezone=Asia/Shanghai&characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true&useAffectedRows=true
+    url: jdbc:mysql://127.0.0.1:3306/newbee_mall_plus_db?useUnicode=true&serverTimezone=Asia/Shanghai&characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true&useAffectedRows=true
     username: root
     password: 123456
     hikari:
@@ -18,14 +18,8 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
-    timeout: 5000
     password:
-    databaseIndex: 3
+    timeout: 5000ms
+    connect-timeout: 5000ms
     expire: 400
-    maxTotal: 50000
-    jedis:
-      pool:
-        max-active: 50
-        max-idle: 100
-        min-idle: 10
-        max-wait: 2000
+    client-type: lettuce

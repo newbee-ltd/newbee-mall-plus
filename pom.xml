@@ -128,8 +128,37 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <!--配置基本镜像-->
+                    <from>
+                        <imnewbee-mall-plusage>azul/zulu-openjdk-centos:8u292</imnewbee-mall-plusage>
+                    </from>
+                    <!--配置最终推送的地址，仓库名，镜像名-->
+                    <to>
+                        <image>registry.hub.docker.com/wayn111/newbeeplus</image>
+                    </to>
+                </configuration>
+
+
+                <!--绑定到maven lifecicle-->
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
+
     <!--  @author 13
           @qq交流群 791509631
           @email 2449207463@qq.com

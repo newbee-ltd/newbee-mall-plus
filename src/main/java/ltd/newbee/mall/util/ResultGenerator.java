@@ -1,7 +1,7 @@
 package ltd.newbee.mall.util;
 
 import ltd.newbee.mall.common.ServiceResultEnum;
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 响应结果生成工具

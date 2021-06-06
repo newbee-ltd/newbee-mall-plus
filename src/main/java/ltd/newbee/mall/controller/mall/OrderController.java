@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -71,7 +71,7 @@ public class OrderController {
     public String orderListPage(@RequestParam Map<String, Object> params, HttpServletRequest request, HttpSession httpSession) {
         NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         params.put("userId", user.getUserId());
-        if (StringUtils.isEmpty(params.get("page"))) {
+        if (StringUtils.isEmpty((CharSequence) params.get("page"))) {
             params.put("page", 1);
         }
         params.put("limit", Constants.ORDER_SEARCH_PAGE_LIMIT);

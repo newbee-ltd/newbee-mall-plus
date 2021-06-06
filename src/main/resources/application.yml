@@ -43,6 +43,6 @@ alipay:
   gateway: https://openapi.alipaydev.com/gateway.do
   charset: UTF-8
   format: json
-  #  log_path: /opt/newbee-mall-plus/log
-  log_path: D://newbee-mall-plus//log
+  #  log-path: /opt/newbee-mall-plus/log
+  log-path: D://newbee-mall-plus//log
   signtype: RSA2

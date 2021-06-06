@@ -136,12 +136,23 @@
                 <configuration>
                     <!--配置基本镜像-->
                     <from>
-                        <imnewbee-mall-plusage>azul/zulu-openjdk-centos:8u292</imnewbee-mall-plusage>
+                        <image>azul/zulu-openjdk-alpine:8u292</image>
                     </from>
                     <!--配置最终推送的地址，仓库名，镜像名-->
                     <to>
                         <image>registry.hub.docker.com/wayn111/newbeeplus</image>
+                        <tags>
+                            <tag>2.0.1</tag>
+                            <tag>latest</tag>
+                        </tags>
                     </to>
+                    <container>
+                        <jvmFlags>
+                            <jvmFlag>-Xms512m</jvmFlag>
+                            <jvmFlag>-Xmx512m</jvmFlag>
+                        </jvmFlags>
+                        <format>OCI</format>
+                    </container>
                 </configuration>
 
 

@@ -24,6 +24,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <aliyun-docker-namespace>填写你的阿里云docker容器命名空间，容器设置：https://cr.console.aliyun.com/cn-shanghai/instances</aliyun-docker-namespace>
     </properties>
 
     <dependencies>
@@ -136,22 +137,26 @@
                 <configuration>
                     <!--配置基本镜像-->
                     <from>
-                        <image>azul/zulu-openjdk-alpine:8u292</image>
+                        <image>azul/zulu-openjdk-alpine:8</image>
                     </from>
                     <!--配置最终推送的地址，仓库名，镜像名-->
                     <to>
-                        <image>registry.hub.docker.com/wayn111/newbeeplus</image>
+                        <image>registry.cn-shanghai.aliyuncs.com/${aliyun-docker-namespace}/${project.artifactId}</image>
                         <tags>
-                            <tag>2.0.1</tag>
+                            <tag>${project.version}</tag>
                             <tag>latest</tag>
                         </tags>
+                        <auth>
+                            <username>填写你的阿里云docker容器账号（邮箱）</username>
+                            <password>填写你的阿里云docker容器密码（固定密码），密码设置：https://cr.console.aliyun.com/cn-shanghai/instance/credentials</password>
+                        </auth>
                     </to>
                     <container>
+                        <mainClass>ltd.newbee.mall.NewBeeMallPlusApplication</mainClass>
                         <jvmFlags>
                             <jvmFlag>-Xms512m</jvmFlag>
                             <jvmFlag>-Xmx512m</jvmFlag>
                         </jvmFlags>
-                        <format>OCI</format>
                     </container>
                 </configuration>
 
@@ -169,6 +174,30 @@
 
         </plugins>
     </build>
+    <repositories>
+        <repository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
     <!--  @author 13
           @qq交流群 791509631

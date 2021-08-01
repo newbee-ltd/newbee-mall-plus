@@ -102,7 +102,7 @@ public class NewBeeMallSeckillServiceImpl implements NewBeeMallSeckillService {
         }
         // 检查虚拟库存
         Integer stock = redisCache.getCacheObject(Constants.SECKILL_GOODS_STOCK_KEY + seckillId);
-        if (stock < 0) {
+        if (stock == null || stock < 0) {
             return new ExposerVO(SeckillStatusEnum.STARTED_SHORTAGE_STOCK, seckillId);
         }
         // 加密

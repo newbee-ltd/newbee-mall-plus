@@ -68,7 +68,7 @@ public class Constants {
     /**
      * 秒杀商品列表页面缓存
      */
-    public static final String SECKILL_GOODS_LIST = "seckill_goods_list:";
+    public static final String SECKILL_GOODS_LIST = "seckill_goods_list";
 
     /**
      * 秒杀成功的用户set缓存

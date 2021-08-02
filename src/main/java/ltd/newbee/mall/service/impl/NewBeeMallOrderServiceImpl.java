@@ -253,8 +253,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
             NewBeeMallException.fail(ServiceResultEnum.ORDER_PRICE_ERROR.getResult());
         }
         newBeeMallOrder.setTotalPrice(priceTotal);
-        // todo 订单body字段，用来作为生成支付单描述信息，暂时未接入第三方支付接口，故该字段暂时设为空字符串
-        String extraInfo = "";
+        String extraInfo = "newbeemall-plus支付宝沙箱支付";
         newBeeMallOrder.setExtraInfo(extraInfo);
         // 生成订单项并保存订单项纪录
         if (newBeeMallOrderMapper.insertSelective(newBeeMallOrder) <= 0) {

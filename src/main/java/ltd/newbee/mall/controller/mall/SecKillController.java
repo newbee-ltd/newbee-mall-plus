@@ -27,6 +27,7 @@ import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Controller
@@ -67,7 +68,7 @@ public class SecKillController {
     @PostMapping("/seckill/{seckillId}/checkStock")
     public Result seckillCheckStock(@PathVariable Long seckillId) {
         Integer stock = redisCache.getCacheObject(Constants.SECKILL_GOODS_STOCK_KEY + seckillId);
-        if (stock < 0) {
+        if (stock == null || stock < 0) {
             return ResultGenerator.genFailResult("秒杀商品库存不足");
         }
         // redis虚拟库存大于等于0时，可以执行秒杀
@@ -147,6 +148,7 @@ public class SecKillController {
                 newBeeMallSeckillGoodsVO.setSeckillEndTime(formatEnd);
                 return newBeeMallSeckillGoodsVO;
             }).filter(newBeeMallSeckillGoodsVO -> newBeeMallSeckillGoodsVO != null).collect(Collectors.toList());
+            redisCache.setCacheObject(Constants.SECKILL_GOODS_LIST, newBeeMallSeckillGoodsVOS, 60 * 60 * 100, TimeUnit.SECONDS);
         }
         return ResultGenerator.genSuccessResult(newBeeMallSeckillGoodsVOS);
     }

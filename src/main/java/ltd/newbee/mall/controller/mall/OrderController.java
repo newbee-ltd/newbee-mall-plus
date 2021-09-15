@@ -154,7 +154,7 @@ public class OrderController {
                     alipayConfig.getSigntype());
             // 创建API对应的request
             AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
-            // 在公共参数中设置回跳和通知地址
+            // 在公共参数中设置回跳和通知地址,通知地址需要公网可访问
             String url = ProjectConfig.getServerUrl() + request.getContextPath();
             alipayRequest.setReturnUrl(url + "/returnOrders/" + newBeeMallOrder.getOrderNo() + "/" + userId);
             alipayRequest.setNotifyUrl(url + "/paySuccess?payType=1&orderNo=" + newBeeMallOrder.getOrderNo());

@@ -16,7 +16,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.0</version>
+        <version>2.5.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -156,10 +156,13 @@
                         <jvmFlags>
                             <jvmFlag>-Xms512m</jvmFlag>
                             <jvmFlag>-Xmx512m</jvmFlag>
+                            <!-- 记录内存溢出时的推展情况-->
+                            <jvmFlag>-XX:+HeapDumpOnOutOfMemoryError</jvmFlag>
+                            <!-- 内存溢出文件位置-->
+                            <jvmFlag>-XX:HeapDumpPath=./</jvmFlag>
                         </jvmFlags>
                     </container>
                 </configuration>
-
 
                 <!--绑定到maven lifecicle-->
                 <executions>

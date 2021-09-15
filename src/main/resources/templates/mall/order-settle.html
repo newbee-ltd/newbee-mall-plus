@@ -86,42 +86,42 @@
                                 </table>
                             </div>
                             <th:block th:unless="${#lists.isEmpty(coupons)}">
-                            <div class="order-detail-info">
-                                <h3>可用优惠卷</h3>
-                                <div id="my-coupon">
-                                    <ul>
-                                        <th:block th:each="coupon : ${coupons}">
-                                            <li>
-                                                <a href="javascript:;"
-                                                   th:onclick="">
-                                                    <div class="left-desc">
-                                                        <input type="hidden" th:value="${coupon.couponUserId}">
-                                                        <div class="q-price ">
-                                                            <em>¥</em>
-                                                            <strong th:text="${coupon.discount}">50</strong>
-                                                            <span class="q-limit" data-tips=""
-                                                                  th:text="'满'+${coupon.min}+'元可用'">满1000元可用</span>
-                                                        </div>
-                                                        <div class="q-name" th:text="${coupon.name}">
-                                                            限时满减券
-                                                        </div>
-                                                        <div class="q-desc">
-                                                            <div th:text="${coupon.couponDesc}"
-                                                                 th:title="${coupon.couponDesc}">全场通用
+                                <div class="order-detail-info">
+                                    <h3>可用优惠卷</h3>
+                                    <div id="my-coupon">
+                                        <ul>
+                                            <th:block th:each="coupon : ${coupons}">
+                                                <li>
+                                                    <a href="javascript:;"
+                                                       th:onclick="">
+                                                        <div class="left-desc">
+                                                            <input type="hidden" th:value="${coupon.couponUserId}">
+                                                            <div class="q-price ">
+                                                                <em>¥</em>
+                                                                <strong th:text="${coupon.discount}">50</strong>
+                                                                <span class="q-limit" data-tips=""
+                                                                      th:text="'满'+${coupon.min}+'元可用'">满1000元可用</span>
                                                             </div>
-                                                            <div th:text="'有效期：'+${#dates.format(coupon.endTime, 'yyyy-MM-dd')}">
-                                                                有效期：2020-12-12
+                                                            <div class="q-name" th:text="${coupon.name}">
+                                                                限时满减券
+                                                            </div>
+                                                            <div class="q-desc">
+                                                                <div th:text="${coupon.couponDesc}"
+                                                                     th:title="${coupon.couponDesc}">全场通用
+                                                                </div>
+                                                                <div th:text="'有效期：'+${#dates.format(coupon.endTime, 'yyyy-MM-dd')}">
+                                                                    有效期：2020-12-12
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                        </th:block>
-                                    </ul>
+                                                    </a>
+                                                </li>
+                                            </th:block>
+                                        </ul>
+                                    </div>
+                                    <div class="actions">
+                                    </div>
                                 </div>
-                                <div class="actions">
-                                </div>
-                            </div>
                             </th:block>
                             <div id="editAddr" class="order-detail-info">
                                 <h3>收货信息</h3>
@@ -297,9 +297,18 @@
         $(e.target).closest('li').siblings().removeClass('active');
         $(e.target).closest('li').addClass('active')
         var discount = $('#my-coupon ul li.active div.left-desc .q-price strong').text();
+        // 检查订单价格
+        var finalTotal = parseInt(priceTotal) - parseInt(discount);
+        if (finalTotal <= 0) {
+            $(e.target).closest('li').removeClass('active');
+            swal('订单价格不能小于等于0元！', {
+                icon: "error",
+            });
+            return;
+        }
         $('#discount').text(discount);
         $('.order-detail-total table tr:first').show();
-        $('#priceTotal').text(parseInt(priceTotal) - parseInt(discount))
+        $('#priceTotal').text(finalTotal);
     })
 </script>
 </body>

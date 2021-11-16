@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
     <groupId>ltd.newbee.mall</groupId>
     <artifactId>newbee-mall-plus</artifactId>
-    <version>2.0.1</version>
+    <version>2.0.2</version>
     <name>newbee-mall-plus</name>
     <description>新蜂商城升级版本</description>
 
@@ -136,7 +136,7 @@
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.1.4</version>
                 <configuration>
                     <!--配置基本镜像-->
                     <from>
@@ -205,6 +205,26 @@
         </pluginRepository>
     </pluginRepositories>
 
+
+    <profiles>
+        <profile>
+            <!-- 开发 -->
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <activatedProperties>dev</activatedProperties>
+            </properties>
+        </profile>
+        <profile>
+            <!-- 生产 -->
+            <id>prod</id>
+            <properties>
+                <activatedProperties>prod</activatedProperties>
+            </properties>
+        </profile>
+    </profiles>
     <!--  @author 13
           @qq交流群 791509631
           @email 2449207463@qq.com

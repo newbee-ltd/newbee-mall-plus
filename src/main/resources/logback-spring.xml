@@ -2,6 +2,7 @@
 <configuration>
     <!-- 日志存放路径 -->
     <property name="log.path" value="./logs"/>
+
     <!-- 日志输出格式 -->
     <property name="log.pattern"
               value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - [%method,%line] - %msg%n"/>
@@ -21,7 +22,7 @@
             <!-- 日志文件名格式 -->
             <fileNamePattern>${log.path}/mall-info.%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- 日志最大的历史 100天 -->
-            <maxHistory>100</maxHistory>
+            <maxHistory>10</maxHistory>
         </rollingPolicy>
         <encoder>
             <pattern>${log.pattern}</pattern>
@@ -43,7 +44,7 @@
             <!-- 日志文件名格式 -->
             <fileNamePattern>${log.path}/mall-error.%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- 日志最大的历史 100天 -->
-            <maxHistory>100</maxHistory>
+            <maxHistory>10</maxHistory>
         </rollingPolicy>
         <encoder>
             <pattern>${log.pattern}</pattern>
@@ -59,15 +60,15 @@
     </appender>
 
     <!-- 系统模块日志级别控制  -->
-    <logger name="ltd.newbee.mall" level="debug"/>
+    <logger name="ltd.newbee.mall" level="info"/>
     <!-- Spring日志级别控制  -->
     <logger name="org.springframework" level="error"/>
 
     <!--系统操作日志-->
     <root level="info">
+        <appender-ref ref="console"/>
         <appender-ref ref="mall_info"/>
         <appender-ref ref="mall_error"/>
-        <appender-ref ref="console"/>
     </root>
 
 </configuration>

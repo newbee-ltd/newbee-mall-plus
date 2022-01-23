@@ -40,7 +40,7 @@
                         <input class="login-info-input verify-code" type="text" name="verifyCode"
                                placeholder="请输入验证码" id="verifyCode"/>
                         <img alt="单击图片刷新！" style="top: 16px;position: relative;" th:src="@{/common/mall/kaptcha}"
-                             onclick="this.src='/common/mall/kaptcha?d='+new Date()*1">
+                             onclick="this.src='/common/mall/kaptcha?d='+new Date()*1" id="kaptcha">
                     </div>
                 </div>
                 <div class="login_submit">
@@ -92,8 +92,8 @@
                     swal(result.message, {
                         icon: "error",
                     });
+                    $('#kaptcha').trigger('click');
                 }
-                ;
             },
             error: function () {
                 swal("操作失败", {

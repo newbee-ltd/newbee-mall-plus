@@ -9,6 +9,7 @@
 package ltd.newbee.mall.controller.mall;
 
 import ltd.newbee.mall.common.Constants;
+import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.NewBeeMallMyCouponVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallShoppingCartItemVO;
@@ -48,14 +49,14 @@ public class ShoppingCartController {
             //购物项总数
             itemsTotal = myShoppingCartItems.stream().mapToInt(NewBeeMallShoppingCartItemVO::getGoodsCount).sum();
             if (itemsTotal < 1) {
-                return "error/error_5xx";
+                NewBeeMallException.fail("购物项不能为空");
             }
             //总价
             for (NewBeeMallShoppingCartItemVO newBeeMallShoppingCartItemVO : myShoppingCartItems) {
                 priceTotal += newBeeMallShoppingCartItemVO.getGoodsCount() * newBeeMallShoppingCartItemVO.getSellingPrice();
             }
             if (priceTotal < 1) {
-                return "error/error_5xx";
+                NewBeeMallException.fail("购物项价格异常");
             }
         }
         request.setAttribute("itemsTotal", itemsTotal);
@@ -123,7 +124,7 @@ public class ShoppingCartController {
                 priceTotal += newBeeMallShoppingCartItemVO.getGoodsCount() * newBeeMallShoppingCartItemVO.getSellingPrice();
             }
             if (priceTotal < 1) {
-                return "error/error_5xx";
+                NewBeeMallException.fail("购物项价格异常");
             }
         }
         List<NewBeeMallMyCouponVO> myCouponVOS = newBeeMallCouponService.selectOrderCanUseCoupons(myShoppingCartItems, priceTotal, user.getUserId());

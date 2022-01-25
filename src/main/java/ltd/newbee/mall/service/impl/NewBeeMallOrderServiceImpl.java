@@ -338,16 +338,16 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     public NewBeeMallOrderDetailVO getOrderDetailByOrderNo(String orderNo, Long userId) {
         NewBeeMallOrder newBeeMallOrder = newBeeMallOrderMapper.selectByOrderNo(orderNo);
         if (newBeeMallOrder == null) {
-            return null;
+            NewBeeMallException.fail(ServiceResultEnum.ORDER_NOT_EXIST_ERROR.getResult());
         }
-        // 验证是否是当前userId下的订单，否则报错
+        //验证是否是当前userId下的订单，否则报错
         if (!userId.equals(newBeeMallOrder.getUserId())) {
             NewBeeMallException.fail(ServiceResultEnum.NO_PERMISSION_ERROR.getResult());
         }
         List<NewBeeMallOrderItem> orderItems = newBeeMallOrderItemMapper.selectByOrderId(newBeeMallOrder.getOrderId());
-        // 获取订单项数据
+        //获取订单项数据
         if (CollectionUtils.isEmpty(orderItems)) {
-            return null;
+            NewBeeMallException.fail(ServiceResultEnum.ORDER_ITEM_NOT_EXIST_ERROR.getResult());
         }
         List<NewBeeMallOrderItemVO> newBeeMallOrderItemVOS = BeanUtil.copyList(orderItems, NewBeeMallOrderItemVO.class);
         NewBeeMallOrderDetailVO newBeeMallOrderDetailVO = new NewBeeMallOrderDetailVO();
@@ -355,11 +355,6 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
         newBeeMallOrderDetailVO.setOrderStatusString(NewBeeMallOrderStatusEnum.getNewBeeMallOrderStatusEnumByStatus(newBeeMallOrderDetailVO.getOrderStatus()).getName());
         newBeeMallOrderDetailVO.setPayTypeString(PayTypeEnum.getPayTypeEnumByType(newBeeMallOrderDetailVO.getPayType()).getName());
         newBeeMallOrderDetailVO.setNewBeeMallOrderItemVOS(newBeeMallOrderItemVOS);
-        NewBeeMallUserCouponRecord newBeeMallUserCouponRecord = newBeeMallUserCouponRecordMapper.getUserCouponByOrderId(newBeeMallOrder.getOrderId());
-        if (newBeeMallUserCouponRecord != null) {
-            NewBeeMallCoupon newBeeMallCoupon = newBeeMallCouponMapper.selectByPrimaryKey(newBeeMallUserCouponRecord.getCouponId());
-            newBeeMallOrderDetailVO.setDiscount(newBeeMallCoupon.getDiscount());
-        }
         return newBeeMallOrderDetailVO;
     }
 

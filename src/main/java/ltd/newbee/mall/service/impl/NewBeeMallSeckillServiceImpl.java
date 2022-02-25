@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 public class NewBeeMallSeckillServiceImpl implements NewBeeMallSeckillService {
 
     // 使用令牌桶RateLimiter 限流
-    private static final RateLimiter rateLimiter = RateLimiter.create(10000);
+    private static final RateLimiter rateLimiter = RateLimiter.create(100);
 
     @Autowired
     private NewBeeMallSeckillMapper newBeeMallSeckillMapper;

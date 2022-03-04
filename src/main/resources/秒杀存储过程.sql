@@ -1,3 +1,9 @@
+-- 查看名称为execute_seckill的存储过程
+show procedure status where Name='execute_seckill';
+
+-- 删除名称为execute_seckill的存储过程
+drop procedure if exists execute_seckill;
+
 -- 创建名称为execute_seckill的存储过程
 CREATE PROCEDURE `execute_seckill`(IN v_seckill_id bigint, IN v_user_id BIGINT,
                                    IN v_kill_time TIMESTAMP, OUT r_result INT)
@@ -45,9 +51,3 @@ r_result = 1;
 END IF;
 END IF;
 END;
-
--- 查看名称为execute_seckill的存储过程
-show procedure status where Name='execute_seckill';
-
--- 删除名称为execute_seckill的存储过程
-drop procedure if exists execute_seckill;

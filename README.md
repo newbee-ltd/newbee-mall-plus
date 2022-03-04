@@ -33,6 +33,34 @@ Spring Boot 2.X 及相关技术栈开发。
 
 ![](https://raw.githubusercontent.com/newbee-ltd/newbee-mall-vue-app/master/static-files/newbee-mall.png)
 
+## 开发部署
+
+```
+# 1. 克隆项目
+
+# 2. 导入项目依赖
+将newbee-mall-plus目录用idea打开，导入maven依赖
+
+# 3. 安装Mysql8.0+、Redis3.0+、Jdk8+、Maven3.5+
+
+# 4. 导入sql文件
+在项目根目录下sql文件夹下，找到`newbee_mall_plus_schema.sql`、`秒杀存储过程.sql`文件，新建mysql数据库newbee_mall_plus_db，导入其中
+
+# 5. 解压项目图片
+将项目根目录下upload.zip文件加压缩到D盘upload文件夹中，eg:D:\\upload
+
+# 6. 修改Mysql、Redis连接配置
+修改`application-dev.yml`文件中数据连接配置相关信息
+
+# 7. 启动项目
+找到`NewBeeMallPlusApplication`文件，右键`run AdminApplication`，启动项目
+
+# 8. 访问
+打开浏览器输入：http://localhost:28079/index.html
+```
+
+------
+
 **新蜂商城有两个仓库：**
 
 - [新蜂商城 newbee-mall](https://github.com/newbee-ltd/newbee-mall)

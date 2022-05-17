@@ -16,7 +16,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.4</version>
+        <version>2.6.7</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -96,7 +96,7 @@
         <dependency>
             <groupId>com.alipay.sdk</groupId>
             <artifactId>alipay-sdk-java</artifactId>
-            <version>4.22.32.ALL</version>
+            <version>4.23.11.ALL</version>
         </dependency>
 
         <dependency>
@@ -115,14 +115,14 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.79</version>
+            <version>1.2.80</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>31.0.1-jre</version>
+            <version>31.1-jre</version>
         </dependency>
     </dependencies>
 
@@ -140,7 +140,7 @@
                 <configuration>
                     <!--配置基本镜像-->
                     <from>
-                        <image>adoptopenjdk:8-jre</image>
+                        <image>adoptopenjdk/openjdk8-openj9</image>
                     </from>
                     <!--配置最终推送的地址，仓库名，镜像名-->
                     <to>

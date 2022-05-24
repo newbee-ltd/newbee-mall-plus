@@ -115,6 +115,9 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
         List<NewBeeMallCouponVO> couponVOS = new ArrayList<>();
         for (NewBeeMallUserCouponRecord couponUser : coupons) {
             NewBeeMallCoupon newBeeMallCoupon = newBeeMallCouponMapper.selectByPrimaryKey(couponUser.getCouponId());
+            if (newBeeMallCoupon == null) {
+                continue;
+            }
             NewBeeMallCouponVO newBeeMallCouponVO = new NewBeeMallCouponVO();
             BeanUtil.copyProperties(newBeeMallCoupon, newBeeMallCouponVO);
             newBeeMallCouponVO.setCouponUserId(couponUser.getCouponUserId());
@@ -130,6 +133,7 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
         List<NewBeeMallMyCouponVO> myCouponVOS = BeanUtil.copyList(couponUsers, NewBeeMallMyCouponVO.class);
         List<Long> couponIds = couponUsers.stream().map(NewBeeMallUserCouponRecord::getCouponId).collect(Collectors.toList());
         if (!couponIds.isEmpty()) {
+            ZoneId zone = ZoneId.systemDefault();
             List<NewBeeMallCoupon> coupons = newBeeMallCouponMapper.selectByIds(couponIds);
             for (NewBeeMallCoupon coupon : coupons) {
                 for (NewBeeMallMyCouponVO myCouponVO : myCouponVOS) {
@@ -140,13 +144,23 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
                         myCouponVO.setMin(coupon.getMin());
                         myCouponVO.setGoodsType(coupon.getGoodsType());
                         myCouponVO.setGoodsValue(coupon.getGoodsValue());
-                        ZonedDateTime zonedDateTime = coupon.getCouponEndTime().atStartOfDay(ZoneId.systemDefault());
-                        myCouponVO.setEndTime(Date.from(zonedDateTime.toInstant()));
+                        ZonedDateTime startZonedDateTime = coupon.getCouponStartTime().atStartOfDay(zone);
+                        ZonedDateTime endZonedDateTime = coupon.getCouponEndTime().atStartOfDay(zone);
+                        myCouponVO.setStartTime(Date.from(startZonedDateTime.toInstant()));
+                        myCouponVO.setEndTime(Date.from(endZonedDateTime.toInstant()));
                     }
                 }
             }
         }
+        long nowTime = System.currentTimeMillis();
         return myCouponVOS.stream().filter(item -> {
+            // 判断有效期
+            Date startTime = item.getStartTime();
+            Date endTime = item.getEndTime();
+            if (startTime == null || endTime == null || nowTime < startTime.getTime() || nowTime > endTime.getTime()) {
+                return false;
+            }
+            // 判断使用条件
             boolean b = false;
             if (item.getMin() <= priceTotal) {
                 if (item.getGoodsType() == 1) { // 指定分类可用

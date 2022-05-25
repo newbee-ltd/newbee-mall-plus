@@ -99,7 +99,7 @@
     //绑定modal上的保存按钮
     $('#saveButton').click(function () {
         var address = $("#address").val();
-        if (address.trim().length < 10) {
+        if (address.trim().length < 6) {
             swal("请输入正确的收货信息", {
                 icon: "error",
             });

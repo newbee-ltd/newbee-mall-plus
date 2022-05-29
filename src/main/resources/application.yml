@@ -12,6 +12,9 @@ server:
     threads:
       io: 16
       worker: 256
+  servlet:
+    session:
+      tracking-modes: cookie
 
 # 项目全局配置
 project:

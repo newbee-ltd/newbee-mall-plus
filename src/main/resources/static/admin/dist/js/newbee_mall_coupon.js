@@ -5,7 +5,7 @@ $(function () {
         viewrecords: true,
         colModel: [
             {label: 'id', name: 'couponId', index: 'couponId', key: true, hidden: true},
-            {label: '优惠卷名称', name: 'couponName', index: 'couponName'},
+            {label: '优惠券名称', name: 'couponName', index: 'couponName'},
             {label: '数量', name: 'couponTotal', index: 'couponTotal', width: '80px', formatter: totalFormatter},
             {label: '优惠金额', name: 'discount', index: 'discount', width: '90px'},
             {label: '最低消费', name: 'min', index: 'min', width: '100px'},
@@ -52,11 +52,11 @@ $(function () {
 
     function typeFormatter(cellvalue) {
         if (cellvalue == 0) {
-            return "通用卷";
+            return "通用券";
         } else if (cellvalue == 1) {
-            return "注册用卷";
+            return "注册用券";
         } else {
-            return "优惠码兑换卷";
+            return "优惠码兑换券";
         }
     }
 
@@ -150,13 +150,13 @@ function couponAdd() {
     $('[name="couponType"]:eq(0)').attr("checked", true).parent().addClass("active");
     $('[name="couponStatus"]:eq(0)').attr("checked", true).parent().addClass("active");
     $('[name="goodsType"]:eq(0)').attr("checked", true).parent().addClass("active");
-    $('.modal-title').html('优惠卷添加');
+    $('.modal-title').html('优惠券添加');
     $('#couponModal').modal('show');
 }
 
 function couponEdit() {
     reset();
-    $('.modal-title').html('优惠卷修改');
+    $('.modal-title').html('优惠券修改');
     var id = getSelectedRow();
     if (id == null) {
         return;
@@ -241,12 +241,12 @@ $('#saveButton').click(function () {
     });
     if (isNull(form.couponName)) {
         $('#edit-error-msg').css("display", "block");
-        $('#edit-error-msg').html("请输入优惠卷名称！");
+        $('#edit-error-msg').html("请输入优惠券名称！");
         return;
     }
     if (isNull(form.couponTotal) || form.couponTotal < 0) {
         $('#edit-error-msg').css("display", "block");
-        $('#edit-error-msg').html("请输入优惠卷数量且不能小于0！");
+        $('#edit-error-msg').html("请输入优惠券数量且不能小于0！");
         return;
     }
     if (isNull(form.discount) || form.discount < 0) {
@@ -261,12 +261,12 @@ $('#saveButton').click(function () {
     }
     if (isNull(form.couponStartTime) || form.couponStartTime < 0) {
         $('#edit-error-msg').css("display", "block");
-        $('#edit-error-msg').html("请输入优惠卷开始时间！");
+        $('#edit-error-msg').html("请输入优惠券开始时间！");
         return;
     }
     if (isNull(form.couponEndTime) || form.couponEndTime < 0) {
         $('#edit-error-msg').css("display", "block");
-        $('#edit-error-msg').html("请输入优惠卷结束时间！");
+        $('#edit-error-msg').html("请输入优惠券结束时间！");
         return;
     }
     if (form.goodsType != 0 && isNull(form.goodsValue)) {
@@ -353,12 +353,12 @@ function reset() {
     methods: {
         couponAdd() {
             this.reset();
-            this.title = '优惠卷添加';
+            this.title = '优惠券添加';
             $('#couponModal').modal('show');
         },
         couponEdit() {
             this.reset();
-            this.title = '优惠卷编辑';
+            this.title = '优惠券编辑';
             var that = this;
             var id = getSelectedRow();
             if (id == null) {
@@ -410,12 +410,12 @@ function reset() {
             var form = this.form
             if (isNull(form.couponName)) {
                 $('#edit-error-msg').css("display", "block");
-                $('#edit-error-msg').html("请输入优惠卷名称！");
+                $('#edit-error-msg').html("请输入优惠券名称！");
                 return;
             }
             if (isNull(form.couponTotal) || form.couponTotal < 0) {
                 $('#edit-error-msg').css("display", "block");
-                $('#edit-error-msg').html("请输入优惠卷数量且不能小于0！");
+                $('#edit-error-msg').html("请输入优惠券数量且不能小于0！");
                 return;
             }
             if (isNull(form.discount) || form.discount < 0) {
@@ -430,12 +430,12 @@ function reset() {
             }
             if (isNull(form.couponStartTime) || form.couponStartTime < 0) {
                 $('#edit-error-msg').css("display", "block");
-                $('#edit-error-msg').html("请输入优惠卷开始时间！");
+                $('#edit-error-msg').html("请输入优惠券开始时间！");
                 return;
             }
             if (isNull(form.couponEndTime) || form.couponEndTime < 0) {
                 $('#edit-error-msg').css("display", "block");
-                $('#edit-error-msg').html("请输入优惠卷结束时间！");
+                $('#edit-error-msg').html("请输入优惠券结束时间！");
                 return;
             }
             if (form.goodsType != 0 && isNull(form.goodsValue)) {

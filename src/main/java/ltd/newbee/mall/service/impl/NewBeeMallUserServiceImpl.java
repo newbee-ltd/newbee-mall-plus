@@ -61,7 +61,7 @@ public class NewBeeMallUserServiceImpl implements NewBeeMallUserService {
         if (mallUserMapper.insertSelective(registerUser) <= 0) {
             return ServiceResultEnum.DB_ERROR.getResult();
         }
-        // 添加注册赠卷
+        // 添加注册赠券
         List<NewBeeMallCoupon> newBeeMallCoupons = newBeeMallCouponMapper.selectAvailableGiveCoupon();
         for (NewBeeMallCoupon newBeeMallCoupon : newBeeMallCoupons) {
             NewBeeMallUserCouponRecord couponUser = new NewBeeMallUserCouponRecord();

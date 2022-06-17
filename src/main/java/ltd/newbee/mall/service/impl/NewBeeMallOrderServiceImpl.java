@@ -243,7 +243,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
         for (NewBeeMallShoppingCartItemVO newBeeMallShoppingCartItemVO : myShoppingCartItems) {
             priceTotal += newBeeMallShoppingCartItemVO.getGoodsCount() * newBeeMallShoppingCartItemVO.getSellingPrice();
         }
-        // 如果使用了优惠卷
+        // 如果使用了优惠券
         if (couponUserId != null) {
             NewBeeMallUserCouponRecord newBeeMallUserCouponRecord = newBeeMallUserCouponRecordMapper.selectByPrimaryKey(couponUserId);
             NewBeeMallCoupon newBeeMallCoupon = newBeeMallCouponMapper.selectByPrimaryKey(newBeeMallUserCouponRecord.getCouponId());
@@ -259,7 +259,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
         if (newBeeMallOrderMapper.insertSelective(newBeeMallOrder) <= 0) {
             NewBeeMallException.fail(ServiceResultEnum.DB_ERROR.getResult());
         }
-        // 如果使用了优惠卷，则更新优惠卷状态
+        // 如果使用了优惠券，则更新优惠券状态
         if (couponUserId != null) {
             NewBeeMallUserCouponRecord couponUser = new NewBeeMallUserCouponRecord();
             couponUser.setCouponUserId(couponUserId);

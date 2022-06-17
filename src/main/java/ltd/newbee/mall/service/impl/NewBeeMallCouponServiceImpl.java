@@ -91,16 +91,16 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
         if (newBeeMallCoupon.getCouponLimit() != 0) {
             int num = newBeeMallUserCouponRecordMapper.getUserCouponCount(userId, couponId);
             if (num != 0) {
-                throw new NewBeeMallException("优惠卷已经领过了,无法再次领取！");
+                throw new NewBeeMallException("优惠券已经领过了,无法再次领取！");
             }
         }
         if (newBeeMallCoupon.getCouponTotal() != 0) {
             int count = newBeeMallUserCouponRecordMapper.getCouponCount(couponId);
             if (count >= newBeeMallCoupon.getCouponTotal()) {
-                throw new NewBeeMallException("优惠卷已经领完了！");
+                throw new NewBeeMallException("优惠券已经领完了！");
             }
             if (newBeeMallCouponMapper.reduceCouponTotal(couponId) <= 0) {
-                throw new NewBeeMallException("优惠卷领取失败！");
+                throw new NewBeeMallException("优惠券领取失败！");
             }
         }
         NewBeeMallUserCouponRecord couponUser = new NewBeeMallUserCouponRecord();

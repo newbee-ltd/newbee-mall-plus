@@ -11,6 +11,8 @@ package ltd.newbee.mall.controller.common;
 import ltd.newbee.mall.config.ProjectConfig;
 import ltd.newbee.mall.util.Result;
 import ltd.newbee.mall.util.ResultGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -39,6 +41,9 @@ import java.util.*;
 @RequestMapping("/admin")
 public class UploadController {
 
+    private final Logger log = LoggerFactory.getLogger(UploadController.class);
+
+
     @Autowired
     private StandardServletMultipartResolver standardServletMultipartResolver;
 
@@ -47,12 +52,12 @@ public class UploadController {
     public Result upload(HttpServletRequest httpServletRequest, @RequestParam("file") MultipartFile file) throws URISyntaxException {
         String fileName = file.getOriginalFilename();
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
-        //生成文件名称通用方法
+        // 生成文件名称通用方法
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
         Random r = new Random();
         String newFileName = sdf.format(new Date()) + r.nextInt(100) + suffixName;
         File fileDirectory = new File(ProjectConfig.getFileUploadPath());
-        //创建文件
+        // 创建文件
         File destFile = new File(ProjectConfig.getFileUploadPath() + newFileName);
         try {
             if (!fileDirectory.exists()) {
@@ -97,12 +102,12 @@ public class UploadController {
         for (int i = 0; i < multipartFiles.size(); i++) {
             String fileName = multipartFiles.get(i).getOriginalFilename();
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
-            //生成文件名称通用方法
+            // 生成文件名称通用方法
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
             Random r = new Random();
             String newFileName = sdf.format(new Date()) + r.nextInt(100) + suffixName;
             File fileDirectory = new File(ProjectConfig.getFileUploadPath());
-            //创建文件
+            // 创建文件
             File destFile = new File(ProjectConfig.getFileUploadPath() + newFileName);
             try {
                 if (!fileDirectory.exists()) {
@@ -113,7 +118,7 @@ public class UploadController {
                 multipartFiles.get(i).transferTo(destFile);
                 fileNames.add("/upload/" + newFileName);
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error(e.getMessage(), e);
                 return ResultGenerator.genFailResult("文件上传失败");
             }
         }

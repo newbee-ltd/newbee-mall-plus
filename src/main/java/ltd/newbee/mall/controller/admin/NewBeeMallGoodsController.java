@@ -67,6 +67,7 @@ public class NewBeeMallGoodsController {
                 request.setAttribute("secondLevelCategories", secondLevelCategories);
                 request.setAttribute("thirdLevelCategories", thirdLevelCategories);
                 request.setAttribute("path", "goods-edit");
+                request.setAttribute("content", "");
                 return "admin/newbee_mall_goods_edit";
             }
         }
@@ -124,6 +125,7 @@ public class NewBeeMallGoodsController {
             }
         }
         request.setAttribute("goods", newBeeMallGoods);
+        request.setAttribute("content", newBeeMallGoods.getGoodsDetailContent());
         request.setAttribute("path", "goods-edit");
         return "admin/newbee_mall_goods_edit";
     }

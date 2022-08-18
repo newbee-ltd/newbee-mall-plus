@@ -32,7 +32,7 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
   profiles:
-    active: @activatedProperties@
+    active: dev
 
 # mybatis配置
 mybatis:

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!-- 日志存放路径 -->
-    <property name="log.path" value="./logs"/>
+    <property name="log.path" value="/home/logs/newbee-mall-plus"/>
 
     <!-- 日志输出格式 -->
     <property name="log.pattern"

@@ -1,17 +1,15 @@
 version: '3'
 services:
   newbee-mall-plus:
-    image: adoptopenjdk:11-openj9
+    image: ibm-semeru-runtimes:open-17-jdk
     container_name: newbee-mall-plus
-    ports:
-      - "28079"
     volumes:
       - /etc/localtime:/etc/localtime
-      - /home/logs/newbee-mall-plus:/home/logs/newbee-mall-plus
-      - /opt/newbee-mall-plus/upload:/opt/newbee-mall-plus/upload
-      - ./jars/newbee-mall-plus-2.1.0.jar:/home/app/newbee-mall-plus-2.1.0.jar
+      - /opt/newbeeplus/logs:/home/logs/newbee-mall-plus
+      - /opt/newbeeplus/upload:/opt/newbee-mall-plus/upload
+      - ./jars/newbee-mall-plus.jar:/home/app/newbee-mall-plus.jar
     restart: always
-    command: java -Xms1024m -Xmx1024m -Duser.timezone=GMT+8 -Dfile.encoding=utf-8 -jar /home/app/newbee-mall-plus-2.1.0.jar
+    command: java -Xms512m -Xmx512m -Duser.timezone=GMT+8 -Dfile.encoding=utf-8 -jar /home/app/newbee-mall-plus.jar --server.port=28079
     network_mode: "host"
     environment:
       - TZ=Asia/Shanghai

@@ -9,5 +9,5 @@ public enum SeckillStatusEnum {
     // 到了秒杀开始时间
     START,
     // 到了秒杀开始时间，但是秒杀商品库存不足
-    STARTED_SHORTAGE_STOCK;
+    STARTED_SHORTAGE_STOCK
 }

@@ -10,7 +10,7 @@ import java.net.URI;
 public class NewBeeMallUtils {
 
     public static URI getHost(URI uri) {
-        URI effectiveURI = null;
+        URI effectiveURI;
         try {
             effectiveURI = new URI(uri.getScheme(), uri.getUserInfo(), uri.getHost(), uri.getPort(), null, null, null);
         } catch (Throwable var4) {
@@ -35,11 +35,11 @@ public class NewBeeMallUtils {
         value = value.replaceAll("let", "1et");
         value = value.replaceAll("function", "functi0n");
         value = value.replaceAll("return", "retu1n");
-        value = value.replaceAll("$", "");
+        value = value.replaceAll("\\$", "");
         value = value.replaceAll("document", "d0cument");
         value = value.replaceAll("const", "c0nst");
         value = value.replaceAll("eval\\((.*)\\)", "");
-        value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
+        value = value.replaceAll("[\"']\\s*javascript:(.*)[\"']", "\"\"");
         value = value.replaceAll("script", "scr1pt");
         value = value.replaceAll("insert", "1nsert");
         value = value.replaceAll("drop", "dr0p");

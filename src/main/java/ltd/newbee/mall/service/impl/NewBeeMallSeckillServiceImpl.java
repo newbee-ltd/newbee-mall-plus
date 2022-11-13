@@ -50,8 +50,7 @@ public class NewBeeMallSeckillServiceImpl implements NewBeeMallSeckillService {
     public PageResult getSeckillPage(PageQueryUtil pageUtil) {
         List<NewBeeMallSeckill> carousels = newBeeMallSeckillMapper.findSeckillList(pageUtil);
         int total = newBeeMallSeckillMapper.getTotalSeckills(pageUtil);
-        PageResult pageResult = new PageResult(carousels, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
+        return new PageResult(carousels, total, pageUtil.getLimit(), pageUtil.getPage());
     }
 
     @Override

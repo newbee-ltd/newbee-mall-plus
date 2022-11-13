@@ -99,8 +99,8 @@ public class UploadController {
             return ResultGenerator.genFailResult("最多上传5张图片");
         }
         List<String> fileNames = new ArrayList(multipartFiles.size());
-        for (int i = 0; i < multipartFiles.size(); i++) {
-            String fileName = multipartFiles.get(i).getOriginalFilename();
+        for (MultipartFile multipartFile : multipartFiles) {
+            String fileName = multipartFile.getOriginalFilename();
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
             // 生成文件名称通用方法
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
@@ -115,7 +115,7 @@ public class UploadController {
                         throw new IOException("文件夹创建失败,路径为：" + fileDirectory);
                     }
                 }
-                multipartFiles.get(i).transferTo(destFile);
+                multipartFile.transferTo(destFile);
                 fileNames.add("/upload/" + newFileName);
             } catch (IOException e) {
                 log.error(e.getMessage(), e);

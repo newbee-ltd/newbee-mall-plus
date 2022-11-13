@@ -27,6 +27,7 @@ import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -147,7 +148,7 @@ public class SecKillController {
                 newBeeMallSeckillGoodsVO.setSeckillBeginTime(formatBegin);
                 newBeeMallSeckillGoodsVO.setSeckillEndTime(formatEnd);
                 return newBeeMallSeckillGoodsVO;
-            }).filter(newBeeMallSeckillGoodsVO -> newBeeMallSeckillGoodsVO != null).collect(Collectors.toList());
+            }).filter(Objects::nonNull).collect(Collectors.toList());
             redisCache.setCacheObject(Constants.SECKILL_GOODS_LIST, newBeeMallSeckillGoodsVOS, 60 * 60 * 100, TimeUnit.SECONDS);
         }
         return ResultGenerator.genSuccessResult(newBeeMallSeckillGoodsVOS);

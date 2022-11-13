@@ -39,8 +39,7 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
     public PageResult getCouponPage(PageQueryUtil pageUtil) {
         List<NewBeeMallCoupon> carousels = newBeeMallCouponMapper.findCouponlList(pageUtil);
         int total = newBeeMallCouponMapper.getTotalCoupons(pageUtil);
-        PageResult pageResult = new PageResult(carousels, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
+        return new PageResult(carousels, total, pageUtil.getLimit(), pageUtil.getPage());
     }
 
     @Override

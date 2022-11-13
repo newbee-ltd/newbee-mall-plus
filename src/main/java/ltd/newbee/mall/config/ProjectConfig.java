@@ -33,7 +33,7 @@ public class ProjectConfig {
     }
 
     public void setName(String name) {
-        this.name = name;
+        ProjectConfig.name = name;
     }
 
     public static String getFileUploadPath() {
@@ -41,7 +41,7 @@ public class ProjectConfig {
     }
 
     public void setFileUploadPath(String fileUploadPath) {
-        this.fileUploadPath = fileUploadPath;
+        ProjectConfig.fileUploadPath = fileUploadPath;
     }
 
     public static Integer getOrderUnpaidOverTime() {
@@ -49,7 +49,7 @@ public class ProjectConfig {
     }
 
     public void setOrderUnpaidOverTime(Integer orderUnpaidOverTime) {
-        this.orderUnpaidOverTime = orderUnpaidOverTime;
+        ProjectConfig.orderUnpaidOverTime = orderUnpaidOverTime;
     }
 
     public static String getServerUrl() {

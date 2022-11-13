@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestControllerAdvice
 public class NewBeeMallExceptionHandler {
 
-    Logger log = LoggerFactory.getLogger(NewBeeMallExceptionHandler.class);
+    public static final Logger log = LoggerFactory.getLogger(NewBeeMallExceptionHandler.class);
 
     @ExceptionHandler(Exception.class)
     public Object handleException(Exception e, HttpServletRequest req) {

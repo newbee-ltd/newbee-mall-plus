@@ -176,8 +176,8 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
                     }
                 } else if (item.getGoodsType() == 2) { // 指定商品可用
                     String[] split = item.getGoodsValue().split(",");
-                    List<Long> goodsValue = Arrays.stream(split).map(Long::valueOf).collect(Collectors.toList());
-                    List<Long> goodsIds = myShoppingCartItems.stream().map(NewBeeMallShoppingCartItemVO::getGoodsId).collect(Collectors.toList());
+                    List<Long> goodsValue = Arrays.stream(split).map(Long::valueOf).toList();
+                    List<Long> goodsIds = myShoppingCartItems.stream().map(NewBeeMallShoppingCartItemVO::getGoodsId).toList();
                     for (Long goodsId : goodsIds) {
                         if (goodsValue.contains(goodsId)) {
                             b = true;

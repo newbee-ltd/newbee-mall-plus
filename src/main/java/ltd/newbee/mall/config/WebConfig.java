@@ -8,10 +8,10 @@
  */
 package ltd.newbee.mall.config;
 
-import ltd.newbee.mall.interceptor.AdminLoginInterceptor;
-import ltd.newbee.mall.interceptor.NewBeeMallCartNumberInterceptor;
-import ltd.newbee.mall.interceptor.NewBeeMallLoginInterceptor;
-import ltd.newbee.mall.interceptor.RepeatSubmitInterceptor;
+import ltd.newbee.mall.web.interceptor.AdminLoginInterceptor;
+import ltd.newbee.mall.web.interceptor.NewBeeMallCartNumberInterceptor;
+import ltd.newbee.mall.web.interceptor.NewBeeMallLoginInterceptor;
+import ltd.newbee.mall.web.interceptor.RepeatSubmitInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -19,7 +19,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class NeeBeeMallWebMvcConfigurer implements WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private AdminLoginInterceptor adminLoginInterceptor;
     @Autowired

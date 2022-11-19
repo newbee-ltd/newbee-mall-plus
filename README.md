@@ -36,6 +36,11 @@ Spring Boot 2.X 及相关技术栈开发。
 
 ![](https://raw.githubusercontent.com/newbee-ltd/newbee-mall-vue-app/master/static-files/newbee-mall.png)
 
+## V2.3.0发布
+1. 升级Springboot版本至2.7+,jdk升级至17
+2. 修复图片上传、修改用户信息漏洞、xss功能漏
+
+
 ## 开发部署
 
 ```
@@ -44,7 +49,7 @@ Spring Boot 2.X 及相关技术栈开发。
 # 2. 导入项目依赖
 将newbee-mall-plus目录用idea打开，导入maven依赖
 
-# 3. 安装Mysql8.0+、Redis3.0+、Jdk8+、Maven3.5+
+# 3. 安装Mysql8.0+、Redis3.0+、Jdk17+、Maven3.5+
 
 # 4. 导入sql文件
 在项目根目录下sql文件夹下，找到`newbee_mall_plus_schema.sql`、`秒杀存储过程.sql`文件，新建mysql数据库newbee_mall_plus_db，导入其中

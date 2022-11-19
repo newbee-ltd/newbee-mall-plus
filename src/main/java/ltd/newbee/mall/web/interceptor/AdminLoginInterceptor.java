@@ -6,9 +6,8 @@
  * Copyright (c) 2019-2020 十三 all rights reserved.
  * 版权所有，侵权必究！
  */
-package ltd.newbee.mall.interceptor;
+package ltd.newbee.mall.web.interceptor;
 
-import ltd.newbee.mall.common.Constants;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * newbee-mall系统身份验证拦截器
+ * 后台系统身份验证拦截器
  *
  * @author 13
  * @qq交流群 791509631
@@ -25,18 +24,17 @@ import javax.servlet.http.HttpServletResponse;
  * @link https://github.com/newbee-ltd
  */
 @Component
-public class NewBeeMallLoginInterceptor implements HandlerInterceptor {
+public class AdminLoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
-        // 秒杀请求放过（压力测试使用）
-        if (request.getRequestURI().startsWith("/seckillExecution")) {
-            return true;
-        }
-        if (null == request.getSession().getAttribute(Constants.MALL_USER_SESSION_KEY)) {
-            response.sendRedirect(request.getContextPath() + "/login");
+        String requestServletPath = request.getServletPath();
+        if (requestServletPath.startsWith("/admin") && null == request.getSession().getAttribute("loginUser")) {
+            request.getSession().setAttribute("errorMsg", "请登陆");
+            response.sendRedirect(request.getContextPath() + "/admin/login");
             return false;
         } else {
+            request.getSession().removeAttribute("errorMsg");
             return true;
         }
     }

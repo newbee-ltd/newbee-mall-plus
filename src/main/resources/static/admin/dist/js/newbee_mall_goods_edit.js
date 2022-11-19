@@ -17,7 +17,16 @@ $(function () {
             // customInsert(res, insertFn) {
             // res 即服务端的返回结果
             // 从 res 中找到 url alt href ，然后插图图片
-            insertFn(res.data[0], '', '');
+            if (res != null && res.resultCode == 200) {
+                // insertImgFn 可把图片插入到编辑器，传入图片 src ，执行函数即可
+                res.data.forEach(img => {
+                    insertFn(img)
+                });
+            } else if (result != null && result.resultCode != 200) {
+                alert(result.message);
+            } else {
+                alert("error");
+            }
         },
         // form-data fieldName ，默认值 'wangeditor-uploaded-image'
         fieldName: 'wangeditor-uploaded-image',
@@ -85,6 +94,9 @@ $(function () {
             if (r != null && r.resultCode == 200) {
                 $("#goodsCoverImg").attr("src", r.data);
                 $("#goodsCoverImg").attr("style", "width: 128px;height: 128px;display:block;");
+                return false;
+            } else if (r != null && r.resultCode != 200) {
+                alert(r.message);
                 return false;
             } else {
                 alert("error");

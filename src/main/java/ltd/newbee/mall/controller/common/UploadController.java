@@ -24,7 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -49,7 +51,11 @@ public class UploadController {
 
     @PostMapping({"/upload/file"})
     @ResponseBody
-    public Result upload(HttpServletRequest httpServletRequest, @RequestParam("file") MultipartFile file) throws URISyntaxException {
+    public Result upload(HttpServletRequest httpServletRequest, @RequestParam("file") MultipartFile file) throws URISyntaxException, IOException {
+        BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
+        if (bufferedImage == null) {
+            return ResultGenerator.genFailResult("请上传图片类型的文件");
+        }
         String fileName = file.getOriginalFilename();
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         // 生成文件名称通用方法
@@ -77,28 +83,28 @@ public class UploadController {
 
     @PostMapping({"/upload/files"})
     @ResponseBody
-    public Result uploadV2(HttpServletRequest httpServletRequest) {
+    public Result uploadV2(HttpServletRequest httpServletRequest) throws IOException {
         List<MultipartFile> multipartFiles = new ArrayList<>(8);
         if (standardServletMultipartResolver.isMultipart(httpServletRequest)) {
             MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) httpServletRequest;
             Iterator<String> iter = multiRequest.getFileNames();
             int total = 0;
             while (iter.hasNext()) {
-                if (total > 5) {
-                    return ResultGenerator.genFailResult("最多上传5张图片");
-                }
                 total += 1;
                 MultipartFile file = multiRequest.getFile(iter.next());
-                multipartFiles.add(file);
+                BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
+                if (bufferedImage != null) {
+                    multipartFiles.add(file);
+                }
             }
         }
         if (CollectionUtils.isEmpty(multipartFiles)) {
-            return ResultGenerator.genFailResult("参数异常");
+            return ResultGenerator.genFailResult("请选择图片类型的文件上传");
         }
         if (multipartFiles.size() > 5) {
             return ResultGenerator.genFailResult("最多上传5张图片");
         }
-        List<String> fileNames = new ArrayList(multipartFiles.size());
+        List<String> fileNames = new ArrayList<>(multipartFiles.size());
         for (MultipartFile multipartFile : multipartFiles) {
             String fileName = multipartFile.getOriginalFilename();
             String suffixName = fileName.substring(fileName.lastIndexOf("."));

@@ -8,6 +8,7 @@
  */
 package ltd.newbee.mall.controller.common;
 
+import jakarta.servlet.http.HttpServletRequest;
 import ltd.newbee.mall.config.ProjectConfig;
 import ltd.newbee.mall.util.Result;
 import ltd.newbee.mall.util.ResultGenerator;
@@ -25,7 +26,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;

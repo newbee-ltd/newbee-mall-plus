@@ -1,5 +1,6 @@
 package ltd.newbee.mall.controller.admin;
 
+import jakarta.servlet.http.HttpServletRequest;
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.entity.NewBeeMallSeckill;
 import ltd.newbee.mall.redis.RedisCache;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @Controller

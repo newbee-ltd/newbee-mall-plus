@@ -8,12 +8,11 @@
  */
 package ltd.newbee.mall.service;
 
+import jakarta.servlet.http.HttpSession;
 import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
 import ltd.newbee.mall.entity.MallUser;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
-
-import javax.servlet.http.HttpSession;
 
 public interface NewBeeMallUserService {
     /**

@@ -69,7 +69,7 @@ public abstract class BeanUtil {
         return (T) beanWrapper.getWrappedInstance();
     }
 
-    public static interface Callback<T> {
+    public interface Callback<T> {
         void set(Object source, T target);
     }
 

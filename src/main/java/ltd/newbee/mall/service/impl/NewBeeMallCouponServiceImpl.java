@@ -164,10 +164,10 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
             if (item.getMin() <= priceTotal) {
                 if (item.getGoodsType() == 1) { // 指定分类可用
                     String[] split = item.getGoodsValue().split(",");
-                    List<Long> goodsValue = Arrays.stream(split).map(Long::valueOf).collect(Collectors.toList());
+                    List<Long> goodsValue = Arrays.stream(split).map(Long::valueOf).toList();
                     List<Long> goodsIds = myShoppingCartItems.stream().map(NewBeeMallShoppingCartItemVO::getGoodsId).collect(Collectors.toList());
                     List<NewBeeMallGoods> goods = newBeeMallGoodsMapper.selectByPrimaryKeys(goodsIds);
-                    List<Long> categoryIds = goods.stream().map(NewBeeMallGoods::getGoodsCategoryId).collect(Collectors.toList());
+                    List<Long> categoryIds = goods.stream().map(NewBeeMallGoods::getGoodsCategoryId).toList();
                     for (Long categoryId : categoryIds) {
                         if (goodsValue.contains(categoryId)) {
                             b = true;

@@ -4,9 +4,8 @@ import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
@@ -22,10 +21,7 @@ import java.time.Duration;
 
 @EnableCaching
 @Configuration
-public class CacheConfig extends CachingConfigurerSupport {
-
-    @Value("${spring.redis.expire}")
-    private int expire = 0;
+public class CacheConfig implements CachingConfigurer {
 
     @Bean
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
@@ -63,7 +59,7 @@ public class CacheConfig extends CachingConfigurerSupport {
     private RedisCacheConfiguration defaultCacheConfig() {
         return RedisCacheConfiguration.defaultCacheConfig()
                 .prefixCacheNameWith("redis_key")
-                .entryTtl(Duration.ofSeconds(expire))
+                .entryTtl(Duration.ofSeconds(300))
                 .disableCachingNullValues();
     }
 

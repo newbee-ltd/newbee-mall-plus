@@ -5,12 +5,12 @@
 [![License](https://img.shields.io/badge/license-GPL3.0-blue.svg)](https://github.com/newbee-ltd/newbee-mall/blob/master/LICENSE)
 
 
-## 当前分支基于springboot2.7、jdk17重构
+## 当前分支已经升级至Spring boot3.0.1，Spring boot2.7版本在分支 `springboot2.7`
 
 newbee-mall-plus 项目是 [newbee-mall](https://github.com/newbee-ltd/newbee-mall)
 的升级版本，新增了优惠券模块、商品秒杀模块、支付宝支付，后续如果有技术栈和功能的升级也会放在这个仓库里，当前项目中的代码主要由 [@十三](https://github.com/newbee-mall)
 和 [@wayn111](https://github.com/wayn111) 共同开发。newbee-mall 项目是一套电商系统，包括 newbee-mall 商城系统及 newbee-mall-admin 商城后台管理系统，基于
-Spring Boot 2.X 及相关技术栈开发。
+Spring Boot 3.X 及相关技术栈开发。
 
 新蜂商城PLUS版本线上预览地址：[http://mall-plus.newbee.ltd](http://mall-plus.newbee.ltd?from=github)，账号可自行注册。
 
@@ -18,7 +18,7 @@ Spring Boot 2.X 及相关技术栈开发。
 
 1. 支持优惠券使用，包含三种类型的优惠券：注册赠券、指定分类用券、指定商品用券。 用户可以在首页领取优惠券后在下订单页面会看到满足可用条件的优惠券，选择使用后，计算订单金额时，会扣减。
 2. 添加秒杀专区，前台页面已经添加秒杀商品倒计时展示，在秒杀开启时间内， 用户对秒杀商品进行下单时，系统内秒杀接口采用redis缓存、令牌桶限流、存储过程等多种手段优化秒杀操作，使得秒杀操作最高支持万人秒杀
-   附jmeter100000请求压测截图，配置：家用电脑6核12线程运行内存2g，100000请求时长持续2分5秒、最大响应时长900毫秒、异常率0%、吞吐量798每秒
+   附jmeter100000请求压测截图，配置：家用电脑6核12线程运行内存16g，100000请求时长持续2分5秒、最大响应时长900毫秒、异常率0%、吞吐量798每秒
    ![](./images/linux下jmeter-1s-100000请求.png)
 4. 支付宝网页支付集成，new-bee-mall-plus采用的是支付宝沙箱支付环境（真实支付环境需要企业信息），演示站点已经把沙箱买家账号/密码展示出来了
    ![](./images/支付页面.jpg)
@@ -36,7 +36,11 @@ Spring Boot 2.X 及相关技术栈开发。
 
 ![](https://raw.githubusercontent.com/newbee-ltd/newbee-mall-vue-app/master/static-files/newbee-mall.png)
 
-## V2.3.0发布
+## 更新日志
+### V2.4.0发布
+1. 升级Springboot版本至3.0+，修复低版本兼容问题
+
+### V2.3.0发布
 1. 升级Springboot版本至2.7+,jdk升级至17
 2. 修复图片上传、修改用户信息漏洞、xss功能漏
 

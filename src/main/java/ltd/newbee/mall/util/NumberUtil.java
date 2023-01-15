@@ -51,7 +51,7 @@ public class NumberUtil {
      * @return
      */
     public static String genOrderNo() {
-        StringBuffer buffer = new StringBuffer(String.valueOf(System.currentTimeMillis()));
+        StringBuilder buffer = new StringBuilder(String.valueOf(System.currentTimeMillis()));
         int num = genRandomNum(4);
         buffer.append(num);
         return buffer.toString();

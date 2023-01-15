@@ -1,9 +1,9 @@
 package ltd.newbee.mall.web.filter;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
 import org.apache.commons.text.StringEscapeUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.IOException;
 
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {

@@ -8,18 +8,18 @@ spring:
     password: 123456
     hikari:
       pool-name: hikariCP
-      minimum-idle: 100
-      maximum-pool-size: 200
+      minimum-idle: 20
+      maximum-pool-size: 50
       auto-commit: true
       idle-timeout: 10000
       max-lifetime: 30000
       connection-timeout: 30000
       connection-test-query: SELECT 1
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    password:
-    timeout: 5000ms
-    connect-timeout: 5000ms
-    expire: 400
-    client-type: lettuce
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password:
+      client-type: lettuce
+      connect-timeout: 5000ms
+      timeout: 5000ms

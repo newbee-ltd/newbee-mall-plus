@@ -42,6 +42,10 @@ spring:
     time-zone: GMT+8
   profiles:
     active: dev
+  session:
+    timeout: 3600S
+    redis:
+      namespace: newbee-mall-plus:session
 
 # mybatis配置
 mybatis:

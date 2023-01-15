@@ -9,7 +9,6 @@
 package ltd.newbee.mall.service.impl;
 
 import ltd.newbee.mall.common.Constants;
-import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.NewBeeMallShoppingCartItemVO;
 import ltd.newbee.mall.dao.NewBeeMallGoodsMapper;

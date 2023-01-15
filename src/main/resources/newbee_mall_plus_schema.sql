@@ -89,8 +89,8 @@ CREATE TABLE `tb_newbee_mall_coupon`  (
                                           `goods_type` tinyint NULL DEFAULT 0 COMMENT '商品限制类型，如果0则全商品，如果是1则是类目限制，如果是2则是商品限制。',
                                           `goods_value` varchar(1023) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '商品限制值，goods_type如果是0则空集合，如果是1则是类目集合，如果是2则是商品集合。',
                                           `coupon_code` varchar(63) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '优惠券兑换码',
-                                          `coupon_start_time` datetime NULL DEFAULT NULL COMMENT '优惠卷开始时间',
-                                          `coupon_end_time` datetime NULL DEFAULT NULL COMMENT '优惠卷结束时间',
+                                          `coupon_start_time` datetime NULL DEFAULT NULL COMMENT '优惠券开始时间',
+                                          `coupon_end_time` datetime NULL DEFAULT NULL COMMENT '优惠券结束时间',
                                           `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                                           `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
                                           `is_deleted` tinyint NULL DEFAULT 0 COMMENT '逻辑删除',
@@ -1419,27 +1419,5 @@ CREATE TABLE `tb_newbee_mall_user_coupon_record`  (
                                                       PRIMARY KEY (`coupon_user_id`) USING BTREE,
                                                       INDEX `user_coupin_index`(`user_id`, `coupon_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 134 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '优惠券用户使用表' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- author 13
--- qq交流群 791509631
--- email 2449207463@qq.com
--- link https://github.com/newbee-ltd
--- Records of tb_newbee_mall_user_coupon_record
--- ----------------------------
-INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (120, 10, 11, 1, '2021-05-25 10:52:37', 73, '2021-05-18 15:19:33', '2021-05-25 10:52:37', 0);
-INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (121, 9, 11, 1, '2021-05-21 21:28:55', 69, '2021-05-21 20:48:37', '2021-05-21 21:28:55', 0);
-INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (122, 9, 12, 0, NULL, NULL, '2021-05-21 20:48:39', NULL, 0);
-INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (123, 9, 13, 1, '2021-05-21 22:29:15', 70, '2021-05-21 20:48:40', '2021-05-21 22:29:15', 0);
-INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (124, 9, 13, 1, '2021-05-25 23:43:39', 89, '2021-05-21 20:48:49', '2021-05-25 23:43:39', 0);
-INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (125, 9, 13, 1, '2021-05-25 23:01:40', 79, '2021-05-21 20:48:49', '2021-05-25 23:01:40', 0);
-INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (126, 9, 13, 1, '2021-05-21 22:35:08', 72, '2021-05-21 20:48:51', '2021-05-21 22:35:08', 0);
-INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (127, 9, 13, 0, '2021-05-25 23:14:45', 81, '2021-05-21 20:48:51', '2021-05-25 23:19:45', 0);
-INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (128, 12, 11, 0, '2021-05-30 22:35:55', 101, '2021-05-30 22:35:21', '2021-05-30 22:40:55', 0);
-INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (129, 13, 11, 0, NULL, NULL, '2021-05-31 10:18:41', NULL, 0);
-INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (130, 1, 11, 1, '2021-05-31 13:28:46', 102, '2021-05-31 13:27:56', '2021-05-31 13:28:46', 0);
-INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (131, 1, 12, 0, NULL, NULL, '2021-05-31 13:28:01', NULL, 0);
-INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (132, 1, 13, 0, '2021-05-31 13:38:16', 103, '2021-05-31 13:28:03', '2021-05-31 13:43:16', 0);
-INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (133, 14, 11, 0, '2021-05-31 14:35:10', 106, '2021-05-31 14:34:41', '2021-05-31 14:40:10', 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

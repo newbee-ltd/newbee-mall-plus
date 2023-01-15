@@ -8,6 +8,7 @@
  */
 package ltd.newbee.mall.service.impl;
 
+import jakarta.servlet.http.HttpSession;
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
@@ -24,7 +25,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
@@ -43,8 +43,7 @@ public class NewBeeMallUserServiceImpl implements NewBeeMallUserService {
     public PageResult getNewBeeMallUsersPage(PageQueryUtil pageUtil) {
         List<MallUser> mallUsers = mallUserMapper.findMallUserList(pageUtil);
         int total = mallUserMapper.getTotalMallUsers(pageUtil);
-        PageResult pageResult = new PageResult(mallUsers, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
+        return new PageResult(mallUsers, total, pageUtil.getLimit(), pageUtil.getPage());
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -61,7 +60,7 @@ public class NewBeeMallUserServiceImpl implements NewBeeMallUserService {
         if (mallUserMapper.insertSelective(registerUser) <= 0) {
             return ServiceResultEnum.DB_ERROR.getResult();
         }
-        // 添加注册赠卷
+        // 添加注册赠券
         List<NewBeeMallCoupon> newBeeMallCoupons = newBeeMallCouponMapper.selectAvailableGiveCoupon();
         for (NewBeeMallCoupon newBeeMallCoupon : newBeeMallCoupons) {
             NewBeeMallUserCouponRecord couponUser = new NewBeeMallUserCouponRecord();
@@ -109,7 +108,6 @@ public class NewBeeMallUserServiceImpl implements NewBeeMallUserService {
             }
             if (mallUserMapper.updateByPrimaryKeySelective(userFromDB) > 0) {
                 NewBeeMallUserVO newBeeMallUserVO = new NewBeeMallUserVO();
-                userFromDB = mallUserMapper.selectByPrimaryKey(mallUser.getUserId());
                 BeanUtil.copyProperties(userFromDB, newBeeMallUserVO);
                 httpSession.setAttribute(Constants.MALL_USER_SESSION_KEY, newBeeMallUserVO);
                 return newBeeMallUserVO;

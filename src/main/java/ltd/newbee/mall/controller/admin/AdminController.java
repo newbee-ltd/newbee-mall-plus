@@ -8,16 +8,15 @@
  */
 package ltd.newbee.mall.controller.admin;
 
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.entity.AdminUser;
 import ltd.newbee.mall.service.AdminUserService;
-import org.springframework.stereotype.Controller;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * @author 13
@@ -57,7 +56,7 @@ public class AdminController {
             return "admin/login";
         }
         String kaptchaCode = session.getAttribute("verifyCode") + "";
-        if (StringUtils.isEmpty(kaptchaCode) || !verifyCode.equals(kaptchaCode)) {
+        if (!StringUtils.equalsIgnoreCase(kaptchaCode, verifyCode)) {
             session.setAttribute("errorMsg", "验证码错误");
             return "admin/login";
         }
@@ -65,8 +64,8 @@ public class AdminController {
         if (adminUser != null) {
             session.setAttribute("loginUser", adminUser.getNickName());
             session.setAttribute("loginUserId", adminUser.getAdminUserId());
-            //session过期时间设置为7200秒 即两小时
-            //session.setMaxInactiveInterval(60 * 60 * 2);
+            // session过期时间设置为7200秒 即两小时
+            // session.setMaxInactiveInterval(60 * 60 * 2);
             return "redirect:/admin/index";
         } else {
             session.setAttribute("errorMsg", "登录失败");
@@ -96,7 +95,7 @@ public class AdminController {
         }
         Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
         if (adminUserService.updatePassword(loginUserId, originalPassword, newPassword)) {
-            //修改成功后清空session中的数据，前端控制跳转至登录页
+            // 修改成功后清空session中的数据，前端控制跳转至登录页
             request.getSession().removeAttribute("loginUserId");
             request.getSession().removeAttribute("loginUser");
             request.getSession().removeAttribute("errorMsg");

@@ -1,0 +1,15 @@
+version: '3'
+services:
+  newbee-mall-plus:
+    image: ibm-semeru-runtimes:open-17-jdk
+    container_name: newbee-mall-plus
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - /opt/newbeeplus/logs:/home/logs/newbee-mall-plus
+      - /opt/newbeeplus/upload:/opt/newbee-mall-plus/upload
+      - ./jars/newbee-mall-plus.jar:/home/app/newbee-mall-plus.jar
+    restart: always
+    command: java -Xms512m -Xmx512m -Duser.timezone=GMT+8 -Dfile.encoding=utf-8 -jar /home/app/newbee-mall-plus.jar --server.port=28079
+    network_mode: "host"
+    environment:
+      - TZ=Asia/Shanghai

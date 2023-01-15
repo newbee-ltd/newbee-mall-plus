@@ -164,7 +164,7 @@
         <include refid="Base_Column_List"/>
         from tb_newbee_mall_user_coupon_record
         where is_deleted = 0 and user_id = #{userId}
-        and use_status = 0 order by create_time limit 8
+        and use_status = 0 order by create_time
     </select>
     <select id="getUserCouponByOrderId" resultMap="BaseResultMap">
         select

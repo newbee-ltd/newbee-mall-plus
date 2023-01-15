@@ -22,7 +22,7 @@ public interface NewBeeMallCouponService {
     boolean deleteCouponById(Long id);
 
     /**
-     * 查询可用优惠卷
+     * 查询可用优惠券
      *
      * @param userId
      * @return
@@ -39,7 +39,7 @@ public interface NewBeeMallCouponService {
     boolean saveCouponUser(Long couponId, Long userId);
 
     /**
-     * 查询我的优惠卷
+     * 查询我的优惠券
      *
      * @param userId 用户ID
      * @return
@@ -47,7 +47,7 @@ public interface NewBeeMallCouponService {
     List<NewBeeMallCouponVO> selectMyCoupons(Long userId);
 
     /**
-     * 查询当前订单可用的优惠卷
+     * 查询当前订单可用的优惠券
      *
      * @param myShoppingCartItems
      * @param priceTotal
@@ -57,7 +57,7 @@ public interface NewBeeMallCouponService {
     List<NewBeeMallMyCouponVO> selectOrderCanUseCoupons(List<NewBeeMallShoppingCartItemVO> myShoppingCartItems, int priceTotal, Long userId);
 
     /**
-     * 删除用户优惠卷
+     * 删除用户优惠券
      *
      * @param couponUserId
      * @return
@@ -65,7 +65,7 @@ public interface NewBeeMallCouponService {
     boolean deleteCouponUser(Long couponUserId);
 
     /**
-     * 回复未支付的优惠卷
+     * 回复未支付的优惠券
      * @param orderId
      */
     void releaseCoupon(Long orderId);

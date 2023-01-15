@@ -26,10 +26,10 @@ var seckill = {
     handleSeckill: function (seckillId, node) {
         setInterval(function () {
             seckill.checkStock(seckillId);
-        }, 4000);
+        }, 500);
         // 获取秒杀地址，控制显示逻辑，执行秒杀
         // node.hide().html('<button class="btn btn-primary btn-lg" id="killBtn">开始秒杀</button>');
-        node.html('秒杀开始');
+        node.html('秒杀进行中');
         console.log('exposerUrl=' + seckill.URL.exposer(seckillId));
         $.post(seckill.URL.exposer(seckillId), {}, function (result) {
             // 在回调函数中，执行交互流程
@@ -86,7 +86,7 @@ var seckill = {
     checkStock: function (seckillId) {
         $.post(seckill.URL.checkStock(seckillId), {}, function (result) {
             if (result['resultCode'] != 200) {
-                $('#killBtn').attr('disabled', true);
+                $('#killBtn').attr('disabled', true).text('库存为空');
             } else {
                 $('#killBtn').attr('disabled', false);
             }

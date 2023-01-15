@@ -33,7 +33,7 @@
             <div class="container-fluid">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
-                        <h3 class="card-title">优惠卷管理</h3>
+                        <h3 class="card-title">优惠券管理</h3>
                     </div>
 
                     <!-- .card-body -->
@@ -55,9 +55,9 @@
                             <select style="width: 160px;" class="form-control" id="couponType"
                                     placeholder="优惠劵类型">
                                 <option value="" selected>全部优惠劵类型</option>
-                                <option value="0">通用卷</option>
-                                <option value="1">注册赠卷</option>
-                                <option value="2">兑换卷</option>
+                                <option value="0">通用券</option>
+                                <option value="1">注册赠券</option>
+                                <option value="2">兑换券</option>
                             </select> &nbsp;
                             <select style="width: 160px;" class="form-control" id="couponStatus"
                                     placeholder="上架状态">
@@ -100,15 +100,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="couponName" class="col-md-3 control-label">优惠卷名称:</label>
+                                    <label for="couponName" class="col-md-3 control-label">优惠券名称:</label>
                                     <input type="text" class="col-md-9 form-control" id="couponName" name="couponName"
-                                           placeholder="*请输入优惠卷名称" required="true">
+                                           placeholder="*请输入优惠券名称" required="true">
                                     <input type="hidden" id="couponId" name="couponId">
                                 </div>
                                 <div class="form-group row">
-                                    <label for="couponTotal" class="col-md-3 control-label">优惠卷数量:</label>
+                                    <label for="couponTotal" class="col-md-3 control-label">优惠券数量:</label>
                                     <input type="number" class="col-md-9 form-control" id="couponTotal" name="couponTotal"
-                                           placeholder="*请输入优惠卷数量，如果是0则是无限量" required="true">
+                                           placeholder="*请输入优惠券数量，如果是0则是无限量" required="true">
                                 </div>
                                 <div class="form-group row">
                                     <label for="discount" class="col-md-3 control-label">优惠金额:</label>
@@ -121,14 +121,14 @@
                                            placeholder="*请输入最少消费金额">
                                 </div>
                                 <div class="form-group row">
-                                    <label for="couponStartTime" class="col-md-3 control-label">优惠卷开始:</label>
+                                    <label for="couponStartTime" class="col-md-3 control-label">优惠券开始:</label>
                                     <input type="text" class="col-md-9 col-md-9 form-control" id="couponStartTime" name="couponStartTime"
-                                           placeholder="*请输入优惠卷开始时间">
+                                           placeholder="*请输入优惠券开始时间">
                                 </div>
                                 <div class="form-group row">
-                                    <label for="couponEndTime" class="col-md-3 control-label">优惠卷结束:</label>
+                                    <label for="couponEndTime" class="col-md-3 control-label">优惠券结束:</label>
                                     <input type="text" class="col-md-9 col-md-9 form-control" id="couponEndTime" name="couponEndTime"
-                                           placeholder="*请输入优惠卷结束时间">
+                                           placeholder="*请输入优惠券结束时间">
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 control-label">领取限制数量:</label>
@@ -145,13 +145,13 @@
                                     <label class="col-md-3 control-label">赠送类型:</label>
                                     <div class="col-md-9 btn-group-sm btn-group-toggle" data-toggle="buttons">
                                         <label class="btn btn-info">
-                                            <input type="radio" name="couponType" value="0">通用卷
+                                            <input type="radio" name="couponType" value="0">通用券
                                         </label>
                                         <label class="btn btn-info">
-                                            <input type="radio" name="couponType" value="1">注册赠卷
+                                            <input type="radio" name="couponType" value="1">注册赠券
                                         </label>
                                         <label class="btn btn-info">
-                                            <input type="radio" name="couponType" value="2">优惠码兑卷
+                                            <input type="radio" name="couponType" value="2">优惠码兑券
                                         </label>
                                     </div>
                                 </div>
@@ -189,9 +189,9 @@
                                            :placeholder="'*请输入' + goodsValueLabel + ',多个用逗号分隔'">
                                 </div>
                                 <div class="form-group row">
-                                    <label for="couponDesc" class="col-md-3 control-label">优惠卷简介:</label>
+                                    <label for="couponDesc" class="col-md-3 control-label">优惠券简介:</label>
                                     <textarea rows="2" class="col-md-9 form-control" id="couponDesc" name="couponDesc"
-                                              placeholder="请输入优惠卷简介"></textarea>
+                                              placeholder="请输入优惠券简介"></textarea>
                                 </div>
                             </form>
                         </div>

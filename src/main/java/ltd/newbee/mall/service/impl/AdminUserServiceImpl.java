@@ -8,14 +8,13 @@
  */
 package ltd.newbee.mall.service.impl;
 
+import jakarta.annotation.Resource;
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.dao.AdminUserMapper;
 import ltd.newbee.mall.entity.AdminUser;
 import ltd.newbee.mall.service.AdminUserService;
 import ltd.newbee.mall.util.MD5Util;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 @Service
 public class AdminUserServiceImpl implements AdminUserService {
@@ -45,10 +44,8 @@ public class AdminUserServiceImpl implements AdminUserService {
             if (originalPasswordMd5.equals(adminUser.getLoginPassword())) {
                 //设置新密码并修改
                 adminUser.setLoginPassword(newPasswordMd5);
-                if (adminUserMapper.updateByPrimaryKeySelective(adminUser) > 0) {
-                    //修改成功则返回true
-                    return true;
-                }
+                //修改成功则返回true
+                return adminUserMapper.updateByPrimaryKeySelective(adminUser) > 0;
             }
         }
         return false;
@@ -62,10 +59,8 @@ public class AdminUserServiceImpl implements AdminUserService {
             //设置新名称并修改
             adminUser.setLoginUserName(loginUserName);
             adminUser.setNickName(nickName);
-            if (adminUserMapper.updateByPrimaryKeySelective(adminUser) > 0) {
-                //修改成功则返回true
-                return true;
-            }
+            //修改成功则返回true
+            return adminUserMapper.updateByPrimaryKeySelective(adminUser) > 0;
         }
         return false;
     }

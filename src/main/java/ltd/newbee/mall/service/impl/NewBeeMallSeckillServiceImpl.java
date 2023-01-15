@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 public class NewBeeMallSeckillServiceImpl implements NewBeeMallSeckillService {
 
     // 使用令牌桶RateLimiter 限流
-    private static final RateLimiter rateLimiter = RateLimiter.create(10);
+    private static final RateLimiter rateLimiter = RateLimiter.create(100);
 
     @Autowired
     private NewBeeMallSeckillMapper newBeeMallSeckillMapper;
@@ -50,8 +50,7 @@ public class NewBeeMallSeckillServiceImpl implements NewBeeMallSeckillService {
     public PageResult getSeckillPage(PageQueryUtil pageUtil) {
         List<NewBeeMallSeckill> carousels = newBeeMallSeckillMapper.findSeckillList(pageUtil);
         int total = newBeeMallSeckillMapper.getTotalSeckills(pageUtil);
-        PageResult pageResult = new PageResult(carousels, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
+        return new PageResult(carousels, total, pageUtil.getLimit(), pageUtil.getPage());
     }
 
     @Override
@@ -102,7 +101,7 @@ public class NewBeeMallSeckillServiceImpl implements NewBeeMallSeckillService {
         }
         // 检查虚拟库存
         Integer stock = redisCache.getCacheObject(Constants.SECKILL_GOODS_STOCK_KEY + seckillId);
-        if (stock < 0) {
+        if (stock == null || stock < 0) {
             return new ExposerVO(SeckillStatusEnum.STARTED_SHORTAGE_STOCK, seckillId);
         }
         // 加密

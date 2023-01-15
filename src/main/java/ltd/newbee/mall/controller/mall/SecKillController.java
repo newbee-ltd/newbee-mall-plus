@@ -1,5 +1,7 @@
 package ltd.newbee.mall.controller.mall;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.controller.vo.ExposerVO;
@@ -22,11 +24,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Controller
@@ -67,7 +69,7 @@ public class SecKillController {
     @PostMapping("/seckill/{seckillId}/checkStock")
     public Result seckillCheckStock(@PathVariable Long seckillId) {
         Integer stock = redisCache.getCacheObject(Constants.SECKILL_GOODS_STOCK_KEY + seckillId);
-        if (stock < 0) {
+        if (stock == null || stock < 0) {
             return ResultGenerator.genFailResult("秒杀商品库存不足");
         }
         // redis虚拟库存大于等于0时，可以执行秒杀
@@ -146,7 +148,8 @@ public class SecKillController {
                 newBeeMallSeckillGoodsVO.setSeckillBeginTime(formatBegin);
                 newBeeMallSeckillGoodsVO.setSeckillEndTime(formatEnd);
                 return newBeeMallSeckillGoodsVO;
-            }).filter(newBeeMallSeckillGoodsVO -> newBeeMallSeckillGoodsVO != null).collect(Collectors.toList());
+            }).filter(Objects::nonNull).collect(Collectors.toList());
+            redisCache.setCacheObject(Constants.SECKILL_GOODS_LIST, newBeeMallSeckillGoodsVOS, 60 * 60 * 100, TimeUnit.SECONDS);
         }
         return ResultGenerator.genSuccessResult(newBeeMallSeckillGoodsVOS);
     }

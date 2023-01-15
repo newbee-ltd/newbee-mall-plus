@@ -8,6 +8,9 @@
  */
 package ltd.newbee.mall.controller.mall;
 
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.common.ServiceResultEnum;
@@ -19,14 +22,10 @@ import ltd.newbee.mall.util.HttpUtil;
 import ltd.newbee.mall.util.MD5Util;
 import ltd.newbee.mall.util.Result;
 import ltd.newbee.mall.util.ResultGenerator;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class PersonalController {
@@ -135,12 +134,10 @@ public class PersonalController {
     public Result updateInfo(@RequestBody MallUser mallUser, HttpSession httpSession) {
         NewBeeMallUserVO mallUserTemp = newBeeMallUserService.updateUserInfo(mallUser, httpSession);
         if (mallUserTemp == null) {
-            Result result = ResultGenerator.genFailResult("修改失败");
-            return result;
+            return ResultGenerator.genFailResult("修改失败");
         } else {
             //返回成功
-            Result result = ResultGenerator.genSuccessResult();
-            return result;
+            return ResultGenerator.genSuccessResult();
         }
     }
 }

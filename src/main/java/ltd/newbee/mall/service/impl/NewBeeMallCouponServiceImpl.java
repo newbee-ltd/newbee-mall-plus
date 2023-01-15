@@ -39,8 +39,7 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
     public PageResult getCouponPage(PageQueryUtil pageUtil) {
         List<NewBeeMallCoupon> carousels = newBeeMallCouponMapper.findCouponlList(pageUtil);
         int total = newBeeMallCouponMapper.getTotalCoupons(pageUtil);
-        PageResult pageResult = new PageResult(carousels, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
+        return new PageResult(carousels, total, pageUtil.getLimit(), pageUtil.getPage());
     }
 
     @Override
@@ -91,16 +90,16 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
         if (newBeeMallCoupon.getCouponLimit() != 0) {
             int num = newBeeMallUserCouponRecordMapper.getUserCouponCount(userId, couponId);
             if (num != 0) {
-                throw new NewBeeMallException("优惠卷已经领过了,无法再次领取！");
+                throw new NewBeeMallException("优惠券已经领过了,无法再次领取！");
             }
         }
         if (newBeeMallCoupon.getCouponTotal() != 0) {
             int count = newBeeMallUserCouponRecordMapper.getCouponCount(couponId);
             if (count >= newBeeMallCoupon.getCouponTotal()) {
-                throw new NewBeeMallException("优惠卷已经领完了！");
+                throw new NewBeeMallException("优惠券已经领完了！");
             }
             if (newBeeMallCouponMapper.reduceCouponTotal(couponId) <= 0) {
-                throw new NewBeeMallException("优惠卷领取失败！");
+                throw new NewBeeMallException("优惠券领取失败！");
             }
         }
         NewBeeMallUserCouponRecord couponUser = new NewBeeMallUserCouponRecord();
@@ -115,6 +114,9 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
         List<NewBeeMallCouponVO> couponVOS = new ArrayList<>();
         for (NewBeeMallUserCouponRecord couponUser : coupons) {
             NewBeeMallCoupon newBeeMallCoupon = newBeeMallCouponMapper.selectByPrimaryKey(couponUser.getCouponId());
+            if (newBeeMallCoupon == null) {
+                continue;
+            }
             NewBeeMallCouponVO newBeeMallCouponVO = new NewBeeMallCouponVO();
             BeanUtil.copyProperties(newBeeMallCoupon, newBeeMallCouponVO);
             newBeeMallCouponVO.setCouponUserId(couponUser.getCouponUserId());
@@ -130,6 +132,7 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
         List<NewBeeMallMyCouponVO> myCouponVOS = BeanUtil.copyList(couponUsers, NewBeeMallMyCouponVO.class);
         List<Long> couponIds = couponUsers.stream().map(NewBeeMallUserCouponRecord::getCouponId).collect(Collectors.toList());
         if (!couponIds.isEmpty()) {
+            ZoneId zone = ZoneId.systemDefault();
             List<NewBeeMallCoupon> coupons = newBeeMallCouponMapper.selectByIds(couponIds);
             for (NewBeeMallCoupon coupon : coupons) {
                 for (NewBeeMallMyCouponVO myCouponVO : myCouponVOS) {
@@ -140,21 +143,31 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
                         myCouponVO.setMin(coupon.getMin());
                         myCouponVO.setGoodsType(coupon.getGoodsType());
                         myCouponVO.setGoodsValue(coupon.getGoodsValue());
-                        ZonedDateTime zonedDateTime = coupon.getCouponEndTime().atStartOfDay(ZoneId.systemDefault());
-                        myCouponVO.setEndTime(Date.from(zonedDateTime.toInstant()));
+                        ZonedDateTime startZonedDateTime = coupon.getCouponStartTime().atStartOfDay(zone);
+                        ZonedDateTime endZonedDateTime = coupon.getCouponEndTime().atStartOfDay(zone);
+                        myCouponVO.setStartTime(Date.from(startZonedDateTime.toInstant()));
+                        myCouponVO.setEndTime(Date.from(endZonedDateTime.toInstant()));
                     }
                 }
             }
         }
+        long nowTime = System.currentTimeMillis();
         return myCouponVOS.stream().filter(item -> {
+            // 判断有效期
+            Date startTime = item.getStartTime();
+            Date endTime = item.getEndTime();
+            if (startTime == null || endTime == null || nowTime < startTime.getTime() || nowTime > endTime.getTime()) {
+                return false;
+            }
+            // 判断使用条件
             boolean b = false;
             if (item.getMin() <= priceTotal) {
                 if (item.getGoodsType() == 1) { // 指定分类可用
                     String[] split = item.getGoodsValue().split(",");
-                    List<Long> goodsValue = Arrays.stream(split).map(Long::valueOf).collect(Collectors.toList());
+                    List<Long> goodsValue = Arrays.stream(split).map(Long::valueOf).toList();
                     List<Long> goodsIds = myShoppingCartItems.stream().map(NewBeeMallShoppingCartItemVO::getGoodsId).collect(Collectors.toList());
                     List<NewBeeMallGoods> goods = newBeeMallGoodsMapper.selectByPrimaryKeys(goodsIds);
-                    List<Long> categoryIds = goods.stream().map(NewBeeMallGoods::getGoodsCategoryId).collect(Collectors.toList());
+                    List<Long> categoryIds = goods.stream().map(NewBeeMallGoods::getGoodsCategoryId).toList();
                     for (Long categoryId : categoryIds) {
                         if (goodsValue.contains(categoryId)) {
                             b = true;
@@ -163,8 +176,8 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
                     }
                 } else if (item.getGoodsType() == 2) { // 指定商品可用
                     String[] split = item.getGoodsValue().split(",");
-                    List<Long> goodsValue = Arrays.stream(split).map(Long::valueOf).collect(Collectors.toList());
-                    List<Long> goodsIds = myShoppingCartItems.stream().map(NewBeeMallShoppingCartItemVO::getGoodsId).collect(Collectors.toList());
+                    List<Long> goodsValue = Arrays.stream(split).map(Long::valueOf).toList();
+                    List<Long> goodsIds = myShoppingCartItems.stream().map(NewBeeMallShoppingCartItemVO::getGoodsId).toList();
                     for (Long goodsId : goodsIds) {
                         if (goodsValue.contains(goodsId)) {
                             b = true;

@@ -450,7 +450,7 @@
 }
 
 #content #recommend ul li a {
-    display: flex;
+    display: block;
     flex-direction: column;
     align-items: center;
     font-size: 14px;
@@ -468,6 +468,7 @@
     line-height: 20px;
     color: #fff;
     font-size: 10px;
+    margin: auto;
 }
 
 #content #recommend ul li a .new {
@@ -475,7 +476,7 @@
 }
 
 #content #recommend ul li a .discount {
-    background-color: #f00;
+    background-color: #45aba1;
 }
 
 #content #recommend ul li a > p {

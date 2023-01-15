@@ -10,7 +10,7 @@
 newbee-mall-plus 项目是 [newbee-mall](https://github.com/newbee-ltd/newbee-mall)
 的升级版本，新增了优惠券模块、商品秒杀模块、支付宝支付，后续如果有技术栈和功能的升级也会放在这个仓库里，当前项目中的代码主要由 [@十三](https://github.com/newbee-mall)
 和 [@wayn111](https://github.com/wayn111) 共同开发。newbee-mall 项目是一套电商系统，包括 newbee-mall 商城系统及 newbee-mall-admin 商城后台管理系统，基于
-Spring Boot 2.X 及相关技术栈开发。
+Spring Boot 3.X 及相关技术栈开发。
 
 新蜂商城PLUS版本线上预览地址：[http://mall-plus.newbee.ltd](http://mall-plus.newbee.ltd?from=github)，账号可自行注册。
 

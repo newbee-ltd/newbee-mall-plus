@@ -11,7 +11,7 @@ package ltd.newbee.mall.controller.admin;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import ltd.newbee.mall.common.IndexConfigTypeEnum;
-import ltd.newbee.mall.common.NewBeeMallException;
+import ltd.newbee.mall.exception.NewBeeMallException;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.entity.IndexConfig;
 import ltd.newbee.mall.service.NewBeeMallIndexConfigService;

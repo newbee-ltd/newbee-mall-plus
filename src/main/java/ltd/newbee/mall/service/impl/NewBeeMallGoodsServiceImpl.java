@@ -9,7 +9,7 @@
 package ltd.newbee.mall.service.impl;
 
 import ltd.newbee.mall.common.NewBeeMallCategoryLevelEnum;
-import ltd.newbee.mall.common.NewBeeMallException;
+import ltd.newbee.mall.exception.NewBeeMallException;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.NewBeeMallSearchGoodsVO;
 import ltd.newbee.mall.dao.GoodsCategoryMapper;

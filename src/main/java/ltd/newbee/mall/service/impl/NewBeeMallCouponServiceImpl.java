@@ -1,6 +1,6 @@
 package ltd.newbee.mall.service.impl;
 
-import ltd.newbee.mall.common.NewBeeMallException;
+import ltd.newbee.mall.exception.NewBeeMallException;
 import ltd.newbee.mall.controller.vo.NewBeeMallCouponVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallMyCouponVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallShoppingCartItemVO;

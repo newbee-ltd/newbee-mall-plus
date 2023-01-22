@@ -12,7 +12,7 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import ltd.newbee.mall.common.Constants;
-import ltd.newbee.mall.common.NewBeeMallException;
+import ltd.newbee.mall.exception.NewBeeMallException;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.NewBeeMallMyCouponVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallShoppingCartItemVO;

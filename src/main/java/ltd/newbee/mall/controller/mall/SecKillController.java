@@ -3,7 +3,7 @@ package ltd.newbee.mall.controller.mall;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import ltd.newbee.mall.common.Constants;
-import ltd.newbee.mall.common.NewBeeMallException;
+import ltd.newbee.mall.exception.NewBeeMallException;
 import ltd.newbee.mall.controller.vo.ExposerVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallSeckillGoodsVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;

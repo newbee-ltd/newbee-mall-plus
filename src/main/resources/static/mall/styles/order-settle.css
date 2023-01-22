@@ -465,11 +465,11 @@ td {
   width: 280px;
   height: 120px;
   margin: 5px;
-  border: #1baeae50 1px solid;
+  border: #7ecbcb 2px solid;
 }
 
 #my-coupon ul li.active {
-  border: #1baeae 2px solid;
+  border: #0ab724 2px solid;
 }
 
 #my-coupon ul li:hover {

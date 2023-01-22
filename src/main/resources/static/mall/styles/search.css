@@ -200,10 +200,6 @@
   margin-right: 5px;
   border: 1px solid #ddd;
 }
-.goods_item .pages .page_wrap .page_span1 a:nth-child(1) {
-  color: #ccc;
-  background: #fff;
-}
 .goods_item .pages .page_wrap .page_span2 {
   float: right;
   margin-right: 55px;

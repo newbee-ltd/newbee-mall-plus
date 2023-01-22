@@ -13,6 +13,7 @@ import ltd.newbee.mall.config.ProjectConfig;
 import ltd.newbee.mall.controller.vo.*;
 import ltd.newbee.mall.dao.*;
 import ltd.newbee.mall.entity.*;
+import ltd.newbee.mall.exception.NewBeeMallException;
 import ltd.newbee.mall.service.NewBeeMallOrderService;
 import ltd.newbee.mall.task.OrderUnPaidTask;
 import ltd.newbee.mall.task.TaskService;

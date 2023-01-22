@@ -1,9 +1,6 @@
 package ltd.newbee.mall.config;
 
-import com.alibaba.fastjson.parser.ParserConfig;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.alibaba.fastjson.support.config.FastJsonConfig;
-import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
+import ltd.newbee.mall.common.Constants;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
@@ -38,14 +35,7 @@ public class CacheConfig implements CachingConfigurer {
     }
 
     private RedisSerializer<Object> valueSerializer() {
-        FastJsonRedisSerializer<Object> fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
-        ParserConfig globalInstance = ParserConfig.getGlobalInstance();
-        globalInstance.setAutoTypeSupport(true);
-        FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        fastJsonConfig.setParserConfig(globalInstance);
-        fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteClassName);
-        fastJsonRedisSerializer.setFastJsonConfig(fastJsonConfig);
-        return fastJsonRedisSerializer;
+        return new FastJsonRedisSerializer<>(Object.class);
     }
 
     @Bean
@@ -58,7 +48,7 @@ public class CacheConfig implements CachingConfigurer {
 
     private RedisCacheConfiguration defaultCacheConfig() {
         return RedisCacheConfiguration.defaultCacheConfig()
-                .prefixCacheNameWith("redis_key")
+                .prefixCacheNameWith(Constants.REDIS_KEY_PREFIX)
                 .entryTtl(Duration.ofSeconds(300))
                 .disableCachingNullValues();
     }

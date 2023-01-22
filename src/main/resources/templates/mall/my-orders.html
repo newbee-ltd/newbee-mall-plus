@@ -106,25 +106,69 @@
                     <th:block th:unless="${#lists.isEmpty(orderPageResult.list)}">
                         <div id="J_orderListPages">
                             <div class="newbee-pagenavi">
-                                <th:block th:if="${orderPageResult.currPage-2 >=1}"><a
-                                        class="numbers"
-                                        th:href="@{'/orders?page=' + ${orderPageResult.currPage-2}}"
-                                        th:text="${orderPageResult.currPage -2}">1</a>
+                                <a th:if="${orderPageResult.currPage != 1}"
+                                   class="numbers"
+                                   th:href="@{'/orders?page=1'}">
+                                    首页
+                                </a>
+                                <a th:if="${orderPageResult.currPage != 1}"
+                                   class="numbers"
+                                   th:href="@{'/orders?page=' + ${orderPageResult.currPage-1}}">
+                                    <
+                                </a>
+
+                                <th:block th:if="${orderPageResult.totalPage <= 5 && orderPageResult.currPage <= 5}">
+                                    <th:block th:each="index : ${#numbers.sequence(1, orderPageResult.totalPage)}">
+                                        <a th:href="@{'/orders?page=' + ${index}"
+                                           class="numbers"
+                                           th:classappend="${index == orderPageResult.currPage ? 'current' : ''}"
+                                           th:text="${index}">1</a>
+                                    </th:block>
                                 </th:block>
-                                <th:block th:if="${orderPageResult.currPage-1 >=1}"><a
-                                        class="numbers"
-                                        th:href="@{'/orders?page=' + ${orderPageResult.currPage-1}}"
-                                        th:text="${orderPageResult.currPage -1}">1</a>
+
+                                <th:block th:if="${orderPageResult.totalPage > 5 && orderPageResult.currPage <= 3}">
+                                    <th:block th:if="${orderPageResult.currPage <= 3}"
+                                              th:each="index : ${#numbers.sequence(1, 5)}">
+                                        <a th:href="@{'/orders?page=' + ${index}}"
+                                           class="numbers"
+                                           th:classappend="${index == orderPageResult.currPage ? 'current' : ''}"
+                                           th:text="${index}">1</a>
+                                    </th:block>
                                 </th:block>
-                                <a href="##" class="numbers current" th:text="${orderPageResult.currPage}">1</a>
-                                <th:block th:if="${orderPageResult.currPage+1<=orderPageResult.totalPage}"><a
-                                        class="numbers"
-                                        th:href="@{'/orders?page=' + ${orderPageResult.currPage+1}}"
-                                        th:text="${orderPageResult.currPage +1}">1</a></th:block>
-                                <th:block th:if="${orderPageResult.currPage+2<=orderPageResult.totalPage}"><a
-                                        class="numbers"
-                                        th:href="@{'/orders?page=' + ${orderPageResult.currPage+2}}"
-                                        th:text="${orderPageResult.currPage +2}">1</a></th:block>
+
+                                <th:block th:if="${orderPageResult.totalPage > 5 && orderPageResult.currPage > 3}">
+                                    <th:block th:if="${orderPageResult.currPage-2 >=1}"><a
+                                            class="numbers"
+                                            th:href="@{'/orders?page=' + ${orderPageResult.currPage-2}}"
+                                            th:text="${orderPageResult.currPage -2}">1</a>
+                                    </th:block>
+                                    <th:block th:if="${orderPageResult.currPage-1 >=1}"><a
+                                            class="numbers"
+                                            th:href="@{'/orders?page=' + ${orderPageResult.currPage-1}}"
+                                            th:text="${orderPageResult.currPage -1}">1</a>
+                                    </th:block>
+                                    <a href="##" class="numbers current" th:text="${orderPageResult.currPage}">1</a>
+                                    <th:block th:if="${orderPageResult.currPage+1<=orderPageResult.totalPage}"><a
+                                            class="numbers"
+                                            th:href="@{'/orders?page=' + ${orderPageResult.currPage+1}}"
+                                            th:text="${orderPageResult.currPage +1}">1</a></th:block>
+                                    <th:block th:if="${orderPageResult.currPage+2<=orderPageResult.totalPage}"><a
+                                            class="numbers"
+                                            th:href="@{'/orders?page=' + ${orderPageResult.currPage+2}}"
+                                            th:text="${orderPageResult.currPage +2}">1</a></th:block>
+                                </th:block>
+
+                                <a th:if="${orderPageResult.currPage != orderPageResult.totalPage}"
+                                   class="numbers"
+                                   th:href="@{'/orders?page=' + ${orderPageResult.currPage+1}}">
+                                    >
+                                </a>
+                                <a th:if="${orderPageResult.currPage != orderPageResult.totalPage}"
+                                   class="numbers"
+                                   th:href="@{'/orders?page=' + ${orderPageResult.totalPage}}">
+                                    尾页
+                                </a>
+
                             </div>
                         </div>
                     </th:block>

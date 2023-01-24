@@ -26,13 +26,13 @@
                     </div>
                     <div class="box-bd">
                         <div class="quan-list">
-                            <th:block th:if="${#lists.isEmpty(myCoupons)}">
+                            <th:block th:if="${#lists.isEmpty(pageResult.list)}">
                                 <img style="margin-top: 16px;"
                                      th:src="@{/mall/image/null-content.png}">
                             </th:block>
-                            <th:block th:unless="${#lists.isEmpty(myCoupons)}">
+                            <th:block th:unless="${#lists.isEmpty(pageResult.list)}">
 
-                                <th:block th:each="coupon : ${myCoupons}">
+                                <th:block th:each="coupon : ${pageResult.list}">
                                     <div class="quan-item quan-d-item">
                                         <div class="q-type">
                                             <div class="q-price q-price-active">
@@ -68,6 +68,77 @@
                                         </div>
                                     </div>
                                 </th:block>
+
+                                <th:block th:unless="${#lists.isEmpty(pageResult.list)}">
+                                    <div id="page">
+                                        <div class="newbee-pagenavi">
+                                            <a th:if="${pageResult.currPage != 1}"
+                                               class="numbers"
+                                               th:href="@{'/myCoupons?page=1'}">
+                                                首页
+                                            </a>
+                                            <a th:if="${pageResult.currPage != 1}"
+                                               class="numbers"
+                                               th:href="@{'/myCoupons?page=' + ${pageResult.currPage-1}}">
+                                                <
+                                            </a>
+
+                                            <th:block th:if="${pageResult.totalPage <= 5 && pageResult.currPage <= 5}">
+                                                <th:block th:each="index : ${#numbers.sequence(1, pageResult.totalPage)}">
+                                                    <a th:href="@{'/myCoupons?page=' + ${index}}"
+                                                       class="numbers"
+                                                       th:classappend="${index == pageResult.currPage ? 'current' : ''}"
+                                                       th:text="${index}">1</a>
+                                                </th:block>
+                                            </th:block>
+
+                                            <th:block th:if="${pageResult.totalPage > 5 && pageResult.currPage <= 3}">
+                                                <th:block th:if="${pageResult.currPage <= 3}"
+                                                          th:each="index : ${#numbers.sequence(1, 5)}">
+                                                    <a th:href="@{'/myCoupons?page=' + ${index}}"
+                                                       class="numbers"
+                                                       th:classappend="${index == pageResult.currPage ? 'current' : ''}"
+                                                       th:text="${index}">1</a>
+                                                </th:block>
+                                            </th:block>
+
+                                            <th:block th:if="${pageResult.totalPage > 5 && pageResult.currPage > 3}">
+                                                <th:block th:if="${pageResult.currPage-2 >=1}"><a
+                                                        class="numbers"
+                                                        th:href="@{'/myCoupons?page=' + ${pageResult.currPage-2}}"
+                                                        th:text="${pageResult.currPage -2}">1</a>
+                                                </th:block>
+                                                <th:block th:if="${pageResult.currPage-1 >=1}"><a
+                                                        class="numbers"
+                                                        th:href="@{'/myCoupons?page=' + ${pageResult.currPage-1}}"
+                                                        th:text="${pageResult.currPage -1}">1</a>
+                                                </th:block>
+                                                <a href="##" class="numbers current" th:text="${pageResult.currPage}">1</a>
+                                                <th:block th:if="${pageResult.currPage+1<=pageResult.totalPage}"><a
+                                                        class="numbers"
+                                                        th:href="@{'/myCoupons?page=' + ${pageResult.currPage+1}}"
+                                                        th:text="${pageResult.currPage +1}">1</a></th:block>
+                                                <th:block th:if="${pageResult.currPage+2<=pageResult.totalPage}"><a
+                                                        class="numbers"
+                                                        th:href="@{'/myCoupons?page=' + ${pageResult.currPage+2}}"
+                                                        th:text="${pageResult.currPage +2}">1</a></th:block>
+                                            </th:block>
+
+                                            <a th:if="${pageResult.currPage != pageResult.totalPage}"
+                                               class="numbers"
+                                               th:href="@{'/myCoupons?page=' + ${pageResult.currPage+1}}">
+                                                >
+                                            </a>
+                                            <a th:if="${pageResult.currPage != pageResult.totalPage}"
+                                               class="numbers"
+                                               th:href="@{'/myCoupons?page=' + ${pageResult.totalPage}}">
+                                                尾页
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </th:block>
+
                             </th:block>
                         </div>
                     </div>

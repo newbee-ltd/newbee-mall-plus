@@ -53,8 +53,6 @@ public class OrderController {
     @Autowired
     private NewBeeMallOrderService newBeeMallOrderService;
     @Autowired
-    private MallUserMapper mallUserMapper;
-    @Autowired
     private AlipayConfig alipayConfig;
 
     @GetMapping("/orders/{orderNo}")
@@ -72,10 +70,10 @@ public class OrderController {
         if (StringUtils.isEmpty((CharSequence) params.get("page"))) {
             params.put("page", 1);
         }
-        params.put("limit", Constants.ORDER_SEARCH_PAGE_LIMIT);
+        params.put("limit", Constants.MY_ORDERS_PAGE_LIMIT);
         //封装我的订单数据
         PageQueryUtil pageUtil = new PageQueryUtil(params);
-        request.setAttribute("orderPageResult", newBeeMallOrderService.getMyOrders(pageUtil));
+        request.setAttribute("pageResult", newBeeMallOrderService.getMyOrders(pageUtil));
         request.setAttribute("path", "orders");
         return "mall/my-orders";
     }

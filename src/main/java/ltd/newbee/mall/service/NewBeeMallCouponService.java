@@ -44,7 +44,7 @@ public interface NewBeeMallCouponService {
      * @param userId 用户ID
      * @return
      */
-    List<NewBeeMallCouponVO> selectMyCoupons(Long userId);
+    PageResult<NewBeeMallCouponVO> selectMyCoupons(PageQueryUtil pageQueryUtil);
 
     /**
      * 查询当前订单可用的优惠券
@@ -69,4 +69,5 @@ public interface NewBeeMallCouponService {
      * @param orderId
      */
     void releaseCoupon(Long orderId);
+
 }

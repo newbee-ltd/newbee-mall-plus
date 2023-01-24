@@ -1,6 +1,7 @@
 package ltd.newbee.mall.dao;
 
 import ltd.newbee.mall.entity.NewBeeMallUserCouponRecord;
+import ltd.newbee.mall.util.PageQueryUtil;
 
 import java.util.List;
 
@@ -21,7 +22,9 @@ public interface NewBeeMallUserCouponRecordMapper {
 
     int getCouponCount(Long couponId);
 
-    List<NewBeeMallUserCouponRecord> selectMyCoupons(Long userId);
+    List<NewBeeMallUserCouponRecord> selectMyCoupons(PageQueryUtil pageQueryUtil);
+
+    Integer countMyCoupons(PageQueryUtil pageQueryUtil);
 
     List<NewBeeMallUserCouponRecord> selectMyAvailableCoupons(Long userId);
 

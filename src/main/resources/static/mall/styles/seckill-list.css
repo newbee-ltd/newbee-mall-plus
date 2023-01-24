@@ -30,6 +30,9 @@
 }
 .goods_item .main .item_card_frame:hover {
     border-color: #1baeae;
+    top: -4px;
+    left: 2px;
+    position: relative;
 }
 .goods_item .main .item_card_frame .item_card {
     padding: 37px;

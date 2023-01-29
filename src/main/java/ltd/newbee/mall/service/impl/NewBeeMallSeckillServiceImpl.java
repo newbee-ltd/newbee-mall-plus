@@ -2,7 +2,7 @@ package ltd.newbee.mall.service.impl;
 
 import com.google.common.util.concurrent.RateLimiter;
 import ltd.newbee.mall.common.Constants;
-import ltd.newbee.mall.common.NewBeeMallException;
+import ltd.newbee.mall.exception.NewBeeMallException;
 import ltd.newbee.mall.common.SeckillStatusEnum;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.ExposerVO;

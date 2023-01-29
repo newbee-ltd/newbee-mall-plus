@@ -1,6 +1,5 @@
 package ltd.newbee.mall.service.impl;
 
-import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.controller.vo.NewBeeMallCouponVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallMyCouponVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallShoppingCartItemVO;
@@ -14,6 +13,7 @@ import ltd.newbee.mall.service.NewBeeMallCouponService;
 import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +22,9 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 @Service
 public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
@@ -90,16 +93,16 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
         if (newBeeMallCoupon.getCouponLimit() != 0) {
             int num = newBeeMallUserCouponRecordMapper.getUserCouponCount(userId, couponId);
             if (num != 0) {
-                throw new NewBeeMallException("优惠券已经领过了,无法再次领取！");
+                throw new ltd.newbee.mall.exception.NewBeeMallException("优惠券已经领过了,无法再次领取！");
             }
         }
         if (newBeeMallCoupon.getCouponTotal() != 0) {
             int count = newBeeMallUserCouponRecordMapper.getCouponCount(couponId);
             if (count >= newBeeMallCoupon.getCouponTotal()) {
-                throw new NewBeeMallException("优惠券已经领完了！");
+                throw new ltd.newbee.mall.exception.NewBeeMallException("优惠券已经领完了！");
             }
             if (newBeeMallCouponMapper.reduceCouponTotal(couponId) <= 0) {
-                throw new NewBeeMallException("优惠券领取失败！");
+                throw new ltd.newbee.mall.exception.NewBeeMallException("优惠券领取失败！");
             }
         }
         NewBeeMallUserCouponRecord couponUser = new NewBeeMallUserCouponRecord();
@@ -109,28 +112,33 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
     }
 
     @Override
-    public List<NewBeeMallCouponVO> selectMyCoupons(Long userId) {
-        List<NewBeeMallUserCouponRecord> coupons = newBeeMallUserCouponRecordMapper.selectMyCoupons(userId);
+    public PageResult<NewBeeMallCouponVO> selectMyCoupons(PageQueryUtil pageUtil) {
+        Integer total = newBeeMallUserCouponRecordMapper.countMyCoupons(pageUtil);
         List<NewBeeMallCouponVO> couponVOS = new ArrayList<>();
-        for (NewBeeMallUserCouponRecord couponUser : coupons) {
-            NewBeeMallCoupon newBeeMallCoupon = newBeeMallCouponMapper.selectByPrimaryKey(couponUser.getCouponId());
-            if (newBeeMallCoupon == null) {
-                continue;
+        if (total > 0) {
+            List<NewBeeMallUserCouponRecord> userCouponRecords = newBeeMallUserCouponRecordMapper.selectMyCoupons(pageUtil);
+            List<Long> couponIds = userCouponRecords.stream().map(NewBeeMallUserCouponRecord::getCouponId).collect(toList());
+            if (CollectionUtils.isNotEmpty(couponIds)) {
+                List<NewBeeMallCoupon> newBeeMallCoupons = newBeeMallCouponMapper.selectByIds(couponIds);
+                Map<Long, NewBeeMallCoupon> listMap = newBeeMallCoupons.stream().collect(toMap(NewBeeMallCoupon::getCouponId, newBeeMallCoupon -> newBeeMallCoupon));
+                for (NewBeeMallUserCouponRecord couponUser : userCouponRecords) {
+                    NewBeeMallCouponVO newBeeMallCouponVO = new NewBeeMallCouponVO();
+                    NewBeeMallCoupon newBeeMallCoupon = listMap.getOrDefault(couponUser.getCouponId(), new NewBeeMallCoupon());
+                    BeanUtil.copyProperties(newBeeMallCoupon, newBeeMallCouponVO);
+                    newBeeMallCouponVO.setCouponUserId(couponUser.getCouponUserId());
+                    newBeeMallCouponVO.setUsed(couponUser.getUsedTime() != null);
+                    couponVOS.add(newBeeMallCouponVO);
+                }
             }
-            NewBeeMallCouponVO newBeeMallCouponVO = new NewBeeMallCouponVO();
-            BeanUtil.copyProperties(newBeeMallCoupon, newBeeMallCouponVO);
-            newBeeMallCouponVO.setCouponUserId(couponUser.getCouponUserId());
-            newBeeMallCouponVO.setUsed(couponUser.getUsedTime() != null);
-            couponVOS.add(newBeeMallCouponVO);
         }
-        return couponVOS;
+        return new PageResult<>(couponVOS, total, pageUtil.getLimit(), pageUtil.getPage());
     }
 
     @Override
     public List<NewBeeMallMyCouponVO> selectOrderCanUseCoupons(List<NewBeeMallShoppingCartItemVO> myShoppingCartItems, int priceTotal, Long userId) {
         List<NewBeeMallUserCouponRecord> couponUsers = newBeeMallUserCouponRecordMapper.selectMyAvailableCoupons(userId);
         List<NewBeeMallMyCouponVO> myCouponVOS = BeanUtil.copyList(couponUsers, NewBeeMallMyCouponVO.class);
-        List<Long> couponIds = couponUsers.stream().map(NewBeeMallUserCouponRecord::getCouponId).collect(Collectors.toList());
+        List<Long> couponIds = couponUsers.stream().map(NewBeeMallUserCouponRecord::getCouponId).collect(toList());
         if (!couponIds.isEmpty()) {
             ZoneId zone = ZoneId.systemDefault();
             List<NewBeeMallCoupon> coupons = newBeeMallCouponMapper.selectByIds(couponIds);
@@ -165,7 +173,7 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
                 if (item.getGoodsType() == 1) { // 指定分类可用
                     String[] split = item.getGoodsValue().split(",");
                     List<Long> goodsValue = Arrays.stream(split).map(Long::valueOf).toList();
-                    List<Long> goodsIds = myShoppingCartItems.stream().map(NewBeeMallShoppingCartItemVO::getGoodsId).collect(Collectors.toList());
+                    List<Long> goodsIds = myShoppingCartItems.stream().map(NewBeeMallShoppingCartItemVO::getGoodsId).collect(toList());
                     List<NewBeeMallGoods> goods = newBeeMallGoodsMapper.selectByPrimaryKeys(goodsIds);
                     List<Long> categoryIds = goods.stream().map(NewBeeMallGoods::getGoodsCategoryId).toList();
                     for (Long categoryId : categoryIds) {
@@ -189,7 +197,7 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
                 }
             }
             return b;
-        }).sorted(Comparator.comparingInt(NewBeeMallMyCouponVO::getDiscount)).collect(Collectors.toList());
+        }).sorted(Comparator.comparingInt(NewBeeMallMyCouponVO::getDiscount)).collect(toList());
     }
 
     @Override

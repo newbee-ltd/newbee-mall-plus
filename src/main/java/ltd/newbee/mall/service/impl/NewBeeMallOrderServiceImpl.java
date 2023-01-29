@@ -13,6 +13,7 @@ import ltd.newbee.mall.config.ProjectConfig;
 import ltd.newbee.mall.controller.vo.*;
 import ltd.newbee.mall.dao.*;
 import ltd.newbee.mall.entity.*;
+import ltd.newbee.mall.exception.NewBeeMallException;
 import ltd.newbee.mall.service.NewBeeMallOrderService;
 import ltd.newbee.mall.task.OrderUnPaidTask;
 import ltd.newbee.mall.task.TaskService;
@@ -365,9 +366,9 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     @Override
     public PageResult getMyOrders(PageQueryUtil pageUtil) {
         int total = newBeeMallOrderMapper.getTotalNewBeeMallOrders(pageUtil);
-        List<NewBeeMallOrder> newBeeMallOrders = newBeeMallOrderMapper.findNewBeeMallOrderList(pageUtil);
         List<NewBeeMallOrderListVO> orderListVOS = new ArrayList<>();
         if (total > 0) {
+            List<NewBeeMallOrder> newBeeMallOrders = newBeeMallOrderMapper.findNewBeeMallOrderList(pageUtil);
             // 数据转换 将实体类转成vo
             orderListVOS = BeanUtil.copyList(newBeeMallOrders, NewBeeMallOrderListVO.class);
             // 设置订单状态中文显示值

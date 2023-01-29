@@ -18,11 +18,14 @@ server:
 
 # 项目全局配置
 project:
-  name: newbee-mall-plus # 项目名称
-  #  fileUploadPath: /opt/newbee-mall-plus/upload/  # 上传文件的默认url前缀，根据部署设置自行修改，linux下路径
-  fileUploadPath: D:\\upload\\              # 上传文件的默认url前缀，根据部署设置自行修改，windows下路径
-  orderUnpaidOverTime: 300 # 订单未支付超期时间，单位秒
-  serverUrl: http://localhost:28079 # 服务器地址
+  # 项目名称
+  name: newbee-mall-plus
+  # 上传文件的默认url前缀，根据部署设置自行修改，windows下路径
+  fileUploadPath: D:\\upload\\
+  # 订单未支付超期时间，单位秒
+  orderUnpaidOverTime: 300
+  # 服务器地址
+  serverUrl: http://localhost:28079
 
 # 防止XSS攻击
 xss:
@@ -49,7 +52,8 @@ spring:
 
 # mybatis配置
 mybatis:
-  mapper-locations: classpath:mapper/*Mapper.xml    # mapper映射文件位置
+  # mapper映射文件位置
+  mapper-locations: classpath:mapper/*Mapper.xml
 
 # alipay 需要自行申请支付宝的沙箱账号、申请appID，并依次配置AppID、密钥、公钥，否则无法发起支付宝支付。
 alipay:
@@ -59,6 +63,5 @@ alipay:
   gateway: https://openapi.alipaydev.com/gateway.do
   charset: UTF-8
   format: json
-  #  log-path: /opt/newbee-mall-plus/log
   log-path: D://newbee-mall-plus//log
   signtype: RSA2

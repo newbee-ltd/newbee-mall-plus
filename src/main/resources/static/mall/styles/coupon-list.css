@@ -30,6 +30,11 @@
     cursor: pointer;
 }
 
+.quan-item.quan-d-item:hover {
+    top: -4px;
+    left: 2px;
+}
+
 .quan-item {
     position: relative;
     height: 192px;

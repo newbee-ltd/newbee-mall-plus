@@ -468,6 +468,10 @@ a {
     margin: 2px 28px 28px 2px;
 }
 
+.quan-list #page{
+    clear: both;
+}
+
 .quan-item {
     position: relative;
     height: 192px;

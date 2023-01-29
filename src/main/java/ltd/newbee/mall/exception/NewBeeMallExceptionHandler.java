@@ -6,10 +6,9 @@
  * Copyright (c) 2019-2020 十三 all rights reserved.
  * 版权所有，侵权必究！
  */
-package ltd.newbee.mall.controller.common;
+package ltd.newbee.mall.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
-import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.util.HttpUtil;
 import ltd.newbee.mall.util.Result;
 import org.slf4j.Logger;
@@ -31,8 +30,8 @@ public class NewBeeMallExceptionHandler {
         Result result = new Result();
         result.setResultCode(500);
         // 区分是否为自定义异常
-        if (e instanceof NewBeeMallException) {
-            result.setMessage(e.getMessage());
+        if (e instanceof NewBeeMallException newBeeMallException) {
+            result.setMessage(newBeeMallException.getMessage());
         } else {
             log.error(e.getMessage(), e);
             result.setMessage("未知异常");

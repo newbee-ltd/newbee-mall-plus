@@ -18,12 +18,13 @@ import ltd.newbee.mall.dao.NewBeeMallUserCouponRecordMapper;
 import ltd.newbee.mall.entity.MallUser;
 import ltd.newbee.mall.entity.NewBeeMallCoupon;
 import ltd.newbee.mall.entity.NewBeeMallUserCouponRecord;
+import ltd.newbee.mall.exception.NewBeeMallException;
 import ltd.newbee.mall.service.NewBeeMallUserService;
 import ltd.newbee.mall.util.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.util.StringUtils;
 
 import java.util.List;
 
@@ -78,14 +79,14 @@ public class NewBeeMallUserServiceImpl implements NewBeeMallUserService {
             if (user.getLockedFlag() == 1) {
                 return ServiceResultEnum.LOGIN_USER_LOCKED.getResult();
             }
-            //昵称太长 影响页面展示
+            // 昵称太长 影响页面展示
             if (user.getNickName() != null && user.getNickName().length() > 7) {
                 String tempNickName = user.getNickName().substring(0, 7) + "..";
                 user.setNickName(tempNickName);
             }
             NewBeeMallUserVO newBeeMallUserVO = new NewBeeMallUserVO();
             BeanUtil.copyProperties(user, newBeeMallUserVO);
-            //设置购物车中的数量
+            // 设置购物车中的数量
             httpSession.setAttribute(Constants.MALL_USER_SESSION_KEY, newBeeMallUserVO);
             return ServiceResultEnum.SUCCESS.getResult();
         }
@@ -96,22 +97,35 @@ public class NewBeeMallUserServiceImpl implements NewBeeMallUserService {
     public NewBeeMallUserVO updateUserInfo(MallUser mallUser, HttpSession httpSession) {
         NewBeeMallUserVO userTemp = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         MallUser userFromDB = mallUserMapper.selectByPrimaryKey(userTemp.getUserId());
-        if (userFromDB != null) {
-            if (!StringUtils.isEmpty(mallUser.getNickName())) {
-                userFromDB.setNickName(NewBeeMallUtils.cleanString(mallUser.getNickName()));
-            }
-            if (!StringUtils.isEmpty(mallUser.getAddress())) {
-                userFromDB.setAddress(NewBeeMallUtils.cleanString(mallUser.getAddress()));
-            }
-            if (!StringUtils.isEmpty(mallUser.getIntroduceSign())) {
-                userFromDB.setIntroduceSign(NewBeeMallUtils.cleanString(mallUser.getIntroduceSign()));
-            }
-            if (mallUserMapper.updateByPrimaryKeySelective(userFromDB) > 0) {
-                NewBeeMallUserVO newBeeMallUserVO = new NewBeeMallUserVO();
-                BeanUtil.copyProperties(userFromDB, newBeeMallUserVO);
-                httpSession.setAttribute(Constants.MALL_USER_SESSION_KEY, newBeeMallUserVO);
-                return newBeeMallUserVO;
-            }
+        if (userFromDB == null) {
+            return null;
+        }
+        if (StringUtils.equals(mallUser.getNickName(), userFromDB.getNickName())
+                && StringUtils.equals(mallUser.getAddress(), userFromDB.getAddress())
+                && StringUtils.equals(mallUser.getIntroduceSign(), userFromDB.getIntroduceSign())) {
+            throw new NewBeeMallException("个人信息无变更！");
+        }
+
+        if (StringUtils.equals(mallUser.getAddress(), userFromDB.getAddress())
+                && mallUser.getNickName() == null
+                && mallUser.getIntroduceSign() == null) {
+            throw new NewBeeMallException("个人信息无变更！");
+        }
+
+        if (!StringUtils.isEmpty(mallUser.getNickName())) {
+            userFromDB.setNickName(NewBeeMallUtils.cleanString(mallUser.getNickName()));
+        }
+        if (!StringUtils.isEmpty(mallUser.getAddress())) {
+            userFromDB.setAddress(NewBeeMallUtils.cleanString(mallUser.getAddress()));
+        }
+        if (!StringUtils.isEmpty(mallUser.getIntroduceSign())) {
+            userFromDB.setIntroduceSign(NewBeeMallUtils.cleanString(mallUser.getIntroduceSign()));
+        }
+        if (mallUserMapper.updateByPrimaryKeySelective(userFromDB) > 0) {
+            NewBeeMallUserVO newBeeMallUserVO = new NewBeeMallUserVO();
+            BeanUtil.copyProperties(userFromDB, newBeeMallUserVO);
+            httpSession.setAttribute(Constants.MALL_USER_SESSION_KEY, newBeeMallUserVO);
+            return newBeeMallUserVO;
         }
         return null;
     }

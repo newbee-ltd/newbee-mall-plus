@@ -6,7 +6,7 @@
  * Copyright (c) 2019-2020 十三 all rights reserved.
  * 版权所有，侵权必究！
  */
-package ltd.newbee.mall.common;
+package ltd.newbee.mall.exception;
 
 public class NewBeeMallException extends RuntimeException {
 

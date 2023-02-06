@@ -780,7 +780,7 @@ a.g-menu-item, a.soptclass, a.clearsearchclass {
 .ui-resizable-handle {
 	/*position: absolute;*/
 	display: block;
-	left :97%;
+	left :auto;
 }
 .ui-jqdialog .ui-resizable-se {
 	width: 12px;
@@ -788,6 +788,9 @@ a.g-menu-item, a.soptclass, a.clearsearchclass {
 	right: -5px;
 	bottom: -5px;
 	background-position: 16px 16px;
+	position : absolute;
+	right: 2px;
+	top: 97%;
 }
 .ui-resizable-se {
 	cursor: se-resize;
@@ -795,6 +798,10 @@ a.g-menu-item, a.soptclass, a.clearsearchclass {
 	height: 12px;
 	right: 1px;
 	bottom: 1px;
+}
+.ui-resizable-icon {
+	resize: both;
+	overflow: auto;
 }
 .ui-top-corner {
 	border-top-left-radius: 5px;

@@ -162,7 +162,7 @@
         AND c.is_deleted = 0
         AND c.coupon_type = 0
         AND c.coupon_status = 0
-        AND r.user_id = ${userId}
+        AND r.user_id = #{userId}
         AND DATE_FORMAT( c.coupon_start_time, '%Y-%m-%d' ) <![CDATA[ <= ]]> DATE_FORMAT( now(), '%Y-%m-%d' )
         AND DATE_FORMAT( c.coupon_end_time, '%Y-%m-%d' ) <![CDATA[ >= ]]> DATE_FORMAT(now(), '%Y-%m-%d')
         order by r.use_status asc, r.create_time desc, r.coupon_user_id desc
@@ -181,7 +181,7 @@
         AND c.is_deleted = 0
         AND c.coupon_type = 0
         AND c.coupon_status = 0
-        AND r.user_id = ${userId}
+        AND r.user_id = #{userId}
         AND r.use_status = 0
         AND DATE_FORMAT( c.coupon_start_time, '%Y-%m-%d' ) <![CDATA[ <= ]]> DATE_FORMAT(now(), '%Y-%m-%d' )
         AND DATE_FORMAT( c.coupon_end_time, '%Y-%m-%d' ) <![CDATA[ >= ]]> DATE_FORMAT(now(), '%Y-%m-%d')
@@ -204,7 +204,7 @@
         AND c.is_deleted = 0
         AND c.coupon_type = 0
         AND c.coupon_status = 0
-        AND r.user_id = ${userId}
+        AND r.user_id = #{userId}
         AND DATE_FORMAT( c.coupon_start_time, '%Y-%m-%d' ) <![CDATA[ <= ]]> DATE_FORMAT( now(), '%Y-%m-%d' )
         AND DATE_FORMAT( c.coupon_end_time, '%Y-%m-%d' ) <![CDATA[ >= ]]> DATE_FORMAT(now(), '%Y-%m-%d')
     </select>

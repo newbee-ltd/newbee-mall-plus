@@ -68,7 +68,9 @@
                 and create_time &lt; #{endTime}
             </if>
         </where>
-        order by create_time desc
+        <if test="sortField!=null and order!=null">
+            order by ${sortField} ${order}
+        </if>
         <if test="start!=null and limit!=null">
             limit #{start},#{limit}
         </if>

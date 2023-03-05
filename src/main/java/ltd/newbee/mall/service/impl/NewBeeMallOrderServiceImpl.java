@@ -56,10 +56,10 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     private TaskService taskService;
 
     @Override
-    public PageResult getNewBeeMallOrdersPage(PageQueryUtil pageUtil) {
-        List<NewBeeMallOrder> newBeeMallOrders = newBeeMallOrderMapper.findNewBeeMallOrderList(pageUtil);
+    public PageResult<NewBeeMallOrder> getNewBeeMallOrdersPage(PageQueryUtil pageUtil) {
         int total = newBeeMallOrderMapper.getTotalNewBeeMallOrders(pageUtil);
-        return new PageResult(newBeeMallOrders, total, pageUtil.getLimit(), pageUtil.getPage());
+        List<NewBeeMallOrder> newBeeMallOrders = newBeeMallOrderMapper.findNewBeeMallOrderList(pageUtil);
+        return new PageResult<>(newBeeMallOrders, total, pageUtil.getLimit(), pageUtil.getPage());
     }
 
     @Override

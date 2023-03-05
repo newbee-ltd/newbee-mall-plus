@@ -4,7 +4,8 @@
 ![Version 2.0.0](https://img.shields.io/badge/version-2.0.0-yellow.svg)
 [![License](https://img.shields.io/badge/license-GPL3.0-blue.svg)](https://github.com/newbee-ltd/newbee-mall/blob/master/LICENSE)
 
-**当前分支已经升级至Spring Boot 3.0.2版本。**
+
+**当前分支已经升级至Spring Boot 3.0.4版本。**
 
 newbee-mall-plus 项目是 [newbee-mall](https://github.com/newbee-ltd/newbee-mall)
 的升级版本，新增了优惠券模块、商品秒杀模块、支付宝支付，后续如果有技术栈和功能的升级也会放在这个仓库里，当前项目中的代码主要由 [@十三](https://github.com/newbee-mall)

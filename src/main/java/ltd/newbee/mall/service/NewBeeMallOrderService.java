@@ -25,7 +25,7 @@ public interface NewBeeMallOrderService {
      * @param pageUtil
      * @return
      */
-    PageResult getNewBeeMallOrdersPage(PageQueryUtil pageUtil);
+    PageResult<NewBeeMallOrder> getNewBeeMallOrdersPage(PageQueryUtil pageUtil);
 
     /**
      * 订单信息修改

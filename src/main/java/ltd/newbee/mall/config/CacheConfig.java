@@ -1,5 +1,6 @@
 package ltd.newbee.mall.config;
 
+import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
 import ltd.newbee.mall.common.Constants;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurer;
@@ -35,7 +36,7 @@ public class CacheConfig implements CachingConfigurer {
     }
 
     private RedisSerializer<Object> valueSerializer() {
-        return new FastJsonRedisSerializer<>(Object.class);
+        return new GenericFastJsonRedisSerializer();
     }
 
     @Bean

@@ -56,7 +56,7 @@ public class SecKillController {
     @ResponseBody
     @GetMapping("/seckill/time/now")
     public Result getTimeNow() {
-        return ResultGenerator.genSuccessResult(new Date().getTime());
+        return ResultGenerator.genSuccessResult(System.currentTimeMillis());
     }
 
     /**

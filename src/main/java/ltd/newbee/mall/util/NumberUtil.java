@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
  * @link https://github.com/newbee-ltd
  */
 public class NumberUtil {
+    public static final Pattern PHONE_PATTERN = Pattern.compile("^((13[0-9])|(14[5,7])|(15[^4,\\D])|(17[0-8])|(18[0-9]))\\d{8}$");
 
     private NumberUtil() {
     }
@@ -22,8 +23,7 @@ public class NumberUtil {
      * @return
      */
     public static boolean isPhone(String phone) {
-        Pattern pattern = Pattern.compile("^((13[0-9])|(14[5,7])|(15[^4,\\D])|(17[0-8])|(18[0-9]))\\d{8}$");
-        Matcher matcher = pattern.matcher(phone);
+        Matcher matcher = PHONE_PATTERN.matcher(phone);
         return matcher.matches();
     }
 

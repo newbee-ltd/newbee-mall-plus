@@ -18,7 +18,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @email 2449207463@qq.com
  * @link https://github.com/newbee-ltd
  */
-@MapperScan("ltd.newbee.mall.dao")
+@MapperScan(basePackages = "ltd.newbee.mall.dao")
 @SpringBootApplication
 public class NewBeeMallPlusApplication {
     public static void main(String[] args) {

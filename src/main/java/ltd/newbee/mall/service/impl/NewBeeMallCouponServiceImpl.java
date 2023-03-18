@@ -126,7 +126,7 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
                     NewBeeMallCoupon newBeeMallCoupon = listMap.getOrDefault(couponUser.getCouponId(), new NewBeeMallCoupon());
                     BeanUtil.copyProperties(newBeeMallCoupon, newBeeMallCouponVO);
                     newBeeMallCouponVO.setCouponUserId(couponUser.getCouponUserId());
-                    newBeeMallCouponVO.setUsed(couponUser.getUsedTime() != null);
+                    newBeeMallCouponVO.setUseStatus(couponUser.getUsedTime() != null);
                     couponVOS.add(newBeeMallCouponVO);
                 }
             }

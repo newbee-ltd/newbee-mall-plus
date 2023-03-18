@@ -1,7 +1,10 @@
 package ltd.newbee.mall.config;
 
 import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
+import io.lettuce.core.ClientOptions;
+import io.lettuce.core.SocketOptions;
 import ltd.newbee.mall.common.Constants;
+import org.springframework.boot.autoconfigure.data.redis.LettuceClientConfigurationBuilderCustomizer;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
@@ -37,6 +40,28 @@ public class CacheConfig implements CachingConfigurer {
 
     private RedisSerializer<Object> valueSerializer() {
         return new GenericFastJsonRedisSerializer();
+    }
+
+    /**
+     * lettuce客户端配置
+     *
+     * @return LettuceClientConfigurationBuilderCustomizer
+     */
+    @Bean
+    public LettuceClientConfigurationBuilderCustomizer lettuceClientConfigurationBuilderCustomizer() {
+        return clientConfigurationBuilder -> {
+            clientConfigurationBuilder.clientOptions(ClientOptions.builder()
+                    .socketOptions(SocketOptions.builder()
+                            .keepAlive(SocketOptions.KeepAliveOptions.builder()
+                                    .enable(true)
+                                    .interval(Duration.ofSeconds(10))
+                                    .idle(Duration.ofSeconds(30))
+                                    .count(3)
+                                    .build())
+                            .build())
+                    .build()
+            ).build();
+        };
     }
 
     @Bean

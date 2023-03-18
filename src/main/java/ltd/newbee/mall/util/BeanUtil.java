@@ -10,7 +10,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
-public abstract class BeanUtil {
+public class BeanUtil {
 
     public static Object copyProperties(Object source, Object target, String... ignoreProperties) {
         if (source == null) {

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
 public class SpringContextUtil implements BeanFactoryPostProcessor {
     /**
@@ -64,6 +66,15 @@ public class SpringContextUtil implements BeanFactoryPostProcessor {
      */
     public static Class<?> getType(String name) throws NoSuchBeanDefinitionException {
         return beanFactory.getType(name);
+    }
+
+    /**
+     * @param t
+     * @return Class 注册对象的类型
+     * @throws NoSuchBeanDefinitionException
+     */
+    public static <T> Map<String, T> getBeansOfType(Class<T> t) throws NoSuchBeanDefinitionException {
+        return beanFactory.getBeansOfType(t);
     }
 
     /**

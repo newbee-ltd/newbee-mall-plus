@@ -10,7 +10,7 @@ $(function () {
             {label: '支付方式', name: 'payType', index: 'payType', width: 80,formatter:payTypeFormatter},
             {label: '收件人地址', name: 'userAddress', index: 'userAddress', width: 10, hidden: true},
             {label: '创建时间', name: 'createTime', index: 'createTime', width: 120},
-            {label: '操作', name: 'createTime', index: 'createTime', width: 120, formatter: operateFormatter}
+            {label: '操作', name: '', index: '', width: 120, formatter: operateFormatter, sortable: false}
         ],
         height: 760,
         rowNum: 20,
@@ -21,6 +21,9 @@ $(function () {
         rownumWidth: 20,
         autowidth: true,
         multiselect: true,
+        sortable: true,
+        sortname: 'createTime', //设置默认的排序列
+        sortorder: 'desc',
         pager: "#jqGridPager",
         jsonReader: {
             root: "data.list",

@@ -35,6 +35,11 @@ newbee-mall是一套电商系统，包括基础版本(Spring Boot+Thymeleaf)、�
 5. RabbitMQ集成解耦下单支付模块、Elastic Search集成优化商城搜索展示，暂时还没有实现，如果大家喜欢的话可以提issue😎，作者会加急更新的哦
 
 ## 更新日志
+### V2.4.1发布
+
+1. 集成mybatis-xmlreload，支持xml文件热加载
+2. 代码优化，通过阿里巴巴代码规范检测
+3. 升级部分依赖至最新
 
 ### V2.4.0发布
 

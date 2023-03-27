@@ -9,14 +9,14 @@
     <packaging>jar</packaging>
     <groupId>ltd.newbee.mall</groupId>
     <artifactId>newbee-mall-plus</artifactId>
-    <version>2.4.0</version>
+    <version>2.4.1</version>
     <name>newbee-mall-plus</name>
     <description>新蜂商城升级版本</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.4</version>
+        <version>3.0.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -113,7 +113,7 @@
         <dependency>
             <groupId>com.alipay.sdk</groupId>
             <artifactId>alipay-sdk-java</artifactId>
-            <version>4.35.32.ALL</version>
+            <version>4.35.79.ALL</version>
         </dependency>
 
         <dependency>
@@ -137,7 +137,7 @@
         <dependency>
             <groupId>com.alibaba.fastjson2</groupId>
             <artifactId>fastjson2</artifactId>
-            <version>2.0.24</version>
+            <version>2.0.25</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
@@ -146,11 +146,10 @@
             <artifactId>guava</artifactId>
             <version>31.1-jre</version>
         </dependency>
-
         <dependency>
-            <groupId>io.methvin</groupId>
-            <artifactId>directory-watcher</artifactId>
-            <version>0.18.0</version>
+            <groupId>io.github.wayn111</groupId>
+            <artifactId>mybatis-xmlreload-spring-boot-starter</artifactId>
+            <version>3.0.3.m1</version>
         </dependency>
     </dependencies>
 

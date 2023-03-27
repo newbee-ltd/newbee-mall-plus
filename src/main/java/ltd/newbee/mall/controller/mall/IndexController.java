@@ -47,11 +47,16 @@ public class IndexController {
         List<NewBeeMallIndexConfigGoodsVO> hotGoodses = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_HOT.getType(), Constants.INDEX_GOODS_HOT_NUMBER);
         List<NewBeeMallIndexConfigGoodsVO> newGoodses = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_NEW.getType(), Constants.INDEX_GOODS_NEW_NUMBER);
         List<NewBeeMallIndexConfigGoodsVO> recommendGoodses = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_RECOMMOND.getType(), Constants.INDEX_GOODS_RECOMMOND_NUMBER);
-        request.setAttribute("categories", categories);//分类数据
-        request.setAttribute("carousels", carousels);//轮播图
-        request.setAttribute("hotGoodses", hotGoodses);//热销商品
-        request.setAttribute("newGoodses", newGoodses);//新品
-        request.setAttribute("recommendGoodses", recommendGoodses);//推荐商品
+        // 分类数据
+        request.setAttribute("categories", categories);
+        // 轮播图
+        request.setAttribute("carousels", carousels);
+        // 热销商品
+        request.setAttribute("hotGoodses", hotGoodses);
+        // 新品
+        request.setAttribute("newGoodses", newGoodses);
+        // 推荐商品
+        request.setAttribute("recommendGoodses", recommendGoodses);
         return "mall/index";
     }
 }

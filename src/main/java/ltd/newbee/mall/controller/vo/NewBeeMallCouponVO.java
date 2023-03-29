@@ -17,7 +17,7 @@ public class NewBeeMallCouponVO {
 
     private boolean saleOut;
 
-    private boolean isUsed;
+    private boolean useStatus;
 
     private Integer discount;
 
@@ -183,45 +183,43 @@ public class NewBeeMallCouponVO {
         return this;
     }
 
+    public boolean isUseStatus() {
+        return useStatus;
+    }
+
+    public void setUseStatus(boolean useStatus) {
+        this.useStatus = useStatus;
+    }
+
     public boolean isHasReceived() {
         return hasReceived;
     }
 
-    public NewBeeMallCouponVO setHasReceived(boolean hasReceived) {
+    public void setHasReceived(boolean hasReceived) {
         this.hasReceived = hasReceived;
-        return this;
-    }
-
-    public boolean isUsed() {
-        return isUsed;
-    }
-
-    public NewBeeMallCouponVO setUsed(boolean used) {
-        isUsed = used;
-        return this;
     }
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", NewBeeMallCouponVO.class.getSimpleName() + "[", "]")
-                .add("couponId=" + couponId)
-                .add("couponUserId=" + couponUserId)
-                .add("couponName='" + couponName + "'")
-                .add("couponDesc='" + couponDesc + "'")
-                .add("couponTotal=" + couponTotal)
-                .add("saleOut=" + saleOut)
-                .add("isUsed=" + isUsed)
-                .add("discount=" + discount)
-                .add("min=" + min)
-                .add("couponLimit=" + couponLimit)
-                .add("couponType=" + couponType)
-                .add("status=" + status)
-                .add("goodsType=" + goodsType)
-                .add("goodsValue='" + goodsValue + "'")
-                .add("code='" + code + "'")
-                .add("couponStartTime=" + couponStartTime)
-                .add("couponEndTime=" + couponEndTime)
-                .add("hasReceived=" + hasReceived)
-                .toString();
+        return "NewBeeMallCouponVO{" +
+                "couponId=" + couponId +
+                ", couponUserId=" + couponUserId +
+                ", couponName='" + couponName + '\'' +
+                ", couponDesc='" + couponDesc + '\'' +
+                ", couponTotal=" + couponTotal +
+                ", saleOut=" + saleOut +
+                ", useStatus=" + useStatus +
+                ", discount=" + discount +
+                ", min=" + min +
+                ", couponLimit=" + couponLimit +
+                ", couponType=" + couponType +
+                ", status=" + status +
+                ", goodsType=" + goodsType +
+                ", goodsValue='" + goodsValue + '\'' +
+                ", code='" + code + '\'' +
+                ", couponStartTime=" + couponStartTime +
+                ", couponEndTime=" + couponEndTime +
+                ", hasReceived=" + hasReceived +
+                '}';
     }
 }

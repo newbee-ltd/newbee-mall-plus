@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/license-GPL3.0-blue.svg)](https://github.com/newbee-ltd/newbee-mall/blob/master/LICENSE)
 
 
-**当前分支已经升级至Spring Boot 3.0.4版本。**
+**当前分支已经升级至Spring Boot 3.0.5版本。**
 
 newbee-mall-plus 项目是 [newbee-mall](https://github.com/newbee-ltd/newbee-mall)
 的升级版本，新增了优惠券模块、商品秒杀模块、支付宝支付，后续如果有技术栈和功能的升级也会放在这个仓库里，当前项目中的代码主要由 [@十三](https://github.com/newbee-mall)
@@ -23,7 +23,7 @@ newbee-mall是一套电商系统，包括基础版本(Spring Boot+Thymeleaf)、�
 
 ![](https://raw.githubusercontent.com/newbee-ltd/newbee-mall-vue-app/master/static-files/newbee-mall.png)
 
-新蜂商城PLUS版本线上预览地址：[http://mall-plus.newbee.ltd](http://mall-plus.newbee.ltd?from=github)，账号可自行注册。
+新蜂商城PLUS版本线上预览地址：[http://121.4.124.33:9001](http://121.4.124.33:9001?from=github)，账号可自行注册。
 
 ## 升级特点
 
@@ -35,6 +35,11 @@ newbee-mall是一套电商系统，包括基础版本(Spring Boot+Thymeleaf)、�
 5. RabbitMQ集成解耦下单支付模块、Elastic Search集成优化商城搜索展示，暂时还没有实现，如果大家喜欢的话可以提issue😎，作者会加急更新的哦
 
 ## 更新日志
+### V2.4.1发布
+
+1. 集成mybatis-xmlreload，支持xml文件热加载
+2. 代码优化，通过阿里巴巴代码规范检测
+3. 升级部分依赖至最新
 
 ### V2.4.0发布
 

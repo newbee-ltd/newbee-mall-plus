@@ -15,9 +15,9 @@
         <result column="update_user" jdbcType="INTEGER" property="updateUser"/>
     </resultMap>
     <sql id="Base_Column_List">
-    config_id, config_name, config_type, goods_id, redirect_url, config_rank, is_deleted, 
+    config_id, config_name, config_type, goods_id, redirect_url, config_rank, is_deleted,
     create_time, create_user, update_time, update_user
-  </sql>
+    </sql>
 
     <select id="findIndexConfigList" parameterType="Map" resultMap="BaseResultMap">
         select
@@ -75,13 +75,13 @@
         </foreach>
     </update>
     <insert id="insert" parameterType="ltd.newbee.mall.entity.IndexConfig">
-    insert into tb_newbee_mall_index_config (config_id, config_name, config_type, 
-      goods_id, redirect_url, config_rank, 
-      is_deleted, create_time, create_user, 
+    insert into tb_newbee_mall_index_config (config_id, config_name, config_type,
+      goods_id, redirect_url, config_rank,
+      is_deleted, create_time, create_user,
       update_time, update_user)
-    values (#{configId,jdbcType=BIGINT}, #{configName,jdbcType=VARCHAR}, #{configType,jdbcType=TINYINT}, 
-      #{goodsId,jdbcType=BIGINT}, #{redirectUrl,jdbcType=VARCHAR}, #{configRank,jdbcType=INTEGER}, 
-      #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=INTEGER}, 
+    values (#{configId,jdbcType=BIGINT}, #{configName,jdbcType=VARCHAR}, #{configType,jdbcType=TINYINT},
+      #{goodsId,jdbcType=BIGINT}, #{redirectUrl,jdbcType=VARCHAR}, #{configRank,jdbcType=INTEGER},
+      #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=INTEGER},
       #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=INTEGER})
   </insert>
     <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.IndexConfig">

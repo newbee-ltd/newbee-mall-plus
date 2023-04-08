@@ -119,7 +119,7 @@
 
                                 <th:block th:if="${pageResult.totalPage <= 5 && pageResult.currPage <= 5}">
                                     <th:block th:each="index : ${#numbers.sequence(1, pageResult.totalPage)}">
-                                        <a th:href="@{'/orders?page=' + ${index}"
+                                        <a th:href="@{'/orders?page=' + ${index}}"
                                            class="numbers"
                                            th:classappend="${index == pageResult.currPage ? 'current' : ''}"
                                            th:text="${index}">1</a>

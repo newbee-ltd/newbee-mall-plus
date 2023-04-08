@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
@@ -126,7 +125,7 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
                     NewBeeMallCoupon newBeeMallCoupon = listMap.getOrDefault(couponUser.getCouponId(), new NewBeeMallCoupon());
                     BeanUtil.copyProperties(newBeeMallCoupon, newBeeMallCouponVO);
                     newBeeMallCouponVO.setCouponUserId(couponUser.getCouponUserId());
-                    newBeeMallCouponVO.setUseStatus(couponUser.getUsedTime() != null);
+                    newBeeMallCouponVO.setUseStatus(couponUser.getUseStatus() == 1);
                     couponVOS.add(newBeeMallCouponVO);
                 }
             }

@@ -39,6 +39,8 @@ public class CouponController {
     public String myCoupons(@RequestParam Map<String, Object> params, HttpServletRequest request, HttpSession session) {
         NewBeeMallUserVO user = (NewBeeMallUserVO) session.getAttribute(Constants.MALL_USER_SESSION_KEY);
         params.put("userId", user.getUserId());
+        int status = Integer.parseInt((String) params.getOrDefault("status", "0"));
+        params.put("status", status);
         if (StringUtils.isEmpty((CharSequence) params.get("page"))) {
             params.put("page", 1);
         }
@@ -49,6 +51,7 @@ public class CouponController {
         PageResult<NewBeeMallCouponVO> pageResult = newBeeMallCouponService.selectMyCoupons(pageUtil);
         request.setAttribute("pageResult", pageResult);
         request.setAttribute("path", "myCoupons");
+        request.setAttribute("status", status);
         return "mall/my-coupons";
     }
 

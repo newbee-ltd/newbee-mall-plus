@@ -1,5 +1,6 @@
 package ltd.newbee.mall.util;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -9,6 +10,7 @@ import java.io.Serializable;
  * @link https://github.com/newbee-ltd
  */
 public class Result<T> implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     private int resultCode;
     private String message;

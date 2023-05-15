@@ -8,20 +8,24 @@
  */
 package ltd.newbee.mall.controller.mall;
 
+import com.alibaba.fastjson2.JSON;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import ltd.newbee.mall.annotion.RepeatSubmit;
-import ltd.newbee.mall.common.*;
+import ltd.newbee.mall.common.Constants;
+import ltd.newbee.mall.common.NewBeeMallOrderStatusEnum;
+import ltd.newbee.mall.common.PayStatusEnum;
+import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.config.AlipayConfig;
 import ltd.newbee.mall.config.ProjectConfig;
 import ltd.newbee.mall.controller.vo.NewBeeMallOrderDetailVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallShoppingCartItemVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
-import ltd.newbee.mall.dao.MallUserMapper;
 import ltd.newbee.mall.entity.NewBeeMallOrder;
 import ltd.newbee.mall.exception.NewBeeMallException;
 import ltd.newbee.mall.service.NewBeeMallOrderService;
@@ -39,9 +43,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Controller
 public class OrderController {
@@ -163,7 +165,7 @@ public class OrderController {
             // 销售产品码，与支付宝签约的产品码名称。目前仅支持FAST_INSTANT_TRADE_PAY
             String product_code = "FAST_INSTANT_TRADE_PAY";
             // 订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]。
-            String total_amount = newBeeMallOrder.getTotalPrice() + "";
+            String total_amount = String.valueOf(newBeeMallOrder.getTotalPrice());
             // 订单标题
             String subject = "支付宝测试";
 
@@ -190,7 +192,13 @@ public class OrderController {
     }
 
     @GetMapping("/returnOrders/{orderNo}/{userId}")
-    public String returnOrderDetailPage(HttpServletRequest request, @PathVariable String orderNo, @PathVariable Long userId) {
+    public String returnOrderDetailPage(HttpServletRequest request,
+                                        HttpSession httpSession,
+                                        @PathVariable String orderNo, @PathVariable Long userId) {
+        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        if (!Objects.equals(user.getUserId(), userId)) {
+            return "error/error_5xx";
+        }
         log.info("支付宝return通知数据记录：orderNo: {}, 当前登陆用户：{}", orderNo, userId);
         // NewBeeMallOrder newBeeMallOrder = judgeOrderUserId(orderNo, userId);
         // 将notifyUrl中逻辑放到此处：未支付订单更新订单状态
@@ -204,14 +212,53 @@ public class OrderController {
 
     @PostMapping("/paySuccess")
     @ResponseBody
-    public Result paySuccess(Integer payType, String orderNo) {
-        log.info("支付宝paySuccess通知数据记录：orderNo: {}, payType：{}", orderNo, payType);
-        String payResult = newBeeMallOrderService.paySuccess(orderNo, payType);
-        if (ServiceResultEnum.SUCCESS.getResult().equals(payResult)) {
-            return ResultGenerator.genSuccessResult();
+    public Result paySuccess(Integer payType, String orderNo, HttpServletRequest request) throws AlipayApiException {
+        log.info("支付宝paySuccess通知数据记录：request.getParameterMap() is {}", JSON.toJSONString(request.getParameterMap()));
+        if (payType == 1 && alipayConfig.getSigntype().equals(request.getParameter("sign_type"))
+                && "trade_status_sync".equals(request.getParameter("notify_type"))
+                && alipayConfig.getAppId().equals(request.getParameter("app_id"))
+                && this.verifySign(request)) {
+            String payResult = newBeeMallOrderService.paySuccess(orderNo, payType);
+            if (ServiceResultEnum.SUCCESS.getResult().equals(payResult)) {
+                return ResultGenerator.genSuccessResult();
+            } else {
+                return ResultGenerator.genFailResult(payResult);
+            }
+        } else if (payType == 2) {
+            String payResult = newBeeMallOrderService.paySuccess(orderNo, payType);
+            if (ServiceResultEnum.SUCCESS.getResult().equals(payResult)) {
+                return ResultGenerator.genSuccessResult();
+            } else {
+                return ResultGenerator.genFailResult(payResult);
+            }
         } else {
-            return ResultGenerator.genFailResult(payResult);
+            return ResultGenerator.genFailResult("支付类型错误");
         }
+    }
+
+    /**
+     * 验签
+     */
+    private boolean verifySign(HttpServletRequest request) throws AlipayApiException {
+        //正式环境验签
+        //编码
+        String charset = request.getParameter("charset");
+        //签名算法类型
+        String signType = request.getParameter("sign_type");
+        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String[]> requestParams = request.getParameterMap();
+        for (String name : requestParams.keySet()) {
+            String[] values = requestParams.get(name);
+            String valueStr = "";
+            for (int i = 0; i < values.length; i++) {
+                valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",";
+            }
+            // 乱码解决，这段代码在出现乱码时使用
+            params.put(name, valueStr);
+        }
+        boolean signVerified = AlipaySignature.rsaCheckV1(params, alipayConfig.getAlipayPublicKey(), charset, signType);
+        log.info("支付宝回调:verifySignparams={},signVerified={}", JSON.toJSONString(params), signVerified);
+        return signVerified;
     }
 
     @RepeatSubmit

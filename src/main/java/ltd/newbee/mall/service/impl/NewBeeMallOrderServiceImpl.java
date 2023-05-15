@@ -246,7 +246,12 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
         // 如果使用了优惠券
         if (couponUserId != null) {
             NewBeeMallUserCouponRecord newBeeMallUserCouponRecord = newBeeMallUserCouponRecordMapper.selectByPrimaryKey(couponUserId);
-            NewBeeMallCoupon newBeeMallCoupon = newBeeMallCouponMapper.selectByPrimaryKey(newBeeMallUserCouponRecord.getCouponId());
+            Long userId = newBeeMallUserCouponRecord.getUserId();
+            if (!Objects.equals(userId, user.getUserId())) {
+                NewBeeMallException.fail("优惠卷所属用户与当前用户不一致！");
+            }
+            Long couponId = newBeeMallUserCouponRecord.getCouponId();
+            NewBeeMallCoupon newBeeMallCoupon = newBeeMallCouponMapper.selectByPrimaryKey(couponId);
             priceTotal -= newBeeMallCoupon.getDiscount();
         }
         if (priceTotal < 1) {

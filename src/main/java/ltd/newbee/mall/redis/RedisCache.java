@@ -55,6 +55,19 @@ public class RedisCache {
         return execute.longValue();
     }
 
+    public void luaIncrement(final String key) {
+        RedisScript<Long> redisScript = new DefaultRedisScript<>(buildLuaIncrScript(), Long.class);
+        Number execute = (Number) redisTemplate.execute(redisScript, Collections.singletonList(key));
+    }
+
+    private String buildLuaIncrScript() {
+        return """
+                local c
+                c = redis.call('incr',KEYS[1])
+                return c;""";
+    }
+
+
     /**
      * lua原子自减脚本
      */

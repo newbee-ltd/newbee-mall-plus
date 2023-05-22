@@ -119,11 +119,6 @@ public class NewBeeMallSeckillServiceImpl implements NewBeeMallSeckillService {
         if (redisCache.containsCacheSet(Constants.SECKILL_SUCCESS_USER_ID + seckillId, userId)) {
             throw new NewBeeMallException("您已经购买过秒杀商品，请勿重复购买");
         }
-        // 更新秒杀商品虚拟库存
-        Long stock = redisCache.luaDecrement(Constants.SECKILL_GOODS_STOCK_KEY + seckillId);
-        if (stock < 0) {
-            throw new NewBeeMallException("秒杀商品已售空");
-        }
         NewBeeMallSeckill newBeeMallSeckill = redisCache.getCacheObject(Constants.SECKILL_KEY + seckillId);
         if (newBeeMallSeckill == null) {
             newBeeMallSeckill = newBeeMallSeckillMapper.selectByPrimaryKey(seckillId);
@@ -139,7 +134,11 @@ public class NewBeeMallSeckillServiceImpl implements NewBeeMallSeckillService {
         } else if (nowTime > endTime) {
             throw new NewBeeMallException("秒杀已结束");
         }
-
+        // 更新秒杀商品虚拟库存
+        Long stock = redisCache.luaDecrement(Constants.SECKILL_GOODS_STOCK_KEY + seckillId);
+        if (stock < 0) {
+            throw new NewBeeMallException("秒杀商品已售空");
+        }
         Date killTime = new Date();
         Map<String, Object> map = new HashMap<>(8);
         map.put("seckillId", seckillId);
@@ -150,12 +149,17 @@ public class NewBeeMallSeckillServiceImpl implements NewBeeMallSeckillService {
         try {
             newBeeMallSeckillMapper.killByProcedure(map);
         } catch (Exception e) {
+            //恢复redis扣减
+//            redisCache.luaIncrement(Constants.SECKILL_GOODS_STOCK_KEY + seckillId);
             throw new NewBeeMallException(e.getMessage());
         }
         // 获取result -2sql执行失败 -1未插入数据 0未更新数据 1sql执行成功
         map.get("result");
         int result = MapUtils.getInteger(map, "result", -2);
         if (result != 1) {
+            //恢复redis扣减
+            //恢复redis扣减
+//            redisCache.luaIncrement(Constants.SECKILL_GOODS_STOCK_KEY + seckillId);
             throw new NewBeeMallException("很遗憾！未抢购到秒杀商品");
         }
         // 记录购买过的用户

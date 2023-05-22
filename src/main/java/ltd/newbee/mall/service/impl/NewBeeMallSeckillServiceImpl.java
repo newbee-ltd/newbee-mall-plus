@@ -150,7 +150,7 @@ public class NewBeeMallSeckillServiceImpl implements NewBeeMallSeckillService {
             newBeeMallSeckillMapper.killByProcedure(map);
         } catch (Exception e) {
             //恢复redis扣减
-//            redisCache.luaIncrement(Constants.SECKILL_GOODS_STOCK_KEY + seckillId);
+            redisCache.luaIncrement(Constants.SECKILL_GOODS_STOCK_KEY + seckillId);
             throw new NewBeeMallException(e.getMessage());
         }
         // 获取result -2sql执行失败 -1未插入数据 0未更新数据 1sql执行成功
@@ -158,8 +158,7 @@ public class NewBeeMallSeckillServiceImpl implements NewBeeMallSeckillService {
         int result = MapUtils.getInteger(map, "result", -2);
         if (result != 1) {
             //恢复redis扣减
-            //恢复redis扣减
-//            redisCache.luaIncrement(Constants.SECKILL_GOODS_STOCK_KEY + seckillId);
+            redisCache.luaIncrement(Constants.SECKILL_GOODS_STOCK_KEY + seckillId);
             throw new NewBeeMallException("很遗憾！未抢购到秒杀商品");
         }
         // 记录购买过的用户
